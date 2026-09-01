@@ -1,0 +1,357 @@
+<title>电赛赛题图谱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#EAEEF4; --surface-3:#F0F3F8;
+  --ink:#111620; --ink-2:#3B4553; --ink-3:#6C7787;
+  --line:#D6DDE6; --line-2:#B6C0CD;
+  --accent:#1B4F9C; --hue:27 79 156;
+  --shadow:0 1px 2px rgba(17,22,32,.05);
+  --grid-line:rgba(27,79,156,.07);
+  --c1:203 58 44;
+  --c2:31 92 186;
+  --c3:118 71 190;
+  --c4:198 108 22;
+  --c5:8 118 130;
+  --c6:56 122 44;
+  --c7:186 48 118;
+  --c8:143 98 16;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1117; --surface:#161A22; --surface-2:#1D222C; --surface-3:#131821;
+    --ink:#E9EDF3; --ink-2:#AFB9C7; --ink-3:#798494;
+    --line:#272E3A; --line-2:#3A4353;
+    --accent:#79A6EC; --hue:121 166 236;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --grid-line:rgba(121,166,236,.08);
+    --c1:244 122 108;
+    --c2:126 168 240;
+    --c3:181 148 238;
+    --c4:240 168 92;
+    --c5:79 196 206;
+    --c6:142 203 116;
+    --c7:242 130 180;
+    --c8:216 171 73;
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#0E1117; --surface:#161A22; --surface-2:#1D222C; --surface-3:#131821;
+    --ink:#E9EDF3; --ink-2:#AFB9C7; --ink-3:#798494;
+    --line:#272E3A; --line-2:#3A4353;
+    --accent:#79A6EC; --hue:121 166 236;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --grid-line:rgba(121,166,236,.08);
+    --c1:244 122 108;
+    --c2:126 168 240;
+    --c3:181 148 238;
+    --c4:240 168 92;
+    --c5:79 196 206;
+    --c6:142 203 116;
+    --c7:242 130 180;
+    --c8:216 171 73;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Noto Serif SC",Georgia,"Songti SC",serif;text-wrap:balance;margin:0;line-height:1.35}
+code,.mono,.num{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+code{background:var(--surface-2);border:1px solid var(--line);padding:1px 5px;font-size:.88em}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+
+.masthead{border-bottom:1px solid var(--line);background:
+  linear-gradient(var(--grid-line) 1px,transparent 1px) 0 0/100% 26px,
+  linear-gradient(90deg,var(--grid-line) 1px,transparent 1px) 0 0/26px 100%,var(--surface)}
+.masthead-inner{padding:56px 0 42px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:20px}
+.masthead h1{font-size:clamp(34px,5.4vw,50px);letter-spacing:-.01em;margin-bottom:14px}
+.lede{max-width:62ch;color:var(--ink-2);font-size:16px;margin:0 0 30px}
+.lede strong{color:var(--ink);font-weight:500}
+.stats{display:flex;flex-wrap:wrap;border:1px solid var(--line);background:var(--surface);width:fit-content;max-width:100%}
+.stat{padding:12px 22px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat .k{font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
+main{padding:46px 0 90px}
+.block{margin-bottom:64px}
+.block-head{margin-bottom:22px}
+.block-head h2{font-size:23px;margin-bottom:7px}
+.block-head p{margin:0;color:var(--ink-3);font-size:14px;max-width:66ch}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:rgb(var(--h))}
+.matrix-scroll{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table.matrix{border-collapse:collapse;width:100%;min-width:660px;font-size:13px}
+table.matrix th,table.matrix td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:0}
+table.matrix tr:last-child td,table.matrix tr:last-child th{border-bottom:0}
+table.matrix th:last-child,table.matrix td:last-child{border-right:0}
+.mx-corner{background:var(--surface-2)}
+.mx-year{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;padding:9px 4px 6px;
+  text-align:center;background:var(--surface-2);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.mx-year span{display:block;font-size:9.5px;letter-spacing:.08em;color:var(--ink-3);font-weight:400;margin-top:1px}
+.mx-year.natl span{color:var(--accent)}
+.mx-cat{padding:8px 12px 8px 10px;text-align:left;font-weight:400;font-size:13px;white-space:nowrap;
+  background:var(--surface-2);color:var(--ink)}
+.mx-cat .dot{margin-right:8px}
+.mx-cell{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:13px;
+  font-variant-numeric:tabular-nums;height:34px;color:var(--ink)}
+.mx-cell.zero{color:var(--ink-3);opacity:.35}
+.mx-total{background:var(--surface-2);font-weight:600}
+.mx-note{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-size:12px;color:var(--ink-3)}
+.mx-note b{color:var(--accent);font-weight:500}
+.cards{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:720px){.cards{grid-template-columns:1fr 1fr}}
+.tc{border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column}
+.tc-band{height:4px;background:rgb(var(--h))}
+.tc-in{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.tc-meta{display:flex;gap:8px;align-items:center;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.08em;margin-bottom:9px}
+.tc-n{background:rgb(var(--h) / .13);color:rgb(var(--h));padding:2px 8px;font-weight:600}
+.tc-k{color:var(--ink-3)}
+.tc-title{text-decoration:none;color:inherit;display:block}
+.tc-title h3{font-size:18.5px;margin-bottom:8px}
+.tc-title:hover h3{color:rgb(var(--h))}
+.tc-def{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.tc-topics{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.tp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
+  border:1px solid var(--line-2);padding:1px 6px}
+.tc-recent{margin:0 0 14px;font-size:12px;color:var(--ink-3);line-height:1.65}
+.tc-recent b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-right:6px}
+.tc-go{margin-top:auto;font-size:13.5px;font-weight:500;color:rgb(var(--h));text-decoration:none;
+  border-top:1px solid var(--line);padding-top:11px}
+.tc-go:hover{text-decoration:underline}
+.tc-go.off{color:var(--ink-3);font-weight:400}
+.road{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:840px){.road{grid-template-columns:repeat(3,1fr)}}
+.stage{border:1px solid var(--line);background:var(--surface);padding:20px;box-shadow:var(--shadow)}
+.stage .st-n{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.stage h4{font-size:16.5px;margin-bottom:6px}
+.stage .st-sub{font-size:12.5px;color:var(--ink-3);margin:0 0 12px}
+.stage ul{margin:0;padding-left:17px}
+.stage li{font-size:13.5px;line-height:1.65;margin-bottom:6px;color:var(--ink-2)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;padding:4px 11px;border:1px solid var(--line-2);
+  background:var(--surface);color:var(--ink-2);cursor:pointer}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.yr{margin-bottom:26px}
+.yr-h{display:flex;align-items:baseline;gap:12px;padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:9px}
+.yr-h .y{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+.yr-h .lv{font-size:12px;color:var(--ink-3)}
+.yr-h .lv.natl{color:var(--accent);font-weight:500}
+.arows{display:grid;gap:1px;grid-template-columns:1fr}
+@media (min-width:700px){.arows{grid-template-columns:1fr 1fr}}
+.arow{display:flex;gap:10px;align-items:baseline;font-size:13.5px;padding:3px 0}
+.arow .ac{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);min-width:52px;flex:none}
+.arow .dot{width:8px;height:8px;flex:none}
+.arow.hide,.yr.hide{display:none}
+footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--ink-3);font-size:12.5px;line-height:1.8}
+footer a{color:var(--ink-2)}
+
+</style>
+
+<header class="masthead"><div class="wrap masthead-inner">
+  <div class="eyebrow">NUEDC · 2016 — 2026 · 11 届 · 104 题 · 96 个知识点</div>
+  <h1>电赛赛题图谱</h1>
+  <p class="lede">全国大学生电子设计竞赛近十一年的全部赛题，按 <strong>8 个命题方向</strong>重排。
+  这一页是总览与导航：先看命题分布，再按方向进入<strong>逐条知识点解析</strong>——
+  每个方向一页，12 条知识点各配公式、方案对比、真题锚点和常见坑。</p>
+  <div class="stats">
+    <div class="stat"><div class="v">104</div><div class="k">赛题总数</div></div>
+    <div class="stat"><div class="v">8</div><div class="k">命题方向</div></div>
+    <div class="stat"><div class="v">96</div><div class="k">知识点解析</div></div>
+    <div class="stat"><div class="v">11</div><div class="k">届（2016–2026）</div></div>
+  </div>
+</div></header>
+
+<div class="wrap"><main>
+
+<section class="block" id="tracks">
+  <div class="block-head"><h2>八个命题方向</h2>
+  <p>每个方向单独成页。点进去是该方向的 12 条知识点逐条解析，外加历年赛题、参考设计方案、开源工程与过关线。</p></div>
+  <div class="cards"><article class="tc" style="--h:var(--c1)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">17 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/ad9e9fe7-6047-4140-9b19-0b03b08774bb" target="_blank" rel="noopener"><h3>电源与功率变换</h3></a>
+      <p class="tc-def">把电能从一种形式高效地变成另一种形式，并让它在负载和输入都变化时保持稳定。电赛出题密度最高、指标最硬、最不吃运气的一类——效率、纹波、调整率、THD 全是可量化的死指标。</p>
+      <div class="tc-topics"><span class="tp">拓扑</span><span class="tp">建模</span><span class="tp">指标定义</span><span class="tp">磁性元件</span><span class="tp">开关管</span><span class="tp">驱动与隔离</span><span class="tp">采样</span><span class="tp">控制器</span></div>
+      <p class="tc-recent"><b>近三题</b> 2026 A AC-AC 变换电路 · 2025 A 能量回馈的变流器负载试验装置 · 2025 B 单相有源电力滤波实验装置</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/ad9e9fe7-6047-4140-9b19-0b03b08774bb" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c2)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">20 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/114677ab-db62-47bb-961a-884e3247be5b" target="_blank" rel="noopener"><h3>测量与仪器仪表</h3></a>
+      <p class="tc-def">把一个物理量准确地变成数字并显示出来。核心矛盾永远是"小信号 + 高精度 + 快速度"三者不可兼得，考的是整条信号链的误差预算能力。</p>
+      <div class="tc-topics"><span class="tp">采样</span><span class="tp">频域</span><span class="tp">误差</span><span class="tp">专项</span><span class="tp">前端</span><span class="tp">放大器选型</span><span class="tp">ADC</span><span class="tp">时基</span></div>
+      <p class="tc-recent"><b>近三题</b> 2026 B “无源”交流电流表及无线读表器 · 2026 G 周期信号测量分析装置 · 2025 D 简易以太网双绞线测试仪</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/114677ab-db62-47bb-961a-884e3247be5b" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c3)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">8 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/a0bba522-91bb-4710-b555-269ef6b599b4" target="_blank" rel="noopener"><h3>信号源与信号处理</h3></a>
+      <p class="tc-def">产生、变换、分离信号本身。这一类题最考验模拟功底和 DSP 算法的结合，往往没有现成模块可抄。</p>
+      <div class="tc-topics"><span class="tp">滤波器</span><span class="tp">自适应</span><span class="tp">盲源分离</span><span class="tp">非线性</span><span class="tp">信号产生</span><span class="tp">移相与倍频</span><span class="tp">幅度控制</span><span class="tp">音频功放</span></div>
+      <p class="tc-recent"><b>近三题</b> 2026 F 李萨如图形显示控制装置 · 2024 G 简易录音屏蔽系统 · 2023 H 信号分离装置</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/a0bba522-91bb-4710-b555-269ef6b599b4" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c4)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">9 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/778a83ef-b9c2-4899-a08c-3c582b6b3292" target="_blank" rel="noopener"><h3>高频与无线通信</h3></a>
+      <p class="tc-def">载波、调制、解调、收发。传统"无线电类"题目，近年从分立高频电路转向软件无线电与调制识别，但射频前端的基本功仍然是门槛。</p>
+      <div class="tc-topics"><span class="tp">调制</span><span class="tp">接收机</span><span class="tp">数字通信</span><span class="tp">调制识别（AMC）</span><span class="tp">射频前端</span><span class="tp">滤波</span><span class="tp">集成方案</span><span class="tp">天线</span></div>
+      <p class="tc-recent"><b>近三题</b> 2025 F 简易自动接收机 · 2024 C 无线传输信号模拟系统 · 2023 D 信号调制方式识别与参数估计装置</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/778a83ef-b9c2-4899-a08c-3c582b6b3292" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c5)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">9 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/7ee00547-cdf3-4b45-95cd-486dc20f2485" target="_blank" rel="noopener"><h3>自动控制系统</h3></a>
+      <p class="tc-def">欠稳定或不稳定对象的闭环镇定。滚球、磁悬浮、曲射炮、云台瞄准——都是控制理论课的实体化，理论到实物之间的鸿沟就是这类题的分差所在。</p>
+      <div class="tc-topics"><span class="tp">建模</span><span class="tp">设计</span><span class="tp">现代控制</span><span class="tp">时序</span><span class="tp">执行器</span><span class="tp">传感</span><span class="tp">功率接口</span><span class="tp">云台</span></div>
+      <p class="tc-recent"><b>近三题</b> 2026 H 车载平衡滚球运动控制系统 · 2025 E 简易自行瞄准装置 · 2024 F 磁悬浮实验装置</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/7ee00547-cdf3-4b45-95cd-486dc20f2485" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c6)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">10 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/10ce6b48-dc1a-463e-a8e0-748131c0fbdc" target="_blank" rel="noopener"><h3>移动机器人 · 小车</h3></a>
+      <p class="tc-def">轮式平台的循迹、避障、定位与协同。看似入门，实际上失分点密集在"稳定复现"上——十次跑九次成功和十次跑十次成功是两个分数段。</p>
+      <div class="tc-topics"><span class="tp">运动学</span><span class="tp">循迹</span><span class="tp">定位</span><span class="tp">规划</span><span class="tp">循迹传感</span><span class="tp">避障</span><span class="tp">驱动</span><span class="tp">控制器</span></div>
+      <p class="tc-recent"><b>近三题</b> 2025 K 自动避障小车 · 2024 H 自动行驶小车 · 2022 C · 7月 小车跟随行驶系统</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/10ce6b48-dc1a-463e-a8e0-748131c0fbdc" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c7)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">9 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/a1b5271d-d1ba-4a7c-9f26-d0f5e2677b3f" target="_blank" rel="noopener"><h3>无人机与飞行器</h3></a>
+      <p class="tc-def">多旋翼的自主起降、航线规划、目标识别与投放。近年从"能飞"升级为"陆空协同"，是综合难度最高、也最容易全盘失分的一类。</p>
+      <div class="tc-topics"><span class="tp">飞控</span><span class="tp">定位</span><span class="tp">规划</span><span class="tp">协同</span><span class="tp">平台</span><span class="tp">飞控硬件</span><span class="tp">感知</span><span class="tp">投放机构</span></div>
+      <p class="tc-recent"><b>近三题</b> 2026 D 陆空协同无人机系统 · 2025 H 野生动物巡查系统 · 2024 D 立体货架盘点无人机系统</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/a1b5271d-d1ba-4a7c-9f26-d0f5e2677b3f" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article><article class="tc" style="--h:var(--c8)">
+    <div class="tc-band"></div>
+    <div class="tc-in">
+      <div class="tc-meta"><span class="tc-n">22 题</span><span class="tc-k">12 个知识点</span></div>
+      <a class="tc-title" href="https://claude.ai/code/artifact/6ee11533-6b97-41de-b694-479af27f3ae7" target="_blank" rel="noopener"><h3>传感 · 定位 · 嵌入式视觉</h3></a>
+      <p class="tc-def">用声、光、电磁、图像感知世界并做出判断。题量已跃居第一，是电赛现代化的主战场：从超声测距、可见光定位，一路做到端侧目标识别与拼图求解。</p>
+      <div class="tc-topics"><span class="tp">测距定位</span><span class="tp">声学</span><span class="tp">视觉几何</span><span class="tp">识别</span><span class="tp">无线定位</span><span class="tp">声学</span><span class="tp">光学</span><span class="tp">视觉模组</span></div>
+      <p class="tc-recent"><b>近三题</b> 2026 C 基于无线通信的数字钥匙实验系统 · 2026 E 拼图装置 · 2025 C 基于单目视觉的目标物测量装置</p>
+      <a class="tc-go" href="https://claude.ai/code/artifact/6ee11533-6b97-41de-b694-479af27f3ae7" target="_blank" rel="noopener">打开赛道详解 <span aria-hidden="true">→</span></a>
+    </div>
+  </article></div>
+</section>
+
+<section class="block" id="matrix">
+  <div class="block-head"><h2>十一年命题分布</h2>
+  <p>行是方向，列是届别。格子里的数字是该届该方向的题目数量，底色深浅同步反映密度。奇数年为全国赛，偶数年为赛区赛 / 省级联赛参考题。</p></div>
+  <div class="matrix-scroll"><table class="matrix"><thead><tr><th class="mx-corner"></th><th class="mx-year">2016<span>区</span></th><th class="mx-year natl">2017<span>国</span></th><th class="mx-year">2018<span>区</span></th><th class="mx-year natl">2019<span>国</span></th><th class="mx-year">2020<span>区</span></th><th class="mx-year natl">2021<span>国</span></th><th class="mx-year">2022<span>区</span></th><th class="mx-year natl">2023<span>国</span></th><th class="mx-year">2024<span>区</span></th><th class="mx-year natl">2025<span>国</span></th><th class="mx-year">2026<span>区</span></th><th class="mx-year mx-total">合计</th></tr></thead><tbody><tr><th class="mx-cat"><span class="dot" style="--h:var(--c1)"></span>电源与功率变换</th><td class="mx-cell" style="background:rgb(var(--c1) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.820)">4</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c1) / 0.280)">1</td><td class="mx-cell mx-total">17</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c2)"></span>测量与仪器仪表</th><td class="mx-cell" style="background:rgb(var(--c2) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.460)">2</td><td class="mx-cell zero" style="background:rgb(var(--c2) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c2) / 0.460)">2</td><td class="mx-cell mx-total">20</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c3)"></span>信号源与信号处理</th><td class="mx-cell zero" style="background:rgb(var(--c3) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c3) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c3) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c3) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c3) / 0.280)">1</td><td class="mx-cell mx-total">8</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c4)"></span>高频与无线通信</th><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c4) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.460)">2</td><td class="mx-cell zero" style="background:rgb(var(--c4) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c4) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c4) / 0.000)">·</td><td class="mx-cell mx-total">9</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c5)"></span>自动控制系统</th><td class="mx-cell zero" style="background:rgb(var(--c5) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c5) / 0.460)">2</td><td class="mx-cell zero" style="background:rgb(var(--c5) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c5) / 0.460)">2</td><td class="mx-cell zero" style="background:rgb(var(--c5) / 0.000)">·</td><td class="mx-cell zero" style="background:rgb(var(--c5) / 0.000)">·</td><td class="mx-cell zero" style="background:rgb(var(--c5) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c5) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c5) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c5) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c5) / 0.280)">1</td><td class="mx-cell mx-total">9</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c6)"></span>移动机器人 · 小车</th><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c6) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.640)">3</td><td class="mx-cell zero" style="background:rgb(var(--c6) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c6) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c6) / 0.000)">·</td><td class="mx-cell mx-total">10</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c7)"></span>无人机与飞行器</th><td class="mx-cell zero" style="background:rgb(var(--c7) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell zero" style="background:rgb(var(--c7) / 0.000)">·</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c7) / 0.280)">1</td><td class="mx-cell mx-total">9</td></tr><tr><th class="mx-cat"><span class="dot" style="--h:var(--c8)"></span>传感 · 定位 · 嵌入式视觉</th><td class="mx-cell" style="background:rgb(var(--c8) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.460)">2</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.280)">1</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.640)">3</td><td class="mx-cell" style="background:rgb(var(--c8) / 0.460)">2</td><td class="mx-cell mx-total">22</td></tr><tr><th class="mx-cat mx-total">合计</th><td class="mx-cell mx-total">6</td><td class="mx-cell mx-total">12</td><td class="mx-cell mx-total">8</td><td class="mx-cell mx-total">11</td><td class="mx-cell mx-total">7</td><td class="mx-cell mx-total">11</td><td class="mx-cell mx-total">11</td><td class="mx-cell mx-total">11</td><td class="mx-cell mx-total">8</td><td class="mx-cell mx-total">11</td><td class="mx-cell mx-total">8</td><td class="mx-cell mx-total">104</td></tr></tbody></table></div>
+  <div class="mx-note"><span><b>国</b> 全国大学生电子设计竞赛（国赛）</span>
+  <span>区 赛区赛 / 省级联赛参考赛题</span><span>2022 年分 7 月、10 月两批参考题</span></div>
+</section>
+
+<section class="block" id="roadmap">
+  <div class="block-head"><h2>三阶段复习路线</h2>
+  <p>从项目倒推知识的顺序：先把信号链和电源这两条“所有题都要用”的底座打穿，再补方向专精，最后按题练整机集成。</p></div>
+  <div class="road">
+    <div class="stage"><div class="st-n">Stage 01 · 4–6 周</div><h4>公共底座</h4>
+      <p class="st-sub">不管做哪一类题都躲不掉的东西</p><ul>
+      <li><b>信号链</b>：运放非理想参数（GBW、压摆率、失调、噪声）→ 抗混叠滤波 → ADC 采样定理与有效位 → FFT 加窗与幅值校正</li>
+      <li><b>电源</b>：自己画一版 Buck，测纹波、效率、环路裕度；理解 LDO 与开关电源在噪声上的取舍</li>
+      <li><b>MCU 外设</b>：定时器捕获 / PWM / DMA + ADC 连续采样 / 硬件浮点；2026 起赛区赛部分题目强制 TI MSPM0</li>
+      <li><b>测量素养</b>：示波器探头补偿、地环路、差分测量、功率分析仪读数含义</li>
+      <li><b>工程化</b>：KiCad 出双面板、可测试点布置、模块化分工与联调顺序</li></ul></div>
+    <div class="stage"><div class="st-n">Stage 02 · 6–8 周</div><h4>方向专精</h4>
+      <p class="st-sub">在图谱里选 2 个方向吃透，别铺开</p><ul>
+      <li>推荐组合一（硬核模电）：<b>电源与功率变换</b> + <b>测量与仪器仪表</b>——覆盖 37 / 104 题，是国赛最稳的两条腿</li>
+      <li>推荐组合二（软硬结合）：<b>自动控制系统</b> + <b>传感 · 定位 · 嵌入式视觉</b>——覆盖 31 / 104 题，现代题占比逐年升高</li>
+      <li>每个方向按赛道页的“知识点解析 → 参考方案 → 开源工程”顺序走，读完源码必须自己复现一次最小系统</li>
+      <li>专精阶段的产出是可复用模块：一块电源板、一套 ADC+FFT 采集固件、一个 PID 调参脚手架</li></ul></div>
+    <div class="stage"><div class="st-n">Stage 03 · 持续</div><h4>整题实战</h4>
+      <p class="st-sub">按四天赛制的节奏，做完整机</p><ul>
+      <li>选题按难度递增：先做同方向的赛区赛题（指标宽松），再做国赛题</li>
+      <li>严格计时：第 1 天定方案 + 采购、第 2–3 天分模块调通、第 4 天联调 + 写报告，报告占 20 / 120 分不能临时凑</li>
+      <li>每道题结束后写“失分复盘”：哪一项指标没达标、卡在哪个环节、下次的预案</li>
+      <li>建议起手题：<b>2026 G 周期信号测量分析装置</b>（纯信号链，无机械依赖）→ <b>2026 H 车载平衡滚球</b>（控制）→ <b>2025 A 能量回馈变流器</b>（功率）</li></ul></div>
+  </div>
+</section>
+
+<section class="block" id="appendix">
+  <div class="block-head"><h2>全量赛题年表 · 2016 — 2026</h2>
+  <p>按届别倒序排列，点方向标签可筛选。题号沿用官方公示编号。</p></div>
+  <div class="filters" id="filters"><button class="chip" data-f="all" aria-pressed="true">全部 104</button><button class="chip" data-f="1" aria-pressed="false">电源 17</button><button class="chip" data-f="2" aria-pressed="false">测量 20</button><button class="chip" data-f="3" aria-pressed="false">信号处理 8</button><button class="chip" data-f="4" aria-pressed="false">高频通信 9</button><button class="chip" data-f="5" aria-pressed="false">控制 9</button><button class="chip" data-f="6" aria-pressed="false">小车 10</button><button class="chip" data-f="7" aria-pressed="false">飞行器 9</button><button class="chip" data-f="8" aria-pressed="false">传感视觉 22</button></div>
+  <div id="years"><div class="yr" data-year="2026"><div class="yr-h"><span class="y">2026</span>
+    <span class="lv">赛区赛 / 省级联赛参考赛题</span>
+    <span class="lv" style="margin-left:auto">8 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>AC-AC 变换电路</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">B</span><span>“无源”交流电流表及无线读表器</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">C</span><span>基于无线通信的数字钥匙实验系统</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">D</span><span>陆空协同无人机系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">E</span><span>拼图装置</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">F</span><span>李萨如图形显示控制装置</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">G</span><span>周期信号测量分析装置</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">H</span><span>车载平衡滚球运动控制系统</span></div></div></div><div class="yr" data-year="2025"><div class="yr-h"><span class="y">2025</span>
+    <span class="lv natl">全国大学生电子设计竞赛（国赛）</span>
+    <span class="lv" style="margin-left:auto">11 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>能量回馈的变流器负载试验装置</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">B</span><span>单相有源电力滤波实验装置</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">C</span><span>基于单目视觉的目标物测量装置</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">D</span><span>简易以太网双绞线测试仪</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">E</span><span>简易自行瞄准装置</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">F</span><span>简易自动接收机</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">G</span><span>电路模型探究装置</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">H</span><span>野生动物巡查系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">I</span><span>非接触式控制盘</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">J</span><span>超声信标定位系统</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">K</span><span>自动避障小车</span></div></div></div><div class="yr" data-year="2024"><div class="yr-h"><span class="y">2024</span>
+    <span class="lv">赛区赛 / 省级联赛参考赛题</span>
+    <span class="lv" style="margin-left:auto">8 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>AC-AC 变换电路并联运行</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">B</span><span>单相功率分析仪</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">C</span><span>无线传输信号模拟系统</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">D</span><span>立体货架盘点无人机系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">E</span><span>三子棋游戏装置</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">F</span><span>磁悬浮实验装置</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">G</span><span>简易录音屏蔽系统</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">H</span><span>自动行驶小车</span></div></div></div><div class="yr" data-year="2023"><div class="yr-h"><span class="y">2023</span>
+    <span class="lv natl">全国大学生电子设计竞赛（国赛）</span>
+    <span class="lv" style="margin-left:auto">11 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>单相逆变器并联运行系统</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">B</span><span>同轴电缆长度与终端负载检测装置</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">C</span><span>电感电容测量装置</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">D</span><span>信号调制方式识别与参数估计装置</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">E</span><span>运动目标控制与自动追踪系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">F</span><span>基于声传播的智能定位系统</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">G</span><span>空地协同智能消防系统</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">H</span><span>信号分离装置</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">I</span><span>气垫悬浮车</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">J</span><span>线路故障自动检测系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">K</span><span>辨音识键奏乐系统</span></div></div></div><div class="yr" data-year="2022"><div class="yr-h"><span class="y">2022</span>
+    <span class="lv">赛区赛 / 省级联赛参考赛题</span>
+    <span class="lv" style="margin-left:auto">11 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A · 7月</span><span>单相交流电子负载</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">B · 7月</span><span>送货无人机</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">C · 7月</span><span>小车跟随行驶系统</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">D · 7月</span><span>混沌信号发生器</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">E · 7月</span><span>声源定位跟踪系统</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">F · 7月</span><span>信号调制度测量装置</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">A · 10月</span><span>无线充电可循迹电动小车</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">B · 10月</span><span>具有自动泊车功能的电动车</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">C · 10月</span><span>有源二分频音频放大电路</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">D · 10月</span><span>盲盒识别装置</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">E · 10月</span><span>基于 CC3200 的无线监视系统</span></div></div></div><div class="yr" data-year="2021"><div class="yr-h"><span class="y">2021</span>
+    <span class="lv natl">全国大学生电子设计竞赛（国赛）</span>
+    <span class="lv" style="margin-left:auto">11 题</span></div>
+    <div class="arows"><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">A</span><span>信号失真度测量装置</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">B</span><span>三相 AC-DC 变换电路</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">C</span><span>三端口 DC-DC 变换器</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">D</span><span>基于互联网的摄像测量系统</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">E</span><span>数字-模拟信号混合传输收发机</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">F</span><span>智能送药小车</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">G</span><span>植保飞行器</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">H</span><span>用电器分析识别装置</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">I</span><span>具有发电功能的储能小车</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">J</span><span>周期信号波形识别及参数测量装置</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">K</span><span>照度稳定可调 LED 台灯</span></div></div></div><div class="yr" data-year="2020"><div class="yr-h"><span class="y">2020</span>
+    <span class="lv">赛区赛 / 省级联赛参考赛题</span>
+    <span class="lv" style="margin-left:auto">7 题</span></div>
+    <div class="arows"><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">A</span><span>无线运动传感器节点设计</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">B</span><span>单相在线式不间断电源</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">C</span><span>坡道行驶电动小车</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">D</span><span>绕障飞行器</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">E</span><span>放大器非线性失真研究装置</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">F</span><span>简易无接触温度测量与身份识别装置</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">G</span><span>非接触物体尺寸形态测量</span></div></div></div><div class="yr" data-year="2019"><div class="yr-h"><span class="y">2019</span>
+    <span class="lv natl">全国大学生电子设计竞赛（国赛）</span>
+    <span class="lv" style="margin-left:auto">11 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>电动小车动态无线充电系统</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">B</span><span>巡线机器人</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">C</span><span>线路负载及故障检测装置</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">D</span><span>简易电路特性测试仪</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">E</span><span>基于互联网的信号传输系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">F</span><span>纸张计数显示装置</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">G</span><span>双路语音同传的无线收发系统</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">H</span><span>模拟电磁曲射炮</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">I</span><span>LED 线阵显示装置</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">J</span><span>模拟电磁曲射炮（高职高专）</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">K</span><span>简易多功能液体容器</span></div></div></div><div class="yr" data-year="2018"><div class="yr-h"><span class="y">2018</span>
+    <span class="lv">赛区赛 / 省级联赛参考赛题</span>
+    <span class="lv" style="margin-left:auto">8 题</span></div>
+    <div class="arows"><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">A</span><span>电流信号检测装置</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">B</span><span>灭火飞行器</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">C</span><span>无线充电电动小车</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">D</span><span>手势识别</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">E</span><span>能量回收装置</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">F</span><span>无线话筒扩音系统</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">G</span><span>简易数字信号时序分析装置</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">H</span><span>简易功率测量装置</span></div></div></div><div class="yr" data-year="2017"><div class="yr-h"><span class="y">2017</span>
+    <span class="lv natl">全国大学生电子设计竞赛（国赛）</span>
+    <span class="lv" style="margin-left:auto">12 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>微电网模拟系统</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">B</span><span>滚球控制系统</span></div><div class="arow" data-cat="7"><span class="dot" style="--h:var(--c7)"></span><span class="ac">C</span><span>四旋翼自主飞行器探测跟踪系统</span></div><div class="arow" data-cat="3"><span class="dot" style="--h:var(--c3)"></span><span class="ac">E</span><span>自适应滤波器</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">F</span><span>调幅信号处理实验电路</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">H</span><span>远程幅频特性测试装置</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">I</span><span>可见光室内定位装置</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">K</span><span>单相用电器分析监测装置</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">L</span><span>自动泊车系统</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">M</span><span>管道内钢珠运动测量装置</span></div><div class="arow" data-cat="5"><span class="dot" style="--h:var(--c5)"></span><span class="ac">O</span><span>直流电动机测速装置</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">P</span><span>简易水情检测系统</span></div></div></div><div class="yr" data-year="2016"><div class="yr-h"><span class="y">2016</span>
+    <span class="lv">赛区赛 / 省级联赛参考赛题</span>
+    <span class="lv" style="margin-left:auto">6 题</span></div>
+    <div class="arows"><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">A</span><span>降压型直流开关稳压电源</span></div><div class="arow" data-cat="8"><span class="dot" style="--h:var(--c8)"></span><span class="ac">B</span><span>物品分拣搬送装置</span></div><div class="arow" data-cat="6"><span class="dot" style="--h:var(--c6)"></span><span class="ac">C</span><span>自动循迹小车</span></div><div class="arow" data-cat="1"><span class="dot" style="--h:var(--c1)"></span><span class="ac">D</span><span>单相正弦波变频电源</span></div><div class="arow" data-cat="2"><span class="dot" style="--h:var(--c2)"></span><span class="ac">E</span><span>脉冲信号参数测量仪</span></div><div class="arow" data-cat="4"><span class="dot" style="--h:var(--c4)"></span><span class="ac">F</span><span>位同步时钟提取电路</span></div></div></div></div>
+</section>
+
+<footer>
+  赛题来源：全国大学生电子设计竞赛培训网（nuedc-training.com.cn）2018–2026 各届公示页与历年赛题合集；
+  2016 / 2017 两届题名依据公开赛题汇总补齐。<br>
+  知识点解析、参考设计方案与开源项目推荐为编者归纳，非官方内容；指标细节请以官方赛题原文为准。
+</footer>
+</main></div>
+
+<script>
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('#filters .chip').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  const f = b.dataset.f;
+  document.querySelectorAll('.arow').forEach(r => r.classList.toggle('hide', f !== 'all' && r.dataset.cat !== f));
+  document.querySelectorAll('.yr').forEach(g => {
+    const any = [...g.querySelectorAll('.arow')].some(r => !r.classList.contains('hide'));
+    g.classList.toggle('hide', !any);
+  });
+});
+</script>

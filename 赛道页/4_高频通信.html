@@ -1,0 +1,755 @@
+<title>高频通信赛道详解</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#EAEEF4; --surface-3:#F0F3F8;
+  --ink:#111620; --ink-2:#3B4553; --ink-3:#6C7787;
+  --line:#D6DDE6; --line-2:#B6C0CD;
+  --accent:#1B4F9C; --hue:198 108 22;
+  --shadow:0 1px 2px rgba(17,22,32,.05);
+  --grid-line:rgba(27,79,156,.07);
+  --c1:203 58 44;
+  --c2:31 92 186;
+  --c3:118 71 190;
+  --c4:198 108 22;
+  --c5:8 118 130;
+  --c6:56 122 44;
+  --c7:186 48 118;
+  --c8:143 98 16;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1117; --surface:#161A22; --surface-2:#1D222C; --surface-3:#131821;
+    --ink:#E9EDF3; --ink-2:#AFB9C7; --ink-3:#798494;
+    --line:#272E3A; --line-2:#3A4353;
+    --accent:#79A6EC; --hue:240 168 92;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --grid-line:rgba(121,166,236,.08);
+    --c1:244 122 108;
+    --c2:126 168 240;
+    --c3:181 148 238;
+    --c4:240 168 92;
+    --c5:79 196 206;
+    --c6:142 203 116;
+    --c7:242 130 180;
+    --c8:216 171 73;
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#0E1117; --surface:#161A22; --surface-2:#1D222C; --surface-3:#131821;
+    --ink:#E9EDF3; --ink-2:#AFB9C7; --ink-3:#798494;
+    --line:#272E3A; --line-2:#3A4353;
+    --accent:#79A6EC; --hue:240 168 92;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --grid-line:rgba(121,166,236,.08);
+    --c1:244 122 108;
+    --c2:126 168 240;
+    --c3:181 148 238;
+    --c4:240 168 92;
+    --c5:79 196 206;
+    --c6:142 203 116;
+    --c7:242 130 180;
+    --c8:216 171 73;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Noto Serif SC",Georgia,"Songti SC",serif;text-wrap:balance;margin:0;line-height:1.35}
+code,.mono,.num{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+code{background:var(--surface-2);border:1px solid var(--line);padding:1px 5px;font-size:.88em}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+
+.k-group{font-size:15px;letter-spacing:.02em;margin:44px 0 16px;padding-bottom:9px;
+  border-bottom:2px solid rgb(var(--hue) / .5);color:var(--ink);display:flex;align-items:baseline;gap:10px}
+.k-group::before{content:"";width:10px;height:10px;background:rgb(var(--hue));flex:none}
+.k{border:1px solid var(--line);background:var(--surface);margin-bottom:14px;box-shadow:var(--shadow);
+  scroll-margin-top:64px}
+.k-h{display:flex;align-items:baseline;gap:12px;padding:15px 20px 0}
+.k-no{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:rgb(var(--hue));
+  background:rgb(var(--hue) / .12);padding:2px 7px;flex:none;letter-spacing:.03em}
+.k-h h3{font-size:18px}
+.k-tags{display:flex;flex-wrap:wrap;gap:5px;padding:9px 20px 0}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);
+  border:1px solid var(--line-2);padding:1px 7px;letter-spacing:.02em}
+.k-b{padding:12px 20px 20px}
+.k-b>p{margin:0 0 12px;color:var(--ink-2)}
+.k-b>p:last-child{margin-bottom:0}
+.lead{color:var(--ink);font-weight:500}
+.k-list{margin:0 0 12px;padding-left:19px}
+.k-list li{margin-bottom:6px;color:var(--ink-2)}
+.k-formula{background:var(--surface-3);border:1px solid var(--line);border-left:3px solid rgb(var(--hue));
+  padding:13px 16px;margin:0 0 13px;overflow-x:auto}
+.k-formula .f{font-family:"IBM Plex Mono",monospace;font-size:14.5px;color:var(--ink);
+  line-height:1.9;white-space:nowrap}
+.k-formula .f+.f{margin-top:4px}
+.k-formula .fn{font-size:12.5px;color:var(--ink-3);margin-top:7px;white-space:normal;line-height:1.6}
+.k-cmp{overflow-x:auto;margin:0 0 13px;border:1px solid var(--line)}
+.k-cmp table{border-collapse:collapse;width:100%;min-width:420px;font-size:13.5px}
+.k-cmp th,.k-cmp td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+  padding:7px 11px;text-align:left;vertical-align:top}
+.k-cmp th{background:var(--surface-2);font-weight:600;font-size:12.5px;color:var(--ink);white-space:nowrap}
+.k-cmp td{color:var(--ink-2)}
+.k-cmp tr:last-child td{border-bottom:0}
+.k-cmp th:last-child,.k-cmp td:last-child{border-right:0}
+.k-callout{padding:11px 15px;margin:0 0 11px;font-size:13.5px;line-height:1.7;border:1px solid var(--line)}
+.k-callout:last-child{margin-bottom:0}
+.k-callout>b{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;margin-bottom:5px}
+.k-callout p{margin:0;color:var(--ink-2)}
+.k-callout p+p{margin-top:7px}
+.k-exam{background:rgb(var(--hue) / .07);border-color:rgb(var(--hue) / .3)}
+.k-exam>b{color:rgb(var(--hue))}
+.k-trap{background:rgb(203 58 44 / .06);border-color:rgb(203 58 44 / .3)}
+.k-trap>b{color:rgb(203 58 44)}
+:root:not([data-theme="light"]) .k-trap{background:rgb(244 122 108 / .08);border-color:rgb(244 122 108 / .3)}
+:root:not([data-theme="light"]) .k-trap>b{color:rgb(244 122 108)}
+:root[data-theme="dark"] .k-trap{background:rgb(244 122 108 / .08);border-color:rgb(244 122 108 / .3)}
+:root[data-theme="dark"] .k-trap>b{color:rgb(244 122 108)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .k-trap{background:rgb(244 122 108 / .08)}}
+.k-tip{background:var(--surface-2);border-color:var(--line-2)}
+.k-tip>b{color:var(--ink-3)}
+
+
+.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:20}
+.top-in{display:flex;align-items:center;gap:14px;padding:10px 0;font-size:13px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--ink-2);text-decoration:none;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.03em;white-space:nowrap}
+.back:hover{color:rgb(var(--hue))}
+.top-name{margin-left:auto;color:var(--ink-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero{border-bottom:1px solid var(--line);background:
+  linear-gradient(var(--grid-line) 1px,transparent 1px) 0 0/100% 26px,
+  linear-gradient(90deg,var(--grid-line) 1px,transparent 1px) 0 0/26px 100%,var(--surface)}
+.hero-in{padding:44px 0 34px;border-top:4px solid rgb(var(--hue))}
+.eyebrow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+.eyebrow .b{background:rgb(var(--hue) / .13);color:rgb(var(--hue));padding:2px 8px;font-weight:600;letter-spacing:.04em}
+.hero h1{font-size:clamp(28px,4.6vw,40px);letter-spacing:-.01em;margin-bottom:13px}
+.hero p{max-width:64ch;color:var(--ink-2);font-size:15.5px;margin:0}
+main{padding:36px 0 90px}
+.sec{margin-bottom:56px}
+.sec-h{margin-bottom:18px}
+.sec-h h2{font-size:21px;margin-bottom:6px}
+.sec-h p{margin:0;color:var(--ink-3);font-size:13.5px;max-width:66ch}
+.jump{border:1px solid var(--line);background:var(--surface);padding:14px 16px;margin-bottom:34px}
+.jump-t{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:9px}
+.jump-l{display:flex;flex-wrap:wrap;gap:5px}
+.jump-l a{display:inline-flex;align-items:baseline;gap:6px;font-size:12.5px;text-decoration:none;
+  color:var(--ink-2);border:1px solid var(--line-2);padding:3px 9px}
+.jump-l a:hover{border-color:rgb(var(--hue));color:rgb(var(--hue))}
+.jump-l a .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+.plist{display:grid;gap:2px;grid-template-columns:1fr}
+@media (min-width:660px){.plist{grid-template-columns:1fr 1fr}}
+.pitem{display:flex;gap:10px;align-items:baseline;padding:4px 0;font-size:13.5px;line-height:1.5}
+.ptag{flex:none;font-family:"IBM Plex Mono",monospace;font-size:11px;padding:1px 6px;
+  border:1px solid var(--line-2);color:var(--ink-3);min-width:74px;text-align:center}
+.ptag.natl{border-color:rgb(var(--hue) / .5);color:rgb(var(--hue));background:rgb(var(--hue) / .08)}
+.plan{margin:0;padding-left:19px}
+.plan li{font-size:14px;line-height:1.75;margin-bottom:10px;color:var(--ink-2)}
+.plan li b{color:var(--ink);font-weight:500}
+.repos{display:grid;gap:8px;grid-template-columns:1fr}
+@media (min-width:700px){.repos{grid-template-columns:1fr 1fr}}
+.repo{display:flex;gap:11px;align-items:baseline;font-size:13.5px;padding:6px 0;border-bottom:1px dotted var(--line)}
+.repo .rn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink);font-weight:500;flex:none}
+.repo .rd{color:var(--ink-3);font-size:12.5px;line-height:1.55}
+.keys{margin-top:14px;font-size:12.5px;color:var(--ink-3);line-height:2}
+.kw{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 7px;margin:0 4px 4px 0;color:var(--ink-2)}
+.gate{background:rgb(var(--hue) / .07);border:1px solid rgb(var(--hue) / .3);padding:15px 18px;font-size:14px;color:var(--ink-2)}
+.gate b{color:rgb(var(--hue));font-weight:600}
+.otherbox{display:block;margin-top:12px;border:1px solid var(--line);background:var(--surface);
+  padding:14px 17px;text-decoration:none}
+.otherbox:hover{border-color:var(--ink-3)}
+.otk{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.otl{display:flex;flex-wrap:wrap;gap:6px}
+.ot{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2);
+  border:1px solid var(--line-2);padding:3px 10px}
+.otd{width:8px;height:8px;border-radius:50%;background:rgb(var(--h));flex:none}
+.otherbox:hover .ot{border-color:var(--line)}
+footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--ink-3);font-size:12.5px;line-height:1.8}
+footer a{color:var(--ink-2)}
+
+</style>
+
+<div class="top"><div class="wrap top-in">
+  <a class="back" href="https://claude.ai/code/artifact/e345f0f5-e096-42ab-8733-c371f4591e81">← 返回电赛赛题图谱</a>
+  <span class="top-name">赛道 4 / 8 · 高频与无线通信</span>
+</div></div>
+
+<header class="hero"><div class="hero-in"><div class="wrap">
+  <div class="eyebrow"><span class="b">9 题 / 104</span><span>12 个知识点</span><span>命题方向 4</span></div>
+  <h1>高频与无线通信</h1>
+  <p>载波、调制、解调、收发。传统"无线电类"题目，近年从分立高频电路转向软件无线电与调制识别，但射频前端的基本功仍然是门槛。</p>
+</div></div></header>
+
+<div class="wrap"><main>
+
+  <div class="jump">
+    <div class="jump-t">知识点速览 · 点击跳转</div>
+    <div class="jump-l"><a href="#k-01"><span class="n">01</span>模拟调制与解调：AM / DSB / SSB / FM</a><a href="#k-02"><span class="n">02</span>接收机架构、噪声级联与灵敏度</a><a href="#k-03"><span class="n">03</span>数字调制：星座、成形与同步</a><a href="#k-04"><span class="n">04</span>调制识别（AMC）：特征量与判决</a><a href="#k-05"><span class="n">05</span>射频前端：LNA、混频器与 PLL</a><a href="#k-06"><span class="n">06</span>滤波：SAW / 陶瓷 / LC 与 Q 值权衡</a><a href="#k-07"><span class="n">07</span>集成方案选型：收音芯片与无线模块</a><a href="#k-08"><span class="n">08</span>天线与阻抗匹配网络</a><a href="#k-09"><span class="n">09</span>射频板级：50Ω 微带、接地与隔离</a><a href="#k-10"><span class="n">10</span>射频测试：频谱仪、矢网与 RTL-SDR</a><a href="#k-11"><span class="n">11</span>软件无线电路线与采样率预算</a><a href="#k-12"><span class="n">12</span>常见失分点与验收自检清单</a></div>
+  </div>
+
+  <section class="sec">
+    <div class="sec-h"><h2>本赛道历年赛题</h2>
+    <p>2016–2026 共 9 道。带色框的是国赛题（奇数年），其余为赛区赛 / 省级联赛参考题。</p></div>
+    <div class="plist"><div class="pitem"><span class="ptag natl">2025 F</span><span>简易自动接收机</span></div><div class="pitem"><span class="ptag">2024 C</span><span>无线传输信号模拟系统</span></div><div class="pitem"><span class="ptag natl">2023 D</span><span>信号调制方式识别与参数估计装置</span></div><div class="pitem"><span class="ptag">2022 E · 10月</span><span>基于 CC3200 的无线监视系统</span></div><div class="pitem"><span class="ptag natl">2021 E</span><span>数字-模拟信号混合传输收发机</span></div><div class="pitem"><span class="ptag natl">2019 E</span><span>基于互联网的信号传输系统</span></div><div class="pitem"><span class="ptag natl">2019 G</span><span>双路语音同传的无线收发系统</span></div><div class="pitem"><span class="ptag natl">2017 F</span><span>调幅信号处理实验电路</span></div><div class="pitem"><span class="ptag">2016 F</span><span>位同步时钟提取电路</span></div></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>知识点逐条解析</h2>
+    <p>每条包含：概念、关键公式、方案对比、这个知识点在哪道真题里怎么考、以及实际做的时候最容易踩的坑。</p></div>
+    <h2 class="k-group">理论与分析</h2>
+
+<article class="k" id="k-01">
+  <div class="k-h">
+    <span class="k-no">01</span>
+    <h3>模拟调制与解调：AM / DSB / SSB / FM</h3>
+  </div>
+  <div class="k-tags"><span class="tag">调制度</span><span class="tag">频偏</span><span class="tag">卡森带宽</span><span class="tag">包络检波</span><span class="tag">鉴频</span></div>
+  <div class="k-b">
+    <p><b class="lead">用低频信息去改变高频载波的某个参数，就是调制。</b>改幅度得到 AM/DSB/SSB，改瞬时频率或相位得到 FM/PM。四种模拟调制的差别不在"能不能传声音"，而在<b>频谱占用</b>、<b>功率利用率</b>和<b>解调复杂度</b>三者的取舍。AM 之所以在赛题里长盛不衰，是因为它的包络里直接装着信息，用一只二极管加 RC 就能解调；FM 之所以是 88–108MHz 广播的选择，是因为限幅后幅度噪声被完全丢掉，抗干扰远好于 AM。</p>
+
+    <div class="k-formula">
+      <div class="f">s<sub>AM</sub>(t) = A<sub>c</sub>[1 + m·x(t)]·cos(ω<sub>c</sub>t)　　m = (E<sub>max</sub> − E<sub>min</sub>) / (E<sub>max</sub> + E<sub>min</sub>)</div>
+      <div class="fn">m 调制度（调幅指数），x(t) 归一化调制信号（|x|≤1），E<sub>max</sub>/E<sub>min</sub> 包络的最大/最小值。m＞1 即过调制，包络出现反相，检波必然失真</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">s<sub>FM</sub>(t) = A<sub>c</sub>·cos(ω<sub>c</sub>t + 2π k<sub>f</sub>∫x(τ)dτ)　　Δf = k<sub>f</sub>·A<sub>m</sub>　　β = Δf / f<sub>m</sub></div>
+      <div class="fn">Δf 最大频偏（单边），k<sub>f</sub> 调频灵敏度 Hz/V，A<sub>m</sub> 调制信号幅度，f<sub>m</sub> 调制频率，β 调频指数</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">B<sub>Carson</sub> = 2(Δf + f<sub>m</sub>) = 2Δf(1 + 1/β)</div>
+      <div class="fn">卡森带宽，容纳约 98% 的 FM 信号功率。宽带 FM（β≫1）时 B ≈ 2Δf；窄带 FM（β≪1）时 B ≈ 2f<sub>m</sub>，退化成 AM 的带宽</div>
+    </div>
+
+    <p>解调路线要和调制方式对齐：AM 有载波，直接<b>包络检波</b>（二极管 + RC，取 R·C 满足 1/f<sub>c</sub> ≪ RC ≪ 1/f<sub>m</sub>，广播段典型 RC 取 10–50μs）；DSB/SSB 无载波，必须<b>相干解调</b>，本地载波的频差会造成音调偏移、相差会造成幅度衰落，所以要么用导频锁相，要么用 Costas 环恢复载波。FM 的数字化解调最省事的是 <b>arctan 微分法</b>：对基带 IQ 求 φ(n)=atan2(Q,I)，相邻相位差分再解卷绕，瞬时频率 f(n)=(φ(n)−φ(n−1))·f<sub>s</sub>/(2π)，这一路就是数字域鉴频器，比模拟相位鉴频器（比例鉴频、正交鉴频）好调太多。</p>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>方式</th><th>带宽</th><th>功率效率</th><th>解调</th><th>典型用处</th></tr></thead>
+        <tbody>
+          <tr><td>AM（含载波）</td><td>2f<sub>m</sub></td><td>低，载波占大部分功率（m=1 时信息只占 1/3）</td><td>包络检波，最简单</td><td>中波广播、赛题 AM 模式</td></tr>
+          <tr><td>DSB-SC</td><td>2f<sub>m</sub></td><td>高，全部功率载信息</td><td>必须相干</td><td>模拟乘法器实验电路</td></tr>
+          <tr><td>SSB</td><td>f<sub>m</sub></td><td>最高</td><td>相干 + 边带滤除/移相法</td><td>业余通信、频谱紧张场合</td></tr>
+          <tr><td>FM</td><td>2(Δf+f<sub>m</sub>)</td><td>恒包络，功放可用 C 类</td><td>限幅 + 鉴频 / arctan 微分</td><td>88–108MHz 广播</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》把这一条写死成了指标：FM 段要求覆盖 88–108MHz、最大频偏 Δf 在 5–75kHz 范围内可测；AM 段要求调制度 m 在 30%–60% 范围内测量并报告。也就是说你不但要解调出声音，还要<b>把 m 和 Δf 算出来并显示</b>——m 用检波后包络的 (E<sub>max</sub>−E<sub>min</sub>)/(E<sub>max</sub>+E<sub>min</sub>) 或包络 AC/DC 比值求，Δf 用 arctan 微分得到瞬时频率序列后取峰值偏移。2017 年国赛 F 题《调幅信号处理实验电路》则考纯模拟链路，要求对给定调幅波做载波提取、包络还原与失真控制，本质是同一组公式的硬件版本。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>用 m 的定义去测很小的 m</b>：m=30% 时 E<sub>max</sub>/E<sub>min</sub> 只差不到 2 倍，检波二极管的非线性和 RC 纹波会直接吃掉几个百分点。稳妥做法是不测包络极值，而是对检波输出做 FFT，取调制频率谱线幅度与直流分量之比，m = 2·A<sub>fm</sub>/A<sub>DC</sub>，抗噪声好得多。二是<b>FM 鉴频忘了解卷绕</b>：相位差分结果落在 ±π 之外时会跳变，必须做 unwrap（差值大于 π 就减 2π，小于 −π 就加 2π），否则频偏一大声音就出现周期性爆音。三是采样率不够：Δf=75kHz 的 FM 广播卡森带宽约 2×(75+15)=180kHz，基带 IQ 采样率至少要 200kSPS 以上，用 48kSPS 直接采是收不全的。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-02">
+  <div class="k-h">
+    <span class="k-no">02</span>
+    <h3>接收机架构、噪声级联与灵敏度</h3>
+  </div>
+  <div class="k-tags"><span class="tag">Friis</span><span class="tag">噪声系数</span><span class="tag">灵敏度</span><span class="tag">镜像频率</span><span class="tag">AGC</span></div>
+  <div class="k-b">
+    <p><b class="lead">接收机的性能上限，在第一级放大器接上天线的那一刻就定死了。</b>整机噪声系数（NF）由 Friis 级联公式决定，后级的噪声被前级增益"除掉"，所以 LNA 的噪声系数和增益是全链路里最值钱的两个数。灵敏度则是把 NF、带宽、解调所需信噪比三者加起来的结果——这条公式是本赛道的过关线，必须能默写并当场算。</p>
+
+    <div class="k-formula">
+      <div class="f">F = F<sub>1</sub> + (F<sub>2</sub>−1)/G<sub>1</sub> + (F<sub>3</sub>−1)/(G<sub>1</sub>G<sub>2</sub>) + … + (F<sub>n</sub>−1)/(G<sub>1</sub>…G<sub>n−1</sub>)</div>
+      <div class="fn">F、G 为<b>线性倍数</b>（不是 dB！），F<sub>1</sub> 第一级噪声因子，G<sub>1</sub> 第一级增益。NF = 10·lg F。级联前必须把 dB 换算成倍数，算完再换回 dB</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">P<sub>sens</sub>(dBm) = −174 + NF + 10·lg B + SNR<sub>min</sub></div>
+      <div class="fn">−174 dBm/Hz 是 290K 下的热噪声功率谱密度 kT；NF 整机噪声系数 dB；B 等效噪声带宽 Hz；SNR<sub>min</sub> 解调所需最小信噪比 dB（宽带 FM 取 10–12dB，AM 包络检波取 10dB 左右，BPSK 误码 10<sup>−3</sup> 取约 7dB）</div>
+    </div>
+
+    <p>举本赛道的典型算例：FM 广播接收，B=200kHz → 10lg B = 53dB，取 NF=6dB、SNR<sub>min</sub>=12dB，得 P<sub>sens</sub> = −174+6+53+12 = <b>−103dBm</b>。要求收到 −85dBm 的信号就有 18dB 余量，很宽裕；但如果你的前端没有 LNA、直接把混频器（NF 常常 10–15dB）接天线，再加上馈线和滤波器插损 3dB，NF 轻松做到 18dB，灵敏度掉到 −91dBm，余量只剩 6dB，天线一摆歪就收不到了。这就是"灵敏度不足"最常见的成因。</p>
+
+    <p>另一组必须记住的是<b>镜像频率</b>与电平换算：</p>
+
+    <div class="k-formula">
+      <div class="f">高本振 f<sub>LO</sub> = f<sub>RF</sub> + f<sub>IF</sub> → f<sub>image</sub> = f<sub>RF</sub> + 2f<sub>IF</sub>　　低本振 f<sub>LO</sub> = f<sub>RF</sub> − f<sub>IF</sub> → f<sub>image</sub> = f<sub>RF</sub> − 2f<sub>IF</sub></div>
+      <div class="fn">镜像与有用信号关于本振对称，混频后落在同一中频，只能靠<b>混频前</b>的射频预选滤波器压制，中频滤波器对它完全无效</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">dBμV = dBm + 107（50Ω 系统）　　　P(dBm) = 20·lg V<sub>rms</sub>(μV) − 107</div>
+      <div class="fn">推导：0dBm = 1mW，50Ω 上对应 V<sub>rms</sub>=√(0.001×50)=223.6mV=107dBμV。射频仪器常用 dBm，广播/EMC 仪器常用 dBμV，赛题给 −85dBm 即 22dBμV，约 12.6μV<sub>rms</sub></div>
+    </div>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>架构</th><th>优点</th><th>代价</th><th>本赛道适配性</th></tr></thead>
+        <tbody>
+          <tr><td>超外差（f<sub>IF</sub>≠0，如 10.7MHz）</td><td>中频固定，选择性和增益都好做；SAW/陶瓷滤波器现成；灵敏度容易做高</td><td>必须有射频预选滤波器抑镜像；本振与中频存在多组杂散响应；元件多、体积大</td><td>做单频段高性能 AM/FM 接收最稳，但 88–108MHz 全段扫描时预选滤波器要跟着调谐，工作量大</td></tr>
+          <tr><td>零中频（f<sub>IF</sub>=0，直接下变频到 IQ）</td><td>没有镜像频率问题；片上低通即可选择性；BOM 最少，适合 SDR</td><td>直流失调（LO 自混频）、1/f 噪声、IQ 幅相不平衡产生镜像杂散、二阶交调（IIP2）敏感</td><td>本赛道主流。配合 MCU/FPGA 做数字解调，2025 F、2023 D 都适合。必须做 DC 阻断与 IQ 校正</td></tr>
+          <tr><td>低中频（f<sub>IF</sub> 取 1–2 个信道带宽，如 100–200kHz）</td><td>避开直流失调和 1/f 噪声；仍可片上集成</td><td>镜像回来了，但只差 2f<sub>IF</sub>，需靠复数（多相）滤波器做镜像抑制，典型 30–40dB</td><td>SI4732/RDA5807 这类收音芯片内部就是低中频，用集成方案时你其实已经在用它</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><b>AGC（自动增益控制）</b>负责把 −85dBm 到 −60dBm 这 25dB 的输入变化压成 ADC 或检波器能接受的恒定电平。设计上分两点：<b>动态范围</b>要覆盖输入范围加上余量（一般做 60–80dB），<b>建立时间</b>由环路时间常数决定，音频 AGC 的攻击时间典型 1–10ms、恢复时间 100–500ms，太快会跟着调制包络走（把 AM 的调制度压掉，m 就测不准了），太慢则换台后要等很久才出声。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》直接给出输入电平范围 <b>−85dBm ~ −60dBm</b> 和<b>响应时间 ≤10s</b>：前者考的就是灵敏度公式与 AGC 动态范围——−85dBm 是最弱信号，你的整机 NF 必须让 P<sub>sens</sub> 至少低于 −90dBm；后者考的是"扫全 88–108MHz 并完成搜台、锁定、AGC 建立"的总时间预算，200kHz 步进要扫 100 个信道，留给每个信道的判决时间只有约 100ms，AGC 建立时间必须压到几十毫秒量级，否则一定超时。2019 年国赛 G 题《双路语音同传的无线收发系统》同样要求在给定发射功率与距离下保证语音可懂，本质仍是链路预算：发射功率 − 路径损耗 ≥ 接收灵敏度 + 余量。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>第一，<b>Friis 公式里用 dB 直接相加</b>是最典型的错误。NF=3dB 要先换成 F=2 才能代入。第二，<b>忘记算无源器件</b>：滤波器、衰减器、开关的噪声系数等于它的插损（3dB 插损就是 3dB NF），而且它放在 LNA 前面会 1:1 地加到整机 NF 上，所以天线→LNA 之间的那段线和滤波器要尽量短、尽量低损。第三，<b>调试顺序反了</b>：先量增益再量噪声。正确流程是分级测增益（用信号源打 −40dBm 进去，频谱仪量输出，逐级记 G<sub>i</sub>），再用 Y 因子法或直接看本底抬升估 NF，最后才整机测灵敏度（降低信号源电平直到解调 SNR 或误码达标）。第四，<b>AGC 环路把 m 压没了</b>：测调制度时必须把 AGC 时间常数拉长到远大于调制周期（音频 1kHz 对应 1ms，AGC 时间常数至少取 100ms），或者干脆在测 m 时冻结增益。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-03">
+  <div class="k-h">
+    <span class="k-no">03</span>
+    <h3>数字调制：星座、成形与同步</h3>
+  </div>
+  <div class="k-tags"><span class="tag">QAM</span><span class="tag">升余弦</span><span class="tag">符号同步</span><span class="tag">Costas</span><span class="tag">误码率</span></div>
+  <div class="k-b">
+    <p><b class="lead">数字调制就是把比特映射成 IQ 平面上的点，再用成形滤波器把这串冲激变成带限波形。</b>BPSK/QPSK 是相位上的 2/4 个点，16QAM 是 4×4 网格。星座点越密，同样带宽下速率越高，但相邻点距离变小，抗噪声能力变差——这个取舍用误码率公式量化。接收端的三件事按顺序是：匹配滤波（最大化采样时刻 SNR）→ 符号定时同步（找对采样时刻）→ 载波同步（消除频偏和相位旋转）。</p>
+
+    <div class="k-formula">
+      <div class="f">B = (1 + α)·R<sub>s</sub>　　R<sub>b</sub> = R<sub>s</sub>·log<sub>2</sub>M　　η = R<sub>b</sub>/B = log<sub>2</sub>M/(1+α)</div>
+      <div class="fn">R<sub>s</sub> 符号率 Baud，α 升余弦滚降系数（工程常取 0.2–0.35），M 星座点数，η 频谱效率 bit/s/Hz。α=0.35、QPSK 时 η≈1.48</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">P<sub>e,BPSK</sub> = Q(√(2E<sub>b</sub>/N<sub>0</sub>))　　P<sub>e,QPSK</sub> ≈ Q(√(2E<sub>b</sub>/N<sub>0</sub>))　　P<sub>e,MQAM</sub> ≈ (4/log<sub>2</sub>M)·Q(√(3·log<sub>2</sub>M·E<sub>b</sub>/((M−1)N<sub>0</sub>)))</div>
+      <div class="fn">E<sub>b</sub>/N<sub>0</sub> 每比特信噪比。记住几个锚点：BPSK 误码 10<sup>−3</sup> 需 E<sub>b</sub>/N<sub>0</sub>≈6.8dB，10<sup>−5</sup> 需 9.6dB；16QAM 达同样 10<sup>−5</sup> 要 13.4dB，比 QPSK 差约 4dB</div>
+    </div>
+
+    <p><b>成形滤波</b>用根升余弦（RRC）分置收发两端，收端 RRC 同时充当匹配滤波器，级联后才是满足奈奎斯特无码间串扰（ISI）条件的完整升余弦。实现上取每符号 4–8 个采样点、滤波器长度 6–10 个符号（即 24–80 抽头），液态 DSP 库 <code>liquid-dsp</code> 的 <code>firinterp_crcf</code> / <code>firdecim_crcf</code> 可直接用。</p>
+
+    <p><b>符号定时同步</b>在嵌入式里最实用的是 Gardner 定时误差检测器，它只需要每符号 2 个采样点且与载波相位无关：e(n) = Re{[y(n) − y(n−1)]·y*(n−½)}，把 e 送进二阶环路滤波器控制插值器（分数延迟用 Farrow 结构）。<b>载波同步</b>用 Costas 环（BPSK 用 I·Q 作误差，QPSK 用 sgn(I)·Q − sgn(Q)·I），环路带宽典型取符号率的 0.1%–1%：太宽跟踪快但相位抖动大，太窄捕获慢。频偏较大时先用 FFT 粗估（对 M 次方后的信号做 FFT，谱线位置÷M 得频偏）再进环路。</p>
+
+    <p>还有一条实现与调试都绕不开的：<b>位同步时钟提取</b>。当只有一路基带码流、没有 IQ 时，用非线性变换（微分整流或过零检测）从数据里挤出符号率谱线，再用窄带滤波器或锁相环净化成时钟。这里的核心难点是<b>长连 0 / 连 1</b> 时没有跳变，环路只能靠惯性保持相位，所以 VCO 的自由振荡频率精度和环路的保持时间要匹配数据的最长游程，工程上常用 8B/10B、曼彻斯特编码或加扰来限制游程长度。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2021 年国赛 E 题《数字-模拟信号混合传输收发机》要求把数字码流和模拟音频同时送过一条无线链路并在收端分离还原，考的正是基带成形（数字支路带宽受控才能与模拟支路频分复用而不互相溅射）+ 收端符号同步与载波同步；分离度不够、误码率超标就是丢分的直接原因。2016 年赛区赛 F 题《位同步时钟提取电路》则把上面最后一段单独拿出来做整题，明确要求在含长连 0/连 1 的码流下提取稳定位时钟并给出相位抖动指标。2023 年国赛 D 题《信号调制方式识别与参数估计装置》中的"符号率估计"也依赖同一套认识：对信号取模平方后做 FFT，符号率谱线会出现在 R<sub>s</sub> 处。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>先调载波环再调定时环</b>，顺序反了会两个环互相打架。正确顺序：固定发射端不加频偏 → 先把定时环调到眼图张开、星座点收敛成 4 团 → 再加频偏调 Costas 环。二是<b>星座图旋转但不发散</b>说明只是残余相位/频偏，属于载波同步问题；<b>星座点糊成一片圆环</b>通常是定时没锁或采样点偏离最佳位置，先看眼图别急着改环路带宽。三是<b>RRC 滚降系数收发不一致</b>（发 0.35 收 0.22）会引入 ISI，误码地板下不去，两端必须用同一个 α 和同样的抽头数。四是相位模糊：BPSK 有 180° 模糊、QPSK 有 90° 模糊，Costas 环锁定后星座可能整体旋转，必须靠差分编码或帧同步字（如 0x1ACFFC1D）解模糊，否则解出来的比特会整段取反。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-04">
+  <div class="k-h">
+    <span class="k-no">04</span>
+    <h3>调制识别（AMC）：特征量与判决</h3>
+  </div>
+  <div class="k-tags"><span class="tag">γmax</span><span class="tag">σap/σdp</span><span class="tag">高阶累积量</span><span class="tag">决策树</span></div>
+  <div class="k-b">
+    <p><b class="lead">调制识别就是在不知道调制方式的前提下，从采到的 IQ 里算出几个统计量，用阈值或分类器判出是 AM / FM / 2ASK / BPSK / QPSK / 16QAM 中的哪一种。</b>竞赛级实现不要上深度学习——数据不够、算力不够、还不可解释。正确路线是<b>瞬时特征 + 高阶累积量 + 决策树</b>，全部可以在 MCU 上定点实现。前提是先做好归一化：去直流、按平均功率归一（使 E[|s|²]=1），否则所有阈值都失效。</p>
+
+    <p>先定义瞬时量：a(n)=|s(n)| 瞬时幅度，φ(n)=unwrap(atan2(Q,I)) 瞬时相位，f(n)=[φ(n)−φ(n−1)]·f<sub>s</sub>/(2π) 瞬时频率。归一化中心化幅度 a<sub>cn</sub>(n) = a(n)/mean(a) − 1。非线性相位 φ<sub>NL</sub>(n) = φ(n) 去掉线性载频项后的残差。</p>
+
+    <div class="k-formula">
+      <div class="f">γ<sub>max</sub> = max |DFT[a<sub>cn</sub>(n)]|² / N</div>
+      <div class="fn">归一化中心化瞬时幅度谱的最大功率。<b>判恒包络与否</b>：FM/PSK 等恒包络调制 γ<sub>max</sub> 小（典型 ＜3–5），AM/ASK/QAM 幅度带信息则 γ<sub>max</sub> 大（典型 ＞10）。N 为样本数</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">σ<sub>ap</sub> = √( (1/C)·Σ<sub>a(n)＞a<sub>t</sub></sub> φ<sub>NL</sub><sup>2</sup>(n) − [(1/C)·Σ<sub>a(n)＞a<sub>t</sub></sub> |φ<sub>NL</sub>(n)| ]<sup>2</sup> )</div>
+      <div class="fn">非弱信号段<b>绝对</b>非线性相位的标准差。只统计 a(n) 超过门限 a<sub>t</sub>（通常取平均幅度的 0.5–1 倍）的样本，避免过零点相位噪声污染。C 为参与统计的样本数</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">σ<sub>dp</sub> = √( (1/C)·Σ φ<sub>NL</sub><sup>2</sup>(n) − [(1/C)·Σ φ<sub>NL</sub>(n)]<sup>2</sup> )</div>
+      <div class="fn">非线性相位<b>直接</b>值（带符号）的标准差。σ<sub>dp</sub> 大而 σ<sub>ap</sub> 小 → 相位对称分布（BPSK 类）；两者都大 → 相位非对称（QPSK/QAM 类）；两者都小 → 无相位信息（AM/ASK）</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">C<sub>40</sub> = M<sub>40</sub> − 3M<sub>20</sub><sup>2</sup>　　C<sub>42</sub> = M<sub>42</sub> − |M<sub>20</sub>|<sup>2</sup> − 2M<sub>21</sub><sup>2</sup></div>
+      <div class="fn">其中 M<sub>pq</sub> = E[s<sup>(p−q)</sup>·(s*)<sup>q</sup>]，即 M<sub>20</sub>=E[s²]、M<sub>21</sub>=E[|s|²]、M<sub>40</sub>=E[s⁴]、M<sub>42</sub>=E[|s|⁴]。判决用<b>归一化</b>值 |C<sub>40</sub>|/C<sub>21</sub><sup>2</sup> 与 |C<sub>42</sub>|/C<sub>21</sub><sup>2</sup>，这样与信号功率无关</div>
+    </div>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>调制</th><th>γ<sub>max</sub></th><th>σ<sub>ap</sub> / σ<sub>dp</sub></th><th>|C<sub>40</sub>|（归一化理论值）</th><th>|C<sub>42</sub>|（归一化理论值）</th></tr></thead>
+        <tbody>
+          <tr><td>AM / 2ASK</td><td>大</td><td>都很小</td><td>—（幅度类另判）</td><td>—</td></tr>
+          <tr><td>FM</td><td>小</td><td>σ<sub>dp</sub> 大、随时间线性漂移</td><td>≈0</td><td>≈0</td></tr>
+          <tr><td>BPSK</td><td>小</td><td>σ<sub>dp</sub> 大、σ<sub>ap</sub> 小</td><td>2</td><td>2</td></tr>
+          <tr><td>QPSK</td><td>小</td><td>两者都大</td><td>1</td><td>1</td></tr>
+          <tr><td>16QAM</td><td>中</td><td>两者都大</td><td>0.68</td><td>0.68</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><b>判决结构</b>建议做成三层决策树而不是一步分类：第一层用 γ<sub>max</sub> 分"含幅度信息 / 恒包络"；第二层在恒包络分支里用瞬时频率的方差与线性度分 FM 与 PSK（FM 的 f(n) 连续变化，PSK 的 f(n) 只在符号跳变处出现窄脉冲）；第三层在 PSK/QAM 分支里用 |C<sub>40</sub>| 分 BPSK(2) / QPSK(1) / 16QAM(0.68)。阈值取相邻理论值的中点（如 1.5 分 BPSK 与 QPSK，0.84 分 QPSK 与 16QAM），并且必须<b>用自己实测的数据重新标定</b>——实际值会因为成形滤波、频偏和采样点偏离而系统性偏小。样本数至少 4096 个符号，累积量估计的方差才够小。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2023 年国赛 D 题《信号调制方式识别与参数估计装置》就是这一条的整题化：要求装置在未知条件下判出调制方式，并进一步估计载频、符号率、调制度/频偏等参数。识别部分照上面的决策树走；参数估计部分——载频用 FFT 找谱峰（PSK 类先做 M 次方恢复载波谱线，频率÷M）、符号率用 |s(n)|² 的 FFT 谱线、AM 调制度用包络的 AC/DC 比、FM 频偏用瞬时频率峰值。2025 年国赛 F 题《简易自动接收机》里也藏着一个小号 AMC：它要求区分 AM 与 FM 两种模式并自动切换解调，用"包络方差 vs 瞬时频率方差"两个量比一比就能判，不需要上累积量。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>没做功率归一化就用绝对阈值</b>，输入电平一变判决全乱——所有特征必须除以 C<sub>21</sub>=E[|s|²] 的相应幂次。二是<b>相位没解卷绕或在低幅度点算相位</b>：|s| 接近 0 时 atan2 的结果几乎是纯噪声，σ<sub>ap</sub> 会被拉爆，一定要设幅度门限 a<sub>t</sub> 剔除弱样本。三是<b>残余载频偏没扣掉</b>：φ 中的线性项会让 σ<sub>dp</sub> 无限增大，计算前要先对 φ(n) 做一次线性拟合并减去（等价于粗频偏校正）。四是<b>用理论累积量值当硬阈值</b>：成形滤波的过采样点、非最佳采样时刻都会让 |C<sub>40</sub>| 明显小于理论值，务必在自己的板子上跑一遍每种调制、记录实测分布，再取分界。五是<b>样本太少</b>：只用几百点算四阶量，估计方差比类间距离还大，识别率上不去。</p>
+    </div>
+  </div>
+</article>
+
+<h2 class="k-group">器件与电路</h2>
+
+<article class="k" id="k-05">
+  <div class="k-h">
+    <span class="k-no">05</span>
+    <h3>射频前端：LNA、混频器与 PLL</h3>
+  </div>
+  <div class="k-tags"><span class="tag">噪声匹配</span><span class="tag">Γ<sub>opt</sub></span><span class="tag">IIP3</span><span class="tag">频率合成</span><span class="tag">相位噪声</span></div>
+  <div class="k-b">
+    <p><b class="lead">前端三件套：LNA 决定噪声，混频器决定线性度和杂散，PLL 决定本振纯度与调谐分辨率。</b>LNA 设计上最容易被忽略的一点是——<b>噪声最优的源阻抗 Γ<sub>opt</sub> 和功率最优的源阻抗 S<sub>11</sub>* 通常不是同一个点</b>。器件手册会同时给出 Γ<sub>opt</sub>、F<sub>min</sub> 和 R<sub>n</sub>，第一级放大器应当按噪声匹配（输入端匹配到 Γ<sub>opt</sub>，牺牲一点输入回损，典型代价 VSWR 做到 1.5–2.5），后级才按功率匹配 50Ω。</p>
+
+    <div class="k-formula">
+      <div class="f">F = F<sub>min</sub> + (4R<sub>n</sub>/Z<sub>0</sub>)·|Γ<sub>s</sub> − Γ<sub>opt</sub>|<sup>2</sup> / [(1−|Γ<sub>s</sub>|<sup>2</sup>)·|1+Γ<sub>opt</sub>|<sup>2</sup>]</div>
+      <div class="fn">Γ<sub>s</sub> 实际呈现给管子的源反射系数，Γ<sub>opt</sub> 最优噪声源反射系数，R<sub>n</sub> 等效噪声电阻，Z<sub>0</sub>=50Ω。Γ<sub>s</sub>=Γ<sub>opt</sub> 时 F=F<sub>min</sub></div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">IIP3(dBm) = P<sub>in</sub> + ΔP/2　　SFDR = (2/3)·(IIP3 − P<sub>noise floor</sub>)</div>
+      <div class="fn">双音测试：输入两个等幅音，ΔP 为基波与三阶交调产物的电平差（dB）。SFDR 无杂散动态范围。级联 IIP3：1/IIP3<sub>tot</sub> = 1/IIP3<sub>1</sub> + G<sub>1</sub>/IIP3<sub>2</sub> + …（线性功率单位），后级越靠后越关键——与噪声正相反</div>
+    </div>
+
+    <p><b>混频器选型</b>：无源二极管环（如 ADE-1、SBL-1）变频损耗 6–7dB、IIP3 高（+10~+15dBm）、需要 +7dBm 本振驱动、噪声系数约等于变频损耗；有源吉尔伯特单元（集成在 SDR 芯片里）有 10–20dB 转换增益、本振驱动小、但 IIP3 低（−5~+5dBm）、NF 约 10–15dB。竞赛里如果自己搭超外差链路，用无源环 + 前置 LNA 最好调；如果用集成收发芯片，混频器已经在片内，你只需管好输入的带外抑制别把它推饱和。</p>
+
+    <p><b>PLL 频率合成器</b>决定你能不能按 100kHz/200kHz 步进精确扫遍 88–108MHz。整数分频 PLL 的输出频率 f<sub>out</sub> = N·f<sub>PFD</sub>，频率分辨率就等于鉴相频率 f<sub>PFD</sub>；要 100kHz 步进就得 f<sub>PFD</sub>=100kHz，此时 N≈1000，而<b>环内相位噪声被放大 20·lg N ≈ 60dB</b>，参考杂散也难压。小数分频（Fractional-N，如 ADF4351、Si5351）允许 f<sub>PFD</sub> 取几 MHz 同时得到 Hz 级分辨率，代价是分数杂散，需要靠 ΔΣ 调制器打散。环路带宽是关键旋钮：典型取 f<sub>PFD</sub>/10 以内（100kHz 鉴相 → 环路带宽 5–10kHz），带宽内是 VCO 被参考"拉住"的区域（噪声由参考和分频比决定），带宽外是 VCO 自身噪声。锁定时间约为 环路带宽倒数的几倍，5kHz 带宽对应几百微秒到几毫秒。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》的"自动搜台"直接压在 PLL 上：88–108MHz 按 100kHz 步进有 200 个信道，响应时间 ≤10s 意味着每个信道只有 50ms 完成"换频 → PLL 锁定 → 电平判决"，PLL 的锁定时间必须做到 1–5ms 量级，环路带宽不能取太窄；同时 −85dBm 的灵敏度要求把 LNA 的噪声匹配摆上台面。2017 年国赛 F 题《调幅信号处理实验电路》考的是模拟前端的另一面：给定调幅信号做放大、混频/检波与失真控制，混频器的线性度（IIP3）直接决定大信号下有没有交调失真。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>把 LNA 输入硬调到 S<sub>11</sub>=−20dB</b> 而不管 Γ<sub>opt</sub>，结果回损很漂亮、NF 却比 F<sub>min</sub> 差 2–3dB，灵敏度直接掉一档。第一级要看 NF 不要看回损。二是<b>LNA 自激</b>：宽带高增益管子在低频段增益更高，容易在几十 MHz 处起振。判据是无输入时频谱仪看到不该有的谱线；对策是加源极负反馈电感（0.5–2nH，几毫米走线即可）、输出串小电阻（10–47Ω）、电源脚就近加 RC 去耦，并用 K 因子检查稳定性。三是<b>本振泄漏</b>：零中频架构中 LO 从输入端漏出去再反射回来自混频，产生随时间漂移的直流失调；布局上 LO 走线要远离 RF 输入，中间用接地过孔墙隔开。四是<b>PLL 环路滤波器抄手册没改</b>：手册的例子往往是另一个鉴相频率和 VCO 增益（K<sub>VCO</sub> MHz/V），照抄会得到过阻尼（锁定慢）或欠阻尼（过冲、杂散大）。用官方工具（ADIsimPLL 之类）按你的 f<sub>PFD</sub>、N、K<sub>VCO</sub> 重算，相位裕度取 45°–55°。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-06">
+  <div class="k-h">
+    <span class="k-no">06</span>
+    <h3>滤波：SAW / 陶瓷 / LC 与 Q 值权衡</h3>
+  </div>
+  <div class="k-tags"><span class="tag">插损</span><span class="tag">矩形系数</span><span class="tag">有载 Q</span><span class="tag">10.7MHz</span></div>
+  <div class="k-b">
+    <p><b class="lead">滤波器在接收链路里有两个位置、两种目的：混频前的射频预选滤波器管镜像与带外阻塞，中频/基带滤波器管邻道选择性。</b>两处的性能要求完全不同——预选滤波器要低插损（它直接进 NF）、宽通带；中频滤波器要陡峭（矩形系数好）、插损可以放宽因为前面已经有增益了。</p>
+
+    <div class="k-formula">
+      <div class="f">Q<sub>L</sub> = f<sub>0</sub> / BW<sub>−3dB</sub>　　1/Q<sub>L</sub> = 1/Q<sub>U</sub> + 1/Q<sub>ext</sub>　　IL(dB) ≈ −20·lg(1 − Q<sub>L</sub>/Q<sub>U</sub>)</div>
+      <div class="fn">Q<sub>L</sub> 有载 Q（决定带宽），Q<sub>U</sub> 元件无载 Q（决定损耗上限），Q<sub>ext</sub> 外部电路引入的 Q。<b>关键结论：Q<sub>L</sub> 越接近 Q<sub>U</sub>，插损越大。</b>工程上取 Q<sub>L</sub> ≤ Q<sub>U</sub>/5，插损约 2dB</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">SF = BW<sub>−60dB</sub> / BW<sub>−3dB</sub></div>
+      <div class="fn">矩形系数（shape factor）。理想砖墙为 1；SAW 典型 1.5–2.5；3 级 LC 约 5–10；单腔陶瓷 &gt;10。要区分 200kHz 间隔的 FM 邻道，必须靠 SAW 或数字滤波，纯 LC 做不到</div>
+    </div>
+
+    <p>数量级要记住：普通贴片电感在 100MHz 的 Q<sub>U</sub> 约 30–60（绕线式可到 80–100），NP0/C0G 电容 Q<sub>U</sub> 可达数百，所以 LC 滤波器的 Q 上限由电感决定。这意味着在 100MHz 处用 LC 做 200kHz 带宽（需要 Q<sub>L</sub>=500）是不可能的，插损会到几十 dB。这也正是超外差架构存在的理由：把信号搬到 10.7MHz，用 Q<sub>U</sub>≈10000 的 SAW 或陶瓷滤波器做 180–280kHz 带宽，Q<sub>L</sub>≈50，轻松实现。</p>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>类型</th><th>典型频率/带宽</th><th>插损</th><th>矩形系数</th><th>用在哪</th></tr></thead>
+        <tbody>
+          <tr><td>SAW 滤波器</td><td>10.7MHz / 45MHz / 433MHz 等固定频点，BW 可做到 f<sub>0</sub> 的 0.1%–1%</td><td>2–6dB（射频前端用会明显抬 NF）</td><td>1.5–2.5，最陡</td><td>中频选择性、433/915MHz 前端带选</td></tr>
+          <tr><td>陶瓷滤波器（如 10.7MHz、455kHz）</td><td>10.7MHz±110/150kHz；455kHz±3–6kHz</td><td>3–8dB</td><td>3–6</td><td>FM/AM 收音中频，最便宜好用</td></tr>
+          <tr><td>LC 带通（分立）</td><td>任意，带宽做窄困难</td><td>1–3dB（宽带）</td><td>5–10</td><td>混频前预选、谐波抑制、匹配兼滤波</td></tr>
+          <tr><td>片上/数字低通</td><td>基带 DC–几 MHz</td><td>无（数字域）</td><td>可任意陡</td><td>零中频/低中频架构的信道选择</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>设计 LC 预选滤波器的实操路数：用 3 阶 Chebyshev（0.1dB 纹波）做 88–108MHz 带通，中心 98MHz、带宽 20MHz（相对带宽 20%，Q<sub>L</sub>=5，对电感 Q 要求很低，插损可做到 1dB 以内），这个带宽足以把镜像（超外差 10.7MHz 中频、高本振时镜像在 f<sub>RF</sub>+21.4MHz，即 109–129MHz）压下去——注意 109MHz 离通带边缘只有 1MHz，3 阶滤波器在这里抑制可能只有 10–15dB，不够；实际接收机会用<b>可变电容跟踪调谐</b>的单调谐或双调谐回路，让通带跟着接收频率走。这也是为什么集成收音芯片走低中频（f<sub>IF</sub>≈100–200kHz）：镜像只差 200–400kHz，改用复数多相滤波器在片内抑制 35–45dB，省掉整个可调预选器。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》要覆盖 88–108MHz 全段自动搜台，滤波方案直接决定架构选择：走超外差就必须解决"预选滤波器如何跟随调谐"，走低中频集成芯片（SI4732/RDA5807）则把这道题交给芯片内部的多相滤波器。2017 年国赛 F 题《调幅信号处理实验电路》里，中频/基带滤波的带宽选择直接关系到解调后的失真与噪声——带宽取窄了削掉边带造成频响下跌，取宽了引入额外噪声、灵敏度变差。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>不给滤波器正确的端接阻抗</b>。陶瓷滤波器和 SAW 器件的通带形状是在规定源/负载阻抗（如 330Ω 或 50Ω）下才成立的，直接接到运放输出（几十 Ω）或 MOS 栅极（高阻）上，通带会塌陷或起大纹波。手册里的端接阻抗必须用电阻或匹配网络做出来。二是<b>用普通高 Q 电感做宽带滤波却发现插损很大</b>——真正原因常常是电感的自谐振频率（SRF）太低，100MHz 用了 SRF=150MHz 的电感，它已经接近容性。选电感时 SRF 至少取工作频率的 3–5 倍。三是<b>PCB 寄生把设计好的滤波器打偏</b>：100MHz 时 1pF 杂散电容和 2nH 引线电感就能移几个 MHz 的中心频率，元件要紧贴、地要完整，调试时留出可换值的位置。四是<b>只看通带不看阻带</b>：滤波器在远端会因寄生耦合出现"回升"（feedthrough），谐波频点可能只有 20dB 抑制，验收时要把频谱仪扫到 3–5 倍频。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-07">
+  <div class="k-h">
+    <span class="k-no">07</span>
+    <h3>集成方案选型：收音芯片与无线模块</h3>
+  </div>
+  <div class="k-tags"><span class="tag">SI4732</span><span class="tag">CC1101</span><span class="tag">ESP32</span><span class="tag">AD9361</span><span class="tag">选型</span></div>
+  <div class="k-b">
+    <p><b class="lead">四天三夜的比赛里，前端能不能一次点亮，往往比方案先进与否更决定名次。</b>选型的判据只有三条：<b>能不能拿到货并当天焊上</b>、<b>驱动库是否成熟</b>、<b>它的指标离题目要求有多少余量</b>。下面这张表按本赛道的题型分类，把常见器件放到各自的位置上。</p>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>器件</th><th>频段/能力</th><th>接口与驱动</th><th>指标要点</th><th>适合的题型</th></tr></thead>
+        <tbody>
+          <tr><td>SI4732 / SI4735</td><td>FM 64–108MHz、AM/SW 150kHz–30MHz，低中频架构，内置搜台、AGC、RDS</td><td>I²C，<code>pu2clr/SI4735</code> Arduino 库开箱即用，几十行代码出声</td><td>FM 灵敏度约 1.5–2μV（≈−103dBm），AM 约 25μV；内部给出 RSSI 与 SNR 寄存器可直接读</td><td>2025 F 自动接收机的保底方案：MCU 只做扫频、读 RSSI、判决、显示</td></tr>
+          <tr><td>RDA5807M</td><td>FM 76–108MHz，模块极小极便宜</td><td>I²C，寄存器简单</td><td>只有 FM，无 AM；灵敏度和邻道抑制弱于 SI4732</td><td>快速验证 FM 通路、做参考对比</td></tr>
+          <tr><td>CC1101</td><td>Sub-1GHz（315/433/868/915MHz），OOK/2-FSK/GFSK/MSK，速率 0.6–600kbps</td><td>SPI，寄存器多但 TI SmartRF Studio 能一键生成配置</td><td>接收灵敏度 −110dBm@1.2kbps；发射 +10dBm；内置包处理、CRC、地址过滤</td><td>点对点数据链路、遥控类</td></tr>
+          <tr><td>nRF24L01+</td><td>2.4GHz，GFSK，1/2Mbps，带自动应答重传（ESB）</td><td>SPI，库极多</td><td>灵敏度 −82dBm@2Mbps；穿墙差、易受 WiFi 干扰</td><td>短距离低成本数传，注意 2.4G 拥挤</td></tr>
+          <tr><td>ESP32 / CC3200</td><td>2.4GHz WiFi + BLE（ESP32 另有 ESP-NOW 免路由点对点）</td><td><code>esp-idf</code>，网络协议栈全套</td><td>吞吐足够传音频与图像；ESP-NOW 单包 250 字节、延迟几毫秒</td><td>2022 E 基于 CC3200 的无线监视系统、2019 E 基于互联网的信号传输系统</td></tr>
+          <tr><td>AD9361 / AD9363</td><td>70MHz–6GHz 宽带 IQ 收发，带宽最高 56MHz，12bit ADC/DAC</td><td>SPI + LVDS/CMOS 数据口，需 FPGA 或 Zynq；<code>analogdevicesinc/no-OS</code> 提供裸机驱动</td><td>真正的 SDR，可任意调制解调</td><td>2023 D 调制识别这类需要原始 IQ 的题；但没有现成板卡（PlutoSDR）就不要碰</td></tr>
+          <tr><td>RTL-SDR</td><td>24–1766MHz 接收，2.4MSPS，8bit</td><td>USB，<code>osmocom/rtl-sdr</code></td><td>只收不发，8bit 动态范围有限</td><td>调试阶段当频谱仪、验证发射端；部分题可直接作为接收前端</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>选型策略上建议<b>双轨并行</b>：第一天先用集成方案（SI4732 / ESP-NOW）把系统跑通、把基本要求的分拿到手，同时另一组人搭零中频 + 数字解调的高分路线，第三天再决定用哪个交。这样最坏情况也有可演示的系统。集成芯片的另一个隐藏价值是<b>它给你一个已知正确的参照</b>：自制接收机收不到台时，把天线切到 SI4732 上一听就知道是天线/信号的问题还是自己链路的问题。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》要求 88–108MHz 自动搜台、AM/FM 双模、−85~−60dBm 输入范围、10s 内响应，SI4732 的能力刚好完整覆盖（它内部就有搜台函数和 RSSI/SNR 判台门限），但题目还要求报告 <b>Δf（5–75kHz）和 m（30%–60%）</b>，这两个参数集成芯片不直接给，必须自己在解调后的音频或 IQ 上算——所以纯集成方案会卡在这两项发挥指标上。2022 年赛区赛 E 题《基于 CC3200 的无线监视系统》直接把芯片写进题名，考的就是围绕给定无线 SoC 搭出完整的采集—传输—显示链路；2019 年国赛 E 题《基于互联网的信号传输系统》同样是模块化路线，ESP32 类方案的选型与延迟预算是关键。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>只买一片</b>。射频芯片静电敏感、焊接返工易废，每种关键器件至少备 3 片，模块化的备 2 块。二是<b>忽略天线端的匹配</b>：CC1101、nRF24L01 的模块出厂已经匹配好 50Ω，但如果你把裸芯片焊到自制板上，必须照抄参考设计的巴伦和匹配网络元件值和布局，改动一颗电容位置就可能掉 10dB。三是<b>I²C/SPI 通了但没输出</b>：SI4732 类芯片上电后需要正确的复位时序和晶振起振时间（典型等待 300–500ms 再发第一条命令），很多"芯片是坏的"其实是时序问题。四是<b>2.4GHz 现场翻车</b>：赛场几十个队同时开 WiFi，nRF24L01 用默认信道必然互撞，务必做信道扫描后选空闲信道，并把关键链路放到 Sub-1GHz 或有线。五是 AD9361 类方案<b>低估了数据接口工作量</b>——没有 FPGA 经验的队伍两天也未必能把 IQ 流搬进来，除非用 PlutoSDR 这类已经打通的现成板卡。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-08">
+  <div class="k-h">
+    <span class="k-no">08</span>
+    <h3>天线与阻抗匹配网络</h3>
+  </div>
+  <div class="k-tags"><span class="tag">λ/4 单极子</span><span class="tag">史密斯圆图</span><span class="tag">VSWR</span><span class="tag">L 型网络</span></div>
+  <div class="k-b">
+    <p><b class="lead">天线是把导行波变成空间波的阻抗变换器，匹配不好的直接后果是发射端功率反射回来、接收端信号进不去。</b>最常用的 λ/4 单极子（鞭状天线）需要一个地平面充当镜像，理论阻抗约 36.5Ω（半波偶极子 73Ω 的一半），实际受地平面尺寸影响很大；地平面小于 λ/4 时阻抗会明显偏离并且方向图上翘。</p>
+
+    <div class="k-formula">
+      <div class="f">λ = c / f　　L<sub>λ/4</sub> = 0.95 · λ/4 = 0.95 · (75 / f<sub>MHz</sub>) 米</div>
+      <div class="fn">0.95 是导线端效应缩短系数（细导线取 0.95–0.98）。100MHz → λ=3m，λ/4≈75cm，实做约 71cm；433MHz → λ/4≈17.3cm，实做约 16.4cm；2.45GHz → 约 2.9cm</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">Γ = (Z<sub>L</sub> − Z<sub>0</sub>) / (Z<sub>L</sub> + Z<sub>0</sub>)　　VSWR = (1 + |Γ|) / (1 − |Γ|)　　RL(dB) = −20·lg|Γ|</div>
+      <div class="fn">Γ 反射系数，Z<sub>0</sub>=50Ω。速记对照：VSWR 1.0→反射 0%；1.5→RL 14dB，反射功率 4%；2.0→RL 9.5dB，反射 11%；3.0→RL 6dB，反射 25%。<b>工程可接受线是 VSWR ≤ 2</b></div>
+    </div>
+
+    <p><b>L 型匹配网络</b>是最实用的两元件匹配。把 Z<sub>L</sub>=R<sub>L</sub>+jX<sub>L</sub> 匹配到 50Ω 时，先定义品质因数 Q = √(R<sub>high</sub>/R<sub>low</sub> − 1)，其中 R<sub>high</sub>、R<sub>low</sub> 是两端电阻中较大和较小者。若 R<sub>L</sub>＜50Ω（如 36Ω 的单极子），用"串感并容"结构：串联电抗 X<sub>s</sub> = Q·R<sub>low</sub>，并联电抗 X<sub>p</sub> = R<sub>high</sub>/Q。以 36Ω 匹配到 50Ω 为例：Q=√(50/36−1)=0.62，X<sub>s</sub>=22.3Ω（100MHz 对应 L=35nH），X<sub>p</sub>=80.6Ω（对应 C=19.7pF）。匹配带宽约为 f<sub>0</sub>/Q，Q 越小带宽越宽——所以宁可用天线长度先把阻抗拉近 50Ω，再用小 Q 网络微调，也不要用大 Q 网络硬扳一个差得很远的阻抗。</p>
+
+    <p><b>史密斯圆图</b>的使用只需记住几条操作规则就够用：串联电感沿等电阻圆<b>顺时针</b>走，串联电容沿等电阻圆<b>逆时针</b>走；并联电感在导纳图上沿等电导圆<b>逆时针</b>走，并联电容沿等电导圆<b>顺时针</b>走；一段传输线沿以圆心为心的等 |Γ| 圆顺时针转（半波长转一圈）。目标是把测到的点挪到圆心。矢网带 Smith 显示时，边看边调，两三个来回就能收敛。</p>
+
+    <p><b>驻波比怎么测</b>，按可用工具排序：① 矢量网络分析仪（含 NanoVNA，几百元）——先做 SOL 校准（开路 Open / 短路 Short / 负载 Load，校准面要落在天线接口处，不能只校到仪器口），然后直接读 S<sub>11</sub> 曲线和 Smith 图，这是最准也最快的路。② 定向耦合器 + 频谱仪/功率计——用耦合器分出反射波，比较入射与反射功率，差值即回波损耗。③ 驻波表（业余无线电用）——只能给单点读数，够用于最后确认。测量时必须<b>把天线摆到接近实际使用的姿态</b>，手握、贴金属面、靠近人体都会显著改变阻抗，尤其是 PCB 走线天线。</p>
+
+    <p><b>PCB 走线天线</b>（倒 F、蛇形、陶瓷贴片）适合 433MHz 以上；它的匹配严重依赖<b>净空区（keep-out）</b>——天线正下方及周围至少 5mm（2.4G）到 λ/20 的区域内不能有铺地、走线和金属件。设计时预留 π 型网络（串一个位置 + 两端各一个并联位置，共 3 个 0402 焊盘），实测后再决定哪些位置装电容、哪些装电感、哪些用 0Ω 短接。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》要求收到 −85dBm 的信号，天线效率与匹配直接吃掉你的链路余量：88–108MHz 的 λ/4 约 71cm，赛场上通常只能用短鞭或拉杆天线，长度不足时阻抗呈现小电阻 + 大容抗，不加匹配会损失 6–10dB，等效于把灵敏度指标降了一档。2019 年国赛 G 题《双路语音同传的无线收发系统》和 2024 年赛区赛 C 题《无线传输信号模拟系统》都涉及收发天线间的链路预算——后者更要求<b>通道一致性与幅相标定</b>，两条通路的天线/馈线必须做等长、同批次处理，否则模拟出的多径与时延就不可信。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>单极子没有地</b>。很多队把一根 71cm 导线焊在 SMA 中心脚上就当天线，忘了地平面；结果馈线外皮变成了天线的另一半，方向图和阻抗都随手持姿势乱变。至少要在馈点处做出足够大的地铺铜，或加 3–4 根 λ/4 径向地线（gound radial）。二是<b>校准面不对</b>。NanoVNA 只校到仪器接口，然后接一根 50cm 的电缆去测天线，读到的相位全是电缆带来的旋转，Smith 图上点位完全错位，匹配元件必然算错——校准件一定要接在你打算连天线的那一端。三是<b>只看 VSWR 不看效率</b>：一个 50Ω 电阻的 VSWR 完美等于 1，但它一点都不辐射。VSWR 好只说明功率进去了，进去以后是辐射掉还是被损耗掉要另外判断（换个环境测接收电平变化，或与已知好天线对比）。四是<b>匹配元件用错介质</b>：射频匹配必须用 NP0/C0G 电容和高 Q 射频电感，X7R 电容在 100MHz 以上损耗大、容值随电压漂移。五是<b>发射端未匹配就加大功率</b>，反射回来的功率可能把 PA 烧掉，调匹配时先降到低功率。</p>
+    </div>
+  </div>
+</article>
+
+<h2 class="k-group">实现与调试</h2>
+
+<article class="k" id="k-09">
+  <div class="k-h">
+    <span class="k-no">09</span>
+    <h3>射频板级：50Ω 微带、接地与隔离</h3>
+  </div>
+  <div class="k-tags"><span class="tag">微带线宽</span><span class="tag">回流路径</span><span class="tag">过孔阵列</span><span class="tag">屏蔽腔</span></div>
+  <div class="k-b">
+    <p><b class="lead">在 100MHz 以上，PCB 上的每根线都是传输线，每个过孔都是电感，每片铜皮都是天线。</b>射频板级设计的第一件事是把信号路径做成受控阻抗的 50Ω 微带线（信号层在顶层，紧邻的第二层是完整地平面），第二件事是保证回流路径连续，第三件事是让数字噪声进不到 LNA。</p>
+
+    <div class="k-formula">
+      <div class="f">W / h ≈ 2 （ε<sub>r</sub>=4.3、h=0.2mm 时 W≈0.4mm；h=0.5mm 时 W≈0.9mm；h=1.6mm 时 W≈2.9mm）</div>
+      <div class="fn">50Ω 微带的经验值：常规 FR4（ε<sub>r</sub>≈4.2–4.5）上，线宽约为到参考地平面介质厚度 h 的 1.8–2 倍。<b>决定阻抗的是 W/h 之比，不是绝对线宽</b>——四层板把第二层设成地、介质压到 0.2mm，就能用很细的 0.4mm 线做 50Ω</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">ε<sub>eff</sub> ≈ (ε<sub>r</sub>+1)/2 + (ε<sub>r</sub>−1)/2 · (1 + 12h/W)<sup>−1/2</sup>　　v<sub>p</sub> = c/√ε<sub>eff</sub>　　λ<sub>g</sub> = λ<sub>0</sub>/√ε<sub>eff</sub></div>
+      <div class="fn">FR4 微带 ε<sub>eff</sub>≈3.0–3.3，传播速度约 0.55c，即 <b>约 6.0–6.1 ps/mm</b>（每毫米走线延迟 6ps）。2.4GHz 时 λ<sub>g</sub>≈69mm，λ<sub>g</sub>/20≈3.5mm——超过这个长度的走线就必须按传输线对待</div>
+    </div>
+
+    <p>常用规则清单：</p>
+    <ul class="k-list">
+      <li><b>四层板优于两层板。</b>叠层用 信号 / 地 / 电源 / 信号，射频全走顶层，第二层地平面在射频路径下方<b>不允许有任何割裂</b>（割裂会迫使回流绕行，形成大环路，既辐射又拾取干扰）。</li>
+      <li><b>过孔缝合（via stitching）。</b>微带线两侧沿走线每隔 λ<sub>g</sub>/20（100MHz 约 8mm，2.4GHz 约 3mm）打一排接地过孔，形成共面波导式的接地墙；元件的接地焊盘正下方直接打 2–4 个过孔到地，不要用细走线连到远处的地。</li>
+      <li><b>去耦按频率分级。</b>芯片电源脚就近 100pF（最靠近，管高频）→ 1nF → 100nF → 10μF 依次远离；串一个 10–100Ω 电阻或磁珠形成 RC/LC 低通，把 MCU 的开关噪声挡在 LNA 电源外。</li>
+      <li><b>物理分区。</b>板子按 天线/RF前端 → 混频/中频 → ADC → 数字/MCU → 电源 的顺序单向排布，数字与射频之间挖出隔离带，晶振、DC-DC 电感、SD 卡这些噪声源离 LNA 至少 15–20mm。</li>
+      <li><b>DC-DC 是头号污染源。</b>它在几百 kHz 开关，谐波能一直延伸到几十 MHz，正好落在中频上。射频部分优先用 LDO 供电（哪怕效率低），若必须用开关电源，把它放在板子另一端并加 π 型 LC 滤波（磁珠 + 10μF + 100nF）。</li>
+      <li><b>屏蔽腔</b>：在 LNA/混频器/本振各自区域预留一圈接地焊盘（宽 1.5–2mm，过孔间距 ≤λ/20），需要时焊上金属屏蔽罩。腔体尺寸要避免在工作频率上谐振（腔体最低谐振频率约 c/(2·最长边)）。</li>
+    </ul>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》的 −85dBm 灵敏度指标在板级上最常见的死法不是 LNA 不够好，而是<b>自己的 MCU 和显示屏把本底抬起来了</b>：OLED/TFT 的时钟谐波、SPI 边沿会在 88–108MHz 段落下一片杂散，扫台时被当成"有台"，造成搜台漏台或误判。2022 年赛区赛 E 题《基于 CC3200 的无线监视系统》需要同板跑 WiFi 与图像采集，射频区与高速数字区的隔离、天线净空区的处理直接影响传输距离与丢包率。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>两层板 1.6mm 厚还想做 50Ω</b>——线宽要 2.9mm，元件焊盘（0402 约 0.5mm 宽）接上去阻抗突变严重。做法要么换四层薄介质，要么在焊盘处把参考地挖空一小块（补偿焊盘电容），要么干脆接受不完美但把走线做到极短（＜λ<sub>g</sub>/20）。二是<b>SMA 座地脚只连一个过孔</b>，等效串了几 nH 电感，回损曲线在高频塌掉；四个地脚每个都要打过孔。三是<b>调试时挂了根长地线</b>：示波器探头的鳄鱼夹地线在射频上就是个环形天线，测射频节点必须用探头的地弹簧或换成同轴直连。四是<b>先焊数字后调射频</b>：正确顺序是先只焊电源和射频链路，用信号源+频谱仪把前端调通、记录本底，然后再焊 MCU 和屏，<b>对比本底抬升了多少</b>，能立刻定位是哪个数字模块污染的。五是<b>把裸露的射频走线当测试点</b>，探针一碰阻抗就变；要测就在设计时预留衰减器焊位或耦合测试点。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-10">
+  <div class="k-h">
+    <span class="k-no">10</span>
+    <h3>射频测试：频谱仪、矢网与 RTL-SDR</h3>
+  </div>
+  <div class="k-tags"><span class="tag">RBW</span><span class="tag">本底</span><span class="tag">S 参数</span><span class="tag">SOL 校准</span><span class="tag">低成本频谱</span></div>
+  <div class="k-b">
+    <p><b class="lead">射频调试是"看不见"的调试，你能相信的只有仪器读数，所以先要会正确设置仪器。</b>频谱仪的三个核心旋钮是中心频率/扫宽、分辨率带宽（RBW）和参考电平（RefLev）。RBW 决定两件事：能分辨多近的两根谱线，以及显示本底有多低——RBW 每降低 10 倍，本底降 10dB，但扫描时间增加约 100 倍。</p>
+
+    <div class="k-formula">
+      <div class="f">DANL(dBm) = −174 + NF<sub>SA</sub> + 10·lg(RBW)　　T<sub>sweep</sub> ≈ k·Span / RBW<sup>2</sup></div>
+      <div class="fn">DANL 显示平均噪声电平。例：NF<sub>SA</sub>=25dB、RBW=1kHz → DANL=−174+25+30=−119dBm；换 RBW=10kHz 则升到 −109dBm。要看 −85dBm 的小信号，RBW 取 1–10kHz 即可；要快速扫 20MHz 找台，RBW 取 100kHz–300kHz</div>
+    </div>
+
+    <p><b>频谱仪该看什么</b>：① 发射机的谐波与杂散——载波之外的最大谱线相对载波多少 dBc，通常要求二次、三次谐波抑制 ≥40dBc；② 本振泄漏与镜像响应；③ 占用带宽——用 OBW（99% 功率带宽）功能验证你的 FM 卡森带宽或数字信号的 (1+α)R<sub>s</sub>；④ 自己板子的噪声本底——把输入端接 50Ω 负载，看有没有异常谱线（数字时钟谐波）。<b>注意保护输入</b>：频谱仪输入通常最大 +30dBm（1W）且不耐直流，接功放输出前必须先串 20–30dB 衰减器和隔直电容。</p>
+
+    <p><b>矢网（含 NanoVNA）</b>用于测 S 参数。S<sub>11</sub> 看输入匹配/天线驻波，S<sub>21</sub> 看滤波器的插损与阻带、放大器的增益与带宽。核心是<b>校准</b>：单端口测 S<sub>11</sub> 做 SOL（Short/Open/Load）三项校准，双端口测 S<sub>21</sub> 再加 Through。校准面必须移到 DUT 的接口处——用什么线接 DUT，校准时就把校准件接在那根线的末端。设置上，IF 带宽（NanoVNA 上没有此项，商用矢网有）越窄测量噪声越小、越慢；扫描点数取 201–401 足够。测有源器件（LNA）的 S<sub>21</sub> 时务必把矢网输出功率降到 −30dBm 以下并在输出侧串衰减器，否则会把 LNA 推饱和读到假增益，或者把矢网接收端打坏。</p>
+
+    <p><b>RTL-SDR（约 20–50 元）</b>是本赛道性价比最高的调试工具。24–1766MHz 接收、2.4MSPS 带宽、8bit。用途：① 当实时频谱仪用（SDR#、GQRX、SDRangel），看自己发射机的频谱形状、频偏、有没有跑偏频率；② 直接采 IQ 存文件，拿去 MATLAB/Python 离线验证你的解调与调制识别算法——这是做 2023 D 那类题最有效的开发方式，先在 PC 上把算法调通，再移植到 MCU；③ 用 <code>rtl_power</code> 做慢速扫频，画出 88–108MHz 的信道占用图，事先知道赛场有哪些台。局限是 8bit 动态范围只有约 48dB、没有前端预选滤波器（强信号会造成互调假信号）、频率精度依赖廉价晶振（有 ppm 级偏差，需要用已知台校准）。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2023 年国赛 D 题《信号调制方式识别与参数估计装置》的开发效率几乎完全取决于你有没有一套"采 IQ → 离线算 → 回灌验证"的流程：用 RTL-SDR 或 PlutoSDR 采下各种调制的实测 IQ，在 PC 上把 γ<sub>max</sub>、σ<sub>ap</sub>、|C<sub>40</sub>| 的实际分布画出来定阈值，比在板子上盲调快一个数量级。2024 年赛区赛 C 题《无线传输信号模拟系统》要求通道<b>幅相一致性标定</b>，这就是矢网的活：用 S<sub>21</sub> 测出每条通路的幅度与相位响应，做成校准表在数字域补偿。2025 年国赛 F 题《简易自动接收机》的灵敏度验收也要靠仪器：信号源加 AM/FM 调制、逐步降电平到 −85dBm，同时用频谱仪确认真实到达天线口的电平（别忘了扣掉线缆和衰减器的损耗）。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>忘了扣衰减器和线损</b>，报告里的灵敏度比真实值好 20dB。规范做法：测试前先做一次"直通标定"，信号源设 −40dBm，把测试链路（线缆+衰减器）接到频谱仪，记下实际读数与设定值的差，之后所有电平都按这个差修正。二是<b>参考电平设太低导致前端过载</b>，屏幕上冒出一堆假的互调谱线，误以为电路有问题；判别方法是把输入衰减加 10dB，如果杂散降了超过 10dB，那就是仪器内部产生的假信号。三是<b>RBW 太宽看不到小信号</b>，把 −100dBm 的谱线埋在本底里就下结论"没有输出"。四是<b>NanoVNA 不校准直接测</b>，或者校准后又换了根线。五是<b>用示波器 FFT 代替频谱仪</b>——示波器 8bit ADC 的动态范围只有 40–50dB，看不到 −60dBc 以下的杂散，只适合看基带和中频波形。六是测量时<b>没关掉附近的 WiFi/手机</b>，2.4G 段的测量结果会被赛场环境污染，必要时用屏蔽盒或改到有线注入。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-11">
+  <div class="k-h">
+    <span class="k-no">11</span>
+    <h3>软件无线电路线与采样率预算</h3>
+  </div>
+  <div class="k-tags"><span class="tag">带通采样</span><span class="tag">IQ 抽取</span><span class="tag">ADC 位数</span><span class="tag">处理量</span></div>
+  <div class="k-b">
+    <p><b class="lead">把解调搬到数字域，可以省掉整条中频模拟链路——但省下来的硬件难度会变成采样率、数据带宽和算力的账，必须提前算清楚。</b>SDR 的基本形态是：射频 → 下变频到零中频或低中频 → 抗混叠低通 → ADC 采 IQ → 数字下变频/抽取 → 解调。每一步都有可量化的预算。</p>
+
+    <div class="k-formula">
+      <div class="f">低通采样：f<sub>s</sub> ≥ 2B　　带通采样：2f<sub>H</sub>/n ≤ f<sub>s</sub> ≤ 2f<sub>L</sub>/(n−1)，n = floor(f<sub>H</sub>/B)</div>
+      <div class="fn">f<sub>L</sub>、f<sub>H</sub> 信号带的上下限，B=f<sub>H</sub>−f<sub>L</sub>。<b>复数（IQ）采样时，f<sub>s</sub> ≥ B 即可</b>，因为 I、Q 各采一路，总采样率仍是 2B——这就是零中频架构的采样率优势</div>
+    </div>
+
+    <div class="k-formula">
+      <div class="f">SNR<sub>ADC</sub>(dB) = 6.02·N + 1.76 + 10·lg(f<sub>s</sub>/(2B))</div>
+      <div class="fn">N 有效位数（ENOB，比标称位数低 1–2 位），最后一项是<b>过采样处理增益</b>：采样率每提高 4 倍，等效多 1 位。12bit ADC 理论 SNR 74dB；若以 10MSPS 采 200kHz 带宽（过采样比 25），处理增益 14dB，等效 SNR 达 88dB</div>
+    </div>
+
+    <p><b>算一遍 FM 广播的账</b>（对应 2025 F 题）：单信道带宽 200kHz，零中频 IQ 采样取 f<sub>s</sub>=400kSPS（留 2 倍余量给滤波器过渡带）。16bit×2 通道 → 数据率 400k×4B = 1.6MB/s，STM32F4/F7 的 DMA 完全吃得下。解调链：DC 阻断（一阶 IIR 高通，截止 1kHz）→ IQ 不平衡校正 → 低通抽取到 200kSPS → arctan 微分鉴频 → 去加重（欧洲 50μs / 北美 75μs 一阶 RC）→ 抽取到 48kSPS 送 DAC。运算量估算：FIR 抽取滤波器 64 抽头、200kSPS 输出、复数 → 约 200k×64×4 ≈ 51 MMAC/s，Cortex-M4F 单周期 MAC 在 168MHz 下能提供约 168 MMAC/s，够用但要用 CMSIS-DSP 的定点或单精度函数并开 <code>-O2</code>；atan2 用查表 + 线性插值或 CORDIC（F4 之后有硬件 CORDIC 的型号更省）。</p>
+
+    <p>如果目标是<b>宽带扫描</b>（一次看完 88–108MHz 的 20MHz），账就完全不同：需要 f<sub>s</sub>≥20MSPS 的复采样，12bit×2 通道 → 120MB/s，这已经超出 MCU 的能力，必须上 FPGA/Zynq 或直接用 PC + RTL-SDR。竞赛里更聪明的做法是<b>不要宽带扫描</b>，而是让 PLL 快速步进 + 窄带功率检测：每个信道停留 20–50ms，读取 RSSI 判决，200 个信道 4–10s，正好卡在响应时间要求内。</p>
+
+    <p><b>IQ 不平衡校正</b>是零中频 SDR 必做的一步。幅度不平衡 ε 和相位不正交 φ 会产生镜像杂散，抑制比 IRR ≈ −20·lg(√(ε²+φ²)/2)；未校正时典型只有 25–35dB，会让邻道信号的镜像落进本信道。校正算法很简单：估计 α=E[I²]/E[Q²] 做幅度归一，θ=E[I·Q]/E[I²] 做正交化（Q' = (Q − θ·I)/√(α−θ²)），这两个统计量在线更新即可，成本几乎为零，能把 IRR 提到 50dB 以上。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》的高分路线就是上面这条：零中频 + MCU 数字解调，自己实现 arctan 鉴频与包络检波，顺带把 Δf（5–75kHz）和 m（30%–60%）从数字域的中间量里直接读出来——集成收音芯片给不了这两个数，SDR 路线却几乎是白送的，因为瞬时频率序列和包络序列本来就在你手上。同时 ≤10s 的响应时间要求逼着你把扫台做成"窄带步进 + RSSI 判决"而不是宽带 FFT。2023 年国赛 D 题《信号调制方式识别与参数估计装置》整题都建立在 IQ 采集之上，采样率必须覆盖待识别信号的最大带宽，且要留够过采样倍数（每符号 ≥4 点）才能做定时同步和累积量估计。2021 年国赛 E 题《数字-模拟信号混合传输收发机》的收端分离同样在数字域做最省事。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>抗混叠滤波器忘了做或做在数字域</b>——混叠一旦发生在 ADC 之前就无法在数字域挽回，模拟低通的截止频率要设在 f<sub>s</sub>/2 以内并留足阻带（三阶以上，在 f<sub>s</sub>/2 处至少 −40dB）。二是<b>直流失调没扣</b>：零中频的 DC 分量在鉴频后表现为固定频偏、在包络检波后抬高基线让 m 算错，必须先做高通（截止取 500Hz–2kHz，别太高否则削掉低频音）。三是<b>浮点算法直接搬到 MCU</b>，实时性崩掉。正确路线是先在 PC/Python 上把算法跑通并保存中间数据，再逐步定点化，每一步都用 PC 的结果做比对。四是<b>抽取不滤波</b>：直接扔样点会把高频折叠进来，抽取必须与低通滤波合成 CIC 或多相 FIR。五是<b>算力预算只算主循环</b>，忘了中断、DMA 搬运和显示刷新的开销；实测时用 GPIO 翻转 + 示波器量 CPU 占空比，留 30% 以上余量。六是 ADC 参考电压和输入范围没匹配，−85dBm 的信号经放大后如果只占满量程的几十分之一，等效位数直接损失 4–5 位——这正是 AGC 存在的意义。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-12">
+  <div class="k-h">
+    <span class="k-no">12</span>
+    <h3>常见失分点与验收自检清单</h3>
+  </div>
+  <div class="k-tags"><span class="tag">灵敏度不足</span><span class="tag">AGC 超时</span><span class="tag">漏台</span><span class="tag">链路预算</span></div>
+  <div class="k-b">
+    <p><b class="lead">本赛道丢分高度集中在三处：收不到弱信号、响应太慢、搜台漏台或误判。</b>这三条都不是"运气不好"，而是可以在赛前用公式预判、赛中用仪器定位的确定性问题。下面把每一条拆成"现象 → 定位方法 → 处置"。</p>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>失分现象</th><th>最可能的原因</th><th>定位方法</th><th>处置</th></tr></thead>
+        <tbody>
+          <tr><td>−85dBm 信号收不到（灵敏度不足）</td><td>整机 NF 太高：LNA 前有损耗、或根本没有 LNA；带宽取得过宽；天线未匹配</td><td>算 P<sub>sens</sub>=−174+NF+10lgB+SNR<sub>min</sub>；分级测增益；输入接 50Ω 看本底</td><td>把 LNA 移到最前、缩短天线到 LNA 的走线；收窄中频/数字滤波带宽；天线加匹配网络</td></tr>
+          <tr><td>强信号（−60dBm）时失真、串台</td><td>前端增益过大导致混频器或 ADC 过载；AGC 未起作用或范围不够</td><td>加 10dB 衰减器，若失真消失即为过载</td><td>加大 AGC 动态范围（做到 60–80dB），或在前端加可控衰减</td></tr>
+          <tr><td>响应时间超限（＞10s）</td><td>PLL 锁定慢、AGC 建立慢、每信道停留过久、UI 刷新阻塞主循环</td><td>GPIO 翻转标记各阶段耗时，用示波器量；单独测 PLL 锁定时间</td><td>加宽 PLL 环路带宽；AGC 攻击时间压到 10–30ms；显示刷新放到低优先级或 DMA</td></tr>
+          <tr><td>搜台漏台</td><td>判台门限设太高；步进太粗跳过了台；扫描时 AGC 未稳就采样</td><td>把 RSSI 随频率的曲线整条打印出来看，对比 RTL-SDR 的实测频谱</td><td>步进取 100kHz（不要 200kHz）；判决用 RSSI + SNR 双门限；每点先等 AGC 稳定再取样</td></tr>
+          <tr><td>搜台多台（虚假台）</td><td>本机数字噪声、LO 谐波、前端互调产生的假谱线</td><td>断开天线再扫一遍，仍出现的峰全是自己产生的</td><td>屏蔽/隔离数字部分；加预选滤波；判决加"解调后是否有有效音频/SNR"的二次确认</td></tr>
+          <tr><td>Δf 或 m 测不准</td><td>AGC 压掉了调制包络；相位未解卷绕；采样率不足</td><td>用信号源给已知 m=50%、Δf=50kHz 的标准信号做标定</td><td>测量时冻结 AGC 或拉长时间常数；unwrap 相位；IQ 采样率 ≥2 倍卡森带宽</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><b>赛前必须做完的三件事</b>：① <b>写出整机链路预算表</b>——从天线到解调，逐级列出增益(dB)、噪声系数(dB)、IIP3(dBm)、带宽，用 Friis 算出整机 NF 和灵敏度，这张表就是本赛道的过关线，答辩时拿出来直接加分。② <b>做一套标定流程</b>——信号源打已知电平和已知调制参数，记录你的系统读数与真值的偏差，做成修正表；测试时的线损、衰减器损耗全部提前标定。③ <b>准备降级方案</b>——集成芯片（SI4732）做保底、自制链路冲高分，两条路都要能出声。</p>
+
+    <p><b>验收时的自检顺序</b>（每一步不过就不要往下走）：接 50Ω 负载看本底是否干净 → 信号源打 −40dBm 强信号，确认能解调出声 → 逐步降到 −85dBm，记录仍能解调的最低电平 → 加满调制（m=60% / Δf=75kHz）确认无削顶失真 → 减到最小调制（m=30% / Δf=5kHz）确认仍能正确测量 → 全频段自动搜台，与 RTL-SDR 实测频谱对照核实台数 → 秒表计时验证响应时间 → 最后连续跑 10 分钟看有没有热漂移或死机。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 F 题《简易自动接收机》把上表的前四行全考了：<b>−85 ~ −60dBm</b> 的 25dB 输入范围同时压灵敏度和 AGC 动态范围两头；<b>响应时间 ≤10s</b> 卡搜台与建立速度；<b>Δf 5–75kHz、m 30%–60%</b> 卡参数测量精度；自动搜台本身则考漏台/虚台。这四项互相牵制——为了快而加宽 AGC 带宽会破坏 m 的测量，为了灵敏度而加大增益会在 −60dBm 时过载，所以必须靠链路预算统筹而不是分别硬调。2019 年国赛 G 题《双路语音同传的无线收发系统》的失分点集中在两路之间的串扰与延迟；2024 年赛区赛 C 题《无线传输信号模拟系统》的失分点则在通道幅相一致性标定精度上。</p>
+    </div>
+
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是<b>把所有调试留到最后一天</b>。射频问题的定位需要仪器排队，赛场频谱仪往往几个队共用，链路预算和灵敏度测试要排进第二天。二是<b>只在自己桌上测过</b>：赛场信号环境完全不同（几十个队的 WiFi、别人的发射机），验收前一定要去测试区实测一次。三是<b>指标只测一个点</b>：题目给的是范围（−85~−60dBm、5–75kHz、30%–60%），验收老师会挑边界点测，务必自己先把两端和中间各测一遍并记录。四是<b>没有留测试接口</b>：板上要预留中频/基带的测试点、AGC 电压的观察点、以及能软件读出 RSSI/SNR 的调试串口，否则出问题时完全是黑盒。五是<b>报告里没写公式和实测数据</b>——本赛道的设计报告，一张完整的链路预算表加一组灵敏度实测曲线，比十页文字有用得多。</p>
+    </div>
+  </div>
+</article>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>参考设计方案</h2>
+    <p>按题型给出可直接落地的技术路线，含拓扑与算法选型。</p></div>
+    <ul class="plan"><li><b>自动接收机（2025 F）</b>：88–108MHz FM/AM 双模。最省事的是用 SI4732 / SI4735 这类集成收音芯片（自带搜台、AGC、FM/AM 切换），MCU 只做扫频与判决；想拿高分则走零中频 + MCU 数字解调，自己实现鉴频（arctan 微分法）与包络检波，调制方式判别用包络方差 vs 瞬时频率方差比较。</li><li><b>调制方式识别（2023 D）</b>：先做 IQ 采集 → 归一化 → 提取瞬时幅度 / 相位 / 频率的高阶统计量（γmax、σap、σdp、C40/C42 累积量）→ 决策树或轻量 SVM 分类；参数估计（载频、符号率、调制度）用谱线检测与循环谱。</li><li><b>数模混合传输收发机（2021 E）</b>：数字部分做基带成形 + 上变频，模拟部分直接叠加或频分复用；关键是收端的同步与分离。</li><li><b>无线传输信号模拟（2024 C）</b>：用可编程衰减 + 时延 + 多径合成来模拟信道，重点在通道一致性与幅相标定。</li><li><b>位同步时钟提取（2016 F）</b>：过零检测 + 窄带滤波（或锁相环）恢复时钟，注意长连 0 / 连 1 时的相位保持。</li></ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>开源工程与参考实现</h2>
+    <p>都是可以直接读源码的成熟项目。附检索关键词，方便自己继续找。</p></div>
+    <div class="repos"><div class="repo"><span class="rn">gnuradio/gnuradio</span><span class="rd">软件无线电事实标准，调制解调、同步、信道模型全套</span></div><div class="repo"><span class="rn">jgaeddert/liquid-dsp</span><span class="rd">嵌入式友好的通信 DSP 库，成形滤波、同步、均衡</span></div><div class="repo"><span class="rn">osmocom/rtl-sdr</span><span class="rd">20 元级 SDR 接收，做频谱与解调实验的入门硬件</span></div><div class="repo"><span class="rn">analogdevicesinc/no-OS</span><span class="rd">AD9361 等射频收发器的裸机驱动参考</span></div><div class="repo"><span class="rn">pu2clr/SI4735</span><span class="rd">SI4735 / SI4732 收音芯片 Arduino 库，自动搜台与 AM/FM 切换</span></div><div class="repo"><span class="rn">espressif/esp-idf</span><span class="rd">ESP32 的 WiFi / BLE / ESP-NOW，无线传输题的省事路线</span></div></div>
+    <div class="keys">检索关键词：<span class="kw">SI4732 FM AM receiver MCU</span><span class="kw">automatic modulation classification features</span><span class="kw">GNU Radio FM demodulator</span><span class="kw">superheterodyne receiver design student</span><span class="kw">ESP-NOW low latency link</span></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>过关线</h2></div>
+    <div class="gate"><b>能做到这一点，这个赛道就算过了</b><br>能说清一台 FM 接收机从天线到扬声器每一级的增益、噪声系数和带宽，并算出整机灵敏度。</div>
+    <a class="otherbox" href="https://claude.ai/code/artifact/e345f0f5-e096-42ab-8733-c371f4591e81">
+      <div class="otk">其余 7 个赛道 · 回总览页选择</div>
+      <div class="otl"><span class="ot" style="--h:var(--c1)"><span class="otd"></span>电源</span><span class="ot" style="--h:var(--c2)"><span class="otd"></span>测量</span><span class="ot" style="--h:var(--c3)"><span class="otd"></span>信号处理</span><span class="ot" style="--h:var(--c5)"><span class="otd"></span>控制</span><span class="ot" style="--h:var(--c6)"><span class="otd"></span>小车</span><span class="ot" style="--h:var(--c7)"><span class="otd"></span>飞行器</span><span class="ot" style="--h:var(--c8)"><span class="otd"></span>传感视觉</span></div>
+    </a>
+  </section>
+
+  <footer>
+    <a href="https://claude.ai/code/artifact/e345f0f5-e096-42ab-8733-c371f4591e81">← 电赛赛题图谱</a> · 赛道 4 / 8<br>
+    赛题来源：全国大学生电子设计竞赛培训网。知识点解析为编者归纳，非官方内容；指标细节以官方赛题原文为准。
+  </footer>
+</main></div>

@@ -1,0 +1,704 @@
+<title>传感视觉赛道详解</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --surface-2:#EAEEF4; --surface-3:#F0F3F8;
+  --ink:#111620; --ink-2:#3B4553; --ink-3:#6C7787;
+  --line:#D6DDE6; --line-2:#B6C0CD;
+  --accent:#1B4F9C; --hue:143 98 16;
+  --shadow:0 1px 2px rgba(17,22,32,.05);
+  --grid-line:rgba(27,79,156,.07);
+  --c1:203 58 44;
+  --c2:31 92 186;
+  --c3:118 71 190;
+  --c4:198 108 22;
+  --c5:8 118 130;
+  --c6:56 122 44;
+  --c7:186 48 118;
+  --c8:143 98 16;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1117; --surface:#161A22; --surface-2:#1D222C; --surface-3:#131821;
+    --ink:#E9EDF3; --ink-2:#AFB9C7; --ink-3:#798494;
+    --line:#272E3A; --line-2:#3A4353;
+    --accent:#79A6EC; --hue:216 171 73;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --grid-line:rgba(121,166,236,.08);
+    --c1:244 122 108;
+    --c2:126 168 240;
+    --c3:181 148 238;
+    --c4:240 168 92;
+    --c5:79 196 206;
+    --c6:142 203 116;
+    --c7:242 130 180;
+    --c8:216 171 73;
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#0E1117; --surface:#161A22; --surface-2:#1D222C; --surface-3:#131821;
+    --ink:#E9EDF3; --ink-2:#AFB9C7; --ink-3:#798494;
+    --line:#272E3A; --line-2:#3A4353;
+    --accent:#79A6EC; --hue:216 171 73;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --grid-line:rgba(121,166,236,.08);
+    --c1:244 122 108;
+    --c2:126 168 240;
+    --c3:181 148 238;
+    --c4:240 168 92;
+    --c5:79 196 206;
+    --c6:142 203 116;
+    --c7:242 130 180;
+    --c8:216 171 73;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Noto Serif SC",Georgia,"Songti SC",serif;text-wrap:balance;margin:0;line-height:1.35}
+code,.mono,.num{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+code{background:var(--surface-2);border:1px solid var(--line);padding:1px 5px;font-size:.88em}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+
+.k-group{font-size:15px;letter-spacing:.02em;margin:44px 0 16px;padding-bottom:9px;
+  border-bottom:2px solid rgb(var(--hue) / .5);color:var(--ink);display:flex;align-items:baseline;gap:10px}
+.k-group::before{content:"";width:10px;height:10px;background:rgb(var(--hue));flex:none}
+.k{border:1px solid var(--line);background:var(--surface);margin-bottom:14px;box-shadow:var(--shadow);
+  scroll-margin-top:64px}
+.k-h{display:flex;align-items:baseline;gap:12px;padding:15px 20px 0}
+.k-no{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:rgb(var(--hue));
+  background:rgb(var(--hue) / .12);padding:2px 7px;flex:none;letter-spacing:.03em}
+.k-h h3{font-size:18px}
+.k-tags{display:flex;flex-wrap:wrap;gap:5px;padding:9px 20px 0}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);
+  border:1px solid var(--line-2);padding:1px 7px;letter-spacing:.02em}
+.k-b{padding:12px 20px 20px}
+.k-b>p{margin:0 0 12px;color:var(--ink-2)}
+.k-b>p:last-child{margin-bottom:0}
+.lead{color:var(--ink);font-weight:500}
+.k-list{margin:0 0 12px;padding-left:19px}
+.k-list li{margin-bottom:6px;color:var(--ink-2)}
+.k-formula{background:var(--surface-3);border:1px solid var(--line);border-left:3px solid rgb(var(--hue));
+  padding:13px 16px;margin:0 0 13px;overflow-x:auto}
+.k-formula .f{font-family:"IBM Plex Mono",monospace;font-size:14.5px;color:var(--ink);
+  line-height:1.9;white-space:nowrap}
+.k-formula .f+.f{margin-top:4px}
+.k-formula .fn{font-size:12.5px;color:var(--ink-3);margin-top:7px;white-space:normal;line-height:1.6}
+.k-cmp{overflow-x:auto;margin:0 0 13px;border:1px solid var(--line)}
+.k-cmp table{border-collapse:collapse;width:100%;min-width:420px;font-size:13.5px}
+.k-cmp th,.k-cmp td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+  padding:7px 11px;text-align:left;vertical-align:top}
+.k-cmp th{background:var(--surface-2);font-weight:600;font-size:12.5px;color:var(--ink);white-space:nowrap}
+.k-cmp td{color:var(--ink-2)}
+.k-cmp tr:last-child td{border-bottom:0}
+.k-cmp th:last-child,.k-cmp td:last-child{border-right:0}
+.k-callout{padding:11px 15px;margin:0 0 11px;font-size:13.5px;line-height:1.7;border:1px solid var(--line)}
+.k-callout:last-child{margin-bottom:0}
+.k-callout>b{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;margin-bottom:5px}
+.k-callout p{margin:0;color:var(--ink-2)}
+.k-callout p+p{margin-top:7px}
+.k-exam{background:rgb(var(--hue) / .07);border-color:rgb(var(--hue) / .3)}
+.k-exam>b{color:rgb(var(--hue))}
+.k-trap{background:rgb(203 58 44 / .06);border-color:rgb(203 58 44 / .3)}
+.k-trap>b{color:rgb(203 58 44)}
+:root:not([data-theme="light"]) .k-trap{background:rgb(244 122 108 / .08);border-color:rgb(244 122 108 / .3)}
+:root:not([data-theme="light"]) .k-trap>b{color:rgb(244 122 108)}
+:root[data-theme="dark"] .k-trap{background:rgb(244 122 108 / .08);border-color:rgb(244 122 108 / .3)}
+:root[data-theme="dark"] .k-trap>b{color:rgb(244 122 108)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .k-trap{background:rgb(244 122 108 / .08)}}
+.k-tip{background:var(--surface-2);border-color:var(--line-2)}
+.k-tip>b{color:var(--ink-3)}
+
+
+.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:20}
+.top-in{display:flex;align-items:center;gap:14px;padding:10px 0;font-size:13px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--ink-2);text-decoration:none;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.03em;white-space:nowrap}
+.back:hover{color:rgb(var(--hue))}
+.top-name{margin-left:auto;color:var(--ink-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero{border-bottom:1px solid var(--line);background:
+  linear-gradient(var(--grid-line) 1px,transparent 1px) 0 0/100% 26px,
+  linear-gradient(90deg,var(--grid-line) 1px,transparent 1px) 0 0/26px 100%,var(--surface)}
+.hero-in{padding:44px 0 34px;border-top:4px solid rgb(var(--hue))}
+.eyebrow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+.eyebrow .b{background:rgb(var(--hue) / .13);color:rgb(var(--hue));padding:2px 8px;font-weight:600;letter-spacing:.04em}
+.hero h1{font-size:clamp(28px,4.6vw,40px);letter-spacing:-.01em;margin-bottom:13px}
+.hero p{max-width:64ch;color:var(--ink-2);font-size:15.5px;margin:0}
+main{padding:36px 0 90px}
+.sec{margin-bottom:56px}
+.sec-h{margin-bottom:18px}
+.sec-h h2{font-size:21px;margin-bottom:6px}
+.sec-h p{margin:0;color:var(--ink-3);font-size:13.5px;max-width:66ch}
+.jump{border:1px solid var(--line);background:var(--surface);padding:14px 16px;margin-bottom:34px}
+.jump-t{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:9px}
+.jump-l{display:flex;flex-wrap:wrap;gap:5px}
+.jump-l a{display:inline-flex;align-items:baseline;gap:6px;font-size:12.5px;text-decoration:none;
+  color:var(--ink-2);border:1px solid var(--line-2);padding:3px 9px}
+.jump-l a:hover{border-color:rgb(var(--hue));color:rgb(var(--hue))}
+.jump-l a .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+.plist{display:grid;gap:2px;grid-template-columns:1fr}
+@media (min-width:660px){.plist{grid-template-columns:1fr 1fr}}
+.pitem{display:flex;gap:10px;align-items:baseline;padding:4px 0;font-size:13.5px;line-height:1.5}
+.ptag{flex:none;font-family:"IBM Plex Mono",monospace;font-size:11px;padding:1px 6px;
+  border:1px solid var(--line-2);color:var(--ink-3);min-width:74px;text-align:center}
+.ptag.natl{border-color:rgb(var(--hue) / .5);color:rgb(var(--hue));background:rgb(var(--hue) / .08)}
+.plan{margin:0;padding-left:19px}
+.plan li{font-size:14px;line-height:1.75;margin-bottom:10px;color:var(--ink-2)}
+.plan li b{color:var(--ink);font-weight:500}
+.repos{display:grid;gap:8px;grid-template-columns:1fr}
+@media (min-width:700px){.repos{grid-template-columns:1fr 1fr}}
+.repo{display:flex;gap:11px;align-items:baseline;font-size:13.5px;padding:6px 0;border-bottom:1px dotted var(--line)}
+.repo .rn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink);font-weight:500;flex:none}
+.repo .rd{color:var(--ink-3);font-size:12.5px;line-height:1.55}
+.keys{margin-top:14px;font-size:12.5px;color:var(--ink-3);line-height:2}
+.kw{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 7px;margin:0 4px 4px 0;color:var(--ink-2)}
+.gate{background:rgb(var(--hue) / .07);border:1px solid rgb(var(--hue) / .3);padding:15px 18px;font-size:14px;color:var(--ink-2)}
+.gate b{color:rgb(var(--hue));font-weight:600}
+.otherbox{display:block;margin-top:12px;border:1px solid var(--line);background:var(--surface);
+  padding:14px 17px;text-decoration:none}
+.otherbox:hover{border-color:var(--ink-3)}
+.otk{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.otl{display:flex;flex-wrap:wrap;gap:6px}
+.ot{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2);
+  border:1px solid var(--line-2);padding:3px 10px}
+.otd{width:8px;height:8px;border-radius:50%;background:rgb(var(--h));flex:none}
+.otherbox:hover .ot{border-color:var(--line)}
+footer{border-top:1px solid var(--line);padding:26px 0 44px;color:var(--ink-3);font-size:12.5px;line-height:1.8}
+footer a{color:var(--ink-2)}
+
+</style>
+
+<div class="top"><div class="wrap top-in">
+  <a class="back" href="https://claude.ai/code/artifact/e345f0f5-e096-42ab-8733-c371f4591e81">← 返回电赛赛题图谱</a>
+  <span class="top-name">赛道 8 / 8 · 传感 · 定位 · 嵌入式视觉</span>
+</div></div>
+
+<header class="hero"><div class="hero-in"><div class="wrap">
+  <div class="eyebrow"><span class="b">22 题 / 104</span><span>12 个知识点</span><span>命题方向 8</span></div>
+  <h1>传感 · 定位 · 嵌入式视觉</h1>
+  <p>用声、光、电磁、图像感知世界并做出判断。题量已跃居第一，是电赛现代化的主战场：从超声测距、可见光定位，一路做到端侧目标识别与拼图求解。</p>
+</div></div></header>
+
+<div class="wrap"><main>
+
+  <div class="jump">
+    <div class="jump-t">知识点速览 · 点击跳转</div>
+    <div class="jump-l"><a href="#k-01"><span class="n">01</span>测距定位：TWR、TDoA 与三边解算</a><a href="#k-02"><span class="n">02</span>声学：声速修正与 GCC-PHAT 时延估计</a><a href="#k-03"><span class="n">03</span>视觉几何：针孔模型、单目测距与 PnP</a><a href="#k-04"><span class="n">04</span>识别选型与端侧算力内存预算</a><a href="#k-05"><span class="n">05</span>无线定位器件：UWB 与 AoA 阵列</a><a href="#k-06"><span class="n">06</span>声学链路：换能器驱动与多通道同步采样</a><a href="#k-07"><span class="n">07</span>光学感知：可见光通信与光电开关</a><a href="#k-08"><span class="n">08</span>视觉模组选型与"不得使用 PC"约束</a><a href="#k-09"><span class="n">09</span>三类标定：内参、手眼与零点延迟</a><a href="#k-10"><span class="n">10</span>抗干扰：多径首径、环境光与背景建模</a><a href="#k-11"><span class="n">11</span>实时性预算：从时间窗倒推算法复杂度</a><a href="#k-12"><span class="n">12</span>常见失分：边界抖动、光照失效与误差累积</a></div>
+  </div>
+
+  <section class="sec">
+    <div class="sec-h"><h2>本赛道历年赛题</h2>
+    <p>2016–2026 共 22 道。带色框的是国赛题（奇数年），其余为赛区赛 / 省级联赛参考题。</p></div>
+    <div class="plist"><div class="pitem"><span class="ptag">2026 C</span><span>基于无线通信的数字钥匙实验系统</span></div><div class="pitem"><span class="ptag">2026 E</span><span>拼图装置</span></div><div class="pitem"><span class="ptag natl">2025 C</span><span>基于单目视觉的目标物测量装置</span></div><div class="pitem"><span class="ptag natl">2025 I</span><span>非接触式控制盘</span></div><div class="pitem"><span class="ptag natl">2025 J</span><span>超声信标定位系统</span></div><div class="pitem"><span class="ptag">2024 E</span><span>三子棋游戏装置</span></div><div class="pitem"><span class="ptag natl">2023 F</span><span>基于声传播的智能定位系统</span></div><div class="pitem"><span class="ptag natl">2023 K</span><span>辨音识键奏乐系统</span></div><div class="pitem"><span class="ptag">2022 E · 7月</span><span>声源定位跟踪系统</span></div><div class="pitem"><span class="ptag">2022 D · 10月</span><span>盲盒识别装置</span></div><div class="pitem"><span class="ptag natl">2021 D</span><span>基于互联网的摄像测量系统</span></div><div class="pitem"><span class="ptag">2020 A</span><span>无线运动传感器节点设计</span></div><div class="pitem"><span class="ptag">2020 F</span><span>简易无接触温度测量与身份识别装置</span></div><div class="pitem"><span class="ptag">2020 G</span><span>非接触物体尺寸形态测量</span></div><div class="pitem"><span class="ptag natl">2019 F</span><span>纸张计数显示装置</span></div><div class="pitem"><span class="ptag natl">2019 I</span><span>LED 线阵显示装置</span></div><div class="pitem"><span class="ptag natl">2019 K</span><span>简易多功能液体容器</span></div><div class="pitem"><span class="ptag">2018 D</span><span>手势识别</span></div><div class="pitem"><span class="ptag natl">2017 I</span><span>可见光室内定位装置</span></div><div class="pitem"><span class="ptag natl">2017 M</span><span>管道内钢珠运动测量装置</span></div><div class="pitem"><span class="ptag natl">2017 P</span><span>简易水情检测系统</span></div><div class="pitem"><span class="ptag">2016 B</span><span>物品分拣搬送装置</span></div></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>知识点逐条解析</h2>
+    <p>每条包含：概念、关键公式、方案对比、这个知识点在哪道真题里怎么考、以及实际做的时候最容易踩的坑。</p></div>
+    <h2 class="k-group">理论与分析</h2>
+
+<article class="k" id="k-01">
+  <div class="k-h">
+    <span class="k-no">01</span>
+    <h3>测距定位：TWR、TDoA 与三边解算</h3>
+  </div>
+  <div class="k-tags"><span class="tag">ToF</span><span class="tag">TWR</span><span class="tag">TDoA</span><span class="tag">最小二乘</span><span class="tag">RSSI</span><span class="tag">AoA</span></div>
+  <div class="k-b">
+    <p><b class="lead">定位的本质是把"时间"或"角度"换算成"距离"，再用几何约束求交点。</b>电磁波 1 ns 走 30 cm，声波 1 ms 走 34 cm——两者相差六个数量级，这决定了电磁定位必须靠专用芯片打时间戳（DW1000 的时间戳分辨率 15.65 ps，对应 4.7 mm），而声学定位用普通 ADC 采样就够。电赛里能落地的测距体制只有四种：单向 ToF（要严格同步）、双向测距 TWR（不要同步）、TDoA（只要基站间同步）、RSSI（不要任何同步但精度差）。</p>
+
+    <p>TWR 的精髓是<b>用往返消掉未知的时钟起点</b>。单边 SS-TWR 为：</p>
+    <div class="k-formula">
+      <div class="f">T<sub>prop</sub> = ( T<sub>round</sub> − T<sub>reply</sub> ) / 2</div>
+      <div class="fn">T<sub>round</sub> 发起端从发出到收到回应的本地计时；T<sub>reply</sub> 应答端从收到到发出的本地计时</div>
+    </div>
+    <p>但两端晶振有相对偏差 e，残差为 <code>0.5·e·T<sub>reply</sub></code>：20 ppm 晶振配 300 µs 的处理延时就带来 3 ns 误差、约 90 cm，直接废掉 0.3 m 指标。所以实战必须用双边 DS-TWR，它把偏差压到二阶小量：</p>
+    <div class="k-formula">
+      <div class="f">T<sub>prop</sub> = ( T<sub>round1</sub>·T<sub>round2</sub> − T<sub>reply1</sub>·T<sub>reply2</sub> ) / ( T<sub>round1</sub> + T<sub>round2</sub> + T<sub>reply1</sub> + T<sub>reply2</sub> )</div>
+      <div class="fn">下标 1 为发起端一轮，2 为应答端反向一轮；四个量都是各自本地时钟测得，无需共同时基</div>
+    </div>
+
+    <p>TDoA 不测绝对距离，只测<b>距离差</b>，每一对基站给出一支双曲线（三维是双曲面）：</p>
+    <div class="k-formula">
+      <div class="f">‖P − A<sub>i</sub>‖ − ‖P − A<sub>j</sub>‖ = c · Δt<sub>ij</sub></div>
+      <div class="fn">P 待定位点，A<sub>i</sub> 第 i 个基站/麦克风坐标，c 波速，Δt<sub>ij</sub> 到达时间差</div>
+    </div>
+    <p>三边定位（已知各 r<sub>i</sub>）的标准解法是<b>两两相减把二次项消掉再做最小二乘</b>：以第 1 个基站为参考，第 i 个方程减第 1 个得</p>
+    <div class="k-formula">
+      <div class="f">2(x<sub>i</sub>−x<sub>1</sub>)·x + 2(y<sub>i</sub>−y<sub>1</sub>)·y = r<sub>1</sub><sup>2</sup> − r<sub>i</sub><sup>2</sup> + x<sub>i</sub><sup>2</sup>+y<sub>i</sub><sup>2</sup> − x<sub>1</sub><sup>2</sup>−y<sub>1</sub><sup>2</sup></div>
+      <div class="fn">写成 A·p = b 后 p = (A<sup>T</sup>A)<sup>−1</sup>A<sup>T</sup>b，p = [x, y]<sup>T</sup>；A<sup>T</sup>A 病态说明基站近似共线，需重新布点</div>
+    </div>
+
+    <p>RSSI 走对数路径损耗模型，精度天然差在<b>它是指数关系且阴影衰落方差大</b>：</p>
+    <div class="k-formula">
+      <div class="f">P(d) = P(d<sub>0</sub>) − 10·n·lg(d/d<sub>0</sub>) + X<sub>σ</sub>　⇒　Δd/d = (ln10 / 10n)·ΔP</div>
+      <div class="fn">n 路径损耗指数（自由空间 2，室内 2.7–4），X<sub>σ</sub> 阴影衰落，室内 σ 常达 4–8 dB</div>
+    </div>
+    <p>取 n=2、σ=4 dB，距离相对误差就是 10<sup>4/20</sup>≈1.58，即 3 m 处误差 ±1.5 m 量级。指望 RSSI 做到 0.3 m 是不可能的，它只配做分区粗判或做 UWB 失锁时的兜底。</p>
+
+    <p>AoA 用阵元间相位差反推来波方向：</p>
+    <div class="k-formula">
+      <div class="f">Δφ = 2π·d·sinθ / λ　⇒　θ = arcsin( λ·Δφ / (2π·d) )</div>
+      <div class="fn">d 阵元间距，λ 波长，θ 相对法线的入射角；|Δφ| ≤ π 无模糊要求 d ≤ λ/2</div>
+    </div>
+    <p>d &gt; λ/2 时同一个 Δφ 对应多个 θ（栅瓣模糊）；d 过小则灵敏度 dθ/dΔφ 变大、噪声被放大。取 d = λ/2 时角误差 Δθ ≈ δφ/(π·cosθ)，相位测量误差 5°（0.087 rad）在法线方向给出 1.6°、在 ±60° 方向给出 3.2°，这正是 10° 指标留有余量的原因。2.4 GHz 时 λ=12.5 cm 故 d ≤ 6.25 cm；UWB CH5（6.5 GHz）λ≈4.6 cm 故 d ≤ 2.3 cm，PCB 上布两根天线就得贴得很近。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」把这一条摊开考：径向距离误差 ≤0.3 m 对应 TWR/ToF 支路（0.3 m 折合 1 ns 时间分辨率，只能上 UWB），方位角 ≤10° 对应 AoA/PDoA 支路，分区判定误差 ≤0.2 m 则考的是分区边界处的滤波与迟滞。三个指标分属不同技术路径，只做其中一条就丢发挥部分的大头。2025 年国赛 J 题「超声信标定位系统」和 2023 年国赛 F 题「基于声传播的智能定位系统」考的是同一套几何：多接收阵元测 TDoA、双曲线交汇、最后用上式的最小二乘收敛到坐标，基本要求的静态定位精度和发挥部分的动态跟踪都卡在解算这一步。2017 年国赛 I 题「可见光室内定位装置」则是把测距量换成光强/相位，几何解算完全照搬。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是基站/麦克风布得近似共线或近似正三角的退化位置，A<sup>T</sup>A 条件数爆炸，表现为"某一个方向误差特别大"——先算一下几何精度因子 GDOP，场地四角布点最稳。二是直接用 SS-TWR 交作品，静态测着还行、换一块板子就整体偏半米，那是晶振偏差没消，务必改 DS-TWR 或先做时钟漂移补偿。三是最小二乘直接解闭式后不迭代，靠近基站连线延长区误差成倍放大，建议闭式解当初值再跑 2–3 次 Gauss-Newton。四是把 RSSI 的模型参数 n 在实验室拟合好就拿去比赛现场用，换个房间 n 变了全盘失效。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-02">
+  <div class="k-h">
+    <span class="k-no">02</span>
+    <h3>声学：声速修正与 GCC-PHAT 时延估计</h3>
+  </div>
+  <div class="k-tags"><span class="tag">声速温度修正</span><span class="tag">互相关</span><span class="tag">GCC-PHAT</span><span class="tag">混响</span><span class="tag">换能器 Q 值</span></div>
+  <div class="k-b">
+    <p><b class="lead">声学定位便宜的代价是声速会变。</b>空气中声速对温度敏感，一阶展开就是工程上最常用的那条式子：</p>
+    <div class="k-formula">
+      <div class="f">c ≈ 331.3 + 0.606·T　(m/s)</div>
+      <div class="fn">T 摄氏温度；20 ℃ 时 c ≈ 343.4 m/s。湿度影响约 +0.1%，相对温度可忽略；风速则是矢量误差，室内一般不计</div>
+    </div>
+    <p>温度估错 10 ℃ 带来 Δc = 6.06 m/s，相对误差 6.06/343.4 = 1.76%。在 3 m 处 <b>3 × 1.76% ≈ 5.3 cm</b> 的系统性误差——足以把一道要求 5 cm 精度的题直接判掉。所以凡是超声/声源题，必须挂一颗 DS18B20 或 SHT30 实时读温度算 c，代价只有几毛钱，收益是把最大的系统误差项归零。</p>
+
+    <p>时延估计不能用简单峰值检测，混响下会抓到反射径。标准做法是广义互相关（GCC），在频域加权后反变换：</p>
+    <div class="k-formula">
+      <div class="f">R<sub>12</sub>(τ) = ∫ ψ(ω)·X<sub>1</sub>(ω)·X<sub>2</sub><sup>*</sup>(ω)·e<sup>jωτ</sup> dω，　τ̂ = argmax<sub>τ</sub> R<sub>12</sub>(τ)</div>
+      <div class="fn">X<sub>i</sub>(ω) 第 i 路信号的傅里叶变换，<sup>*</sup> 为共轭，ψ(ω) 为加权函数</div>
+    </div>
+    <div class="k-formula">
+      <div class="f">PHAT 加权：ψ<sub>PHAT</sub>(ω) = 1 / | X<sub>1</sub>(ω)·X<sub>2</sub><sup>*</sup>(ω) |</div>
+      <div class="fn">把互功率谱归一化到只剩相位信息，幅度谱被彻底白化</div>
+    </div>
+    <p>PHAT 的作用是把互相关峰从"宽而钝"变成"窄而尖"：普通互相关的峰宽由信号带宽决定，宽带白化后峰宽逼近 1/B（B 为带宽），对宽带扫频或宽带噪声源尤其有效，抗混响能力明显强于纯互相关。代价是低信噪比时噪声频段被同等放大，所以实现时要在 ψ 分母加一个小正则项 ε（取信号谱均值的 1%–10%），或只对信号真正有能量的频段（如 1–8 kHz）做 PHAT。</p>
+
+    <p>采样率决定时延分辨率：f<sub>s</sub> = 48 kHz 时一个采样点 20.8 µs，对应 <code>c/f<sub>s</sub></code> ≈ 7.2 mm 的距离差；要更细必须做<b>亚采样点插值</b>——对相关峰的三点做抛物线拟合 <code>δ = 0.5(R<sub>−1</sub>−R<sub>+1</sub>)/(R<sub>−1</sub>−2R<sub>0</sub>+R<sub>+1</sub>)</code>，通常能把分辨率再提高 5–10 倍。</p>
+
+    <p>超声换能器是个高 Q 谐振体：40 kHz 分体式收发对 Q 常在 20–30，带宽 B ≈ f<sub>0</sub>/Q ≈ 1.3–2 kHz，激励停止后要振铃衰减 0.5–1 ms，这段时间接收头被自身余振淹没，形成<b>盲区</b> <code>d<sub>min</sub> = c·t<sub>ring</sub>/2 ≈ 343×1 ms/2 ≈ 17 cm</code>。窄带也意味着不能用宽带 chirp，脉冲压缩增益受限，只能靠多周期串（典型 8–16 个 40 kHz 方波）累积能量。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 J 题「超声信标定位系统」是这条知识点的正面考法：信标发超声、接收端阵列测 TDoA，声速不做温度修正在 3 m 处就是 5 cm 级的固定偏差，直接吃掉基本要求的定位精度余量；发挥部分的移动目标跟踪还要求单次解算足够快，GCC-PHAT 的 FFT 长度必须压住。2023 年国赛 F 题「基于声传播的智能定位系统」同理，且明确在有回声的室内环境测试，取首径而非最强径是拿分关键。2022 年 7 月赛区赛 E 题「声源定位跟踪系统」把 GCC-PHAT 用在语音/宽带声源上，是 PHAT 加权最能体现优势的场景。2023 年国赛 K 题「辨音识键奏乐系统」虽然不测距，但同样吃频域处理功底，只是把互相关换成了基频提取与谐波分析。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是把温度传感器贴在发热的功放或 MCU 旁边，读数偏高好几度，反而引入误差——要外置到空气中。二是多通道 ADC 用软件轮询采样，通道间存在固定采样偏斜，48 kHz 下一个通道错开一个采样就是 7 mm，必须用同步采样 ADC 或同一 ADC 的同步扫描并把已知偏斜标定掉。三是 GCC-PHAT 的 FFT 长度短于信号往返时延跨度，出现循环卷积混叠，务必补零到至少两倍。四是直接找相关最大值——在混响室里最强径经常是墙面反射，正确做法是在最大峰之前设一个门限（如峰值的 0.5–0.7 倍）向前搜第一个越限点作为首径。五是忽略换能器盲区，把 15 cm 内的读数当有效值上报。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-03">
+  <div class="k-h">
+    <span class="k-no">03</span>
+    <h3>视觉几何：针孔模型、单目测距与 PnP</h3>
+  </div>
+  <div class="k-tags"><span class="tag">针孔模型</span><span class="tag">内参</span><span class="tag">畸变校正</span><span class="tag">单应矩阵</span><span class="tag">solvePnP</span></div>
+  <div class="k-b">
+    <p><b class="lead">摄像头把三维点压成二维像素，丢掉的正是深度，一切单目测距都是在用先验把深度补回来。</b>针孔模型给出这个投影：</p>
+    <div class="k-formula">
+      <div class="f">u = f<sub>x</sub>·X/Z + c<sub>x</sub>　,　v = f<sub>y</sub>·Y/Z + c<sub>y</sub></div>
+      <div class="fn">(X,Y,Z) 相机坐标系下的物点，(u,v) 像素坐标，f<sub>x</sub>=f/d<sub>x</sub>、f<sub>y</sub>=f/d<sub>y</sub> 是以像素为单位的焦距，(c<sub>x</sub>,c<sub>y</sub>) 主点</div>
+    </div>
+    <p>实际镜头有畸变，标定必须同时解出畸变系数：</p>
+    <div class="k-formula">
+      <div class="f">x<sub>d</sub> = x(1 + k<sub>1</sub>r<sup>2</sup> + k<sub>2</sub>r<sup>4</sup> + k<sub>3</sub>r<sup>6</sup>) + 2p<sub>1</sub>xy + p<sub>2</sub>(r<sup>2</sup>+2x<sup>2</sup>)</div>
+      <div class="fn">x,y 为归一化像平面坐标，r<sup>2</sup>=x<sup>2</sup>+y<sup>2</sup>；k 为径向、p 为切向畸变系数。广角/鱼眼镜头 k<sub>1</sub> 可达 −0.3 以上，边缘位移几十像素</div>
+    </div>
+
+    <p>单目测距三条路，按可用先验选：</p>
+    <ul class="k-list">
+      <li><b>已知实际尺寸</b>——最常用也最稳：<code>Z = f<sub>x</sub>·W / w</code>，W 是物体实际宽度（m），w 是它在图上的像素宽度。误差传递是 <code>ΔZ/Z = −Δw/w</code>：镜头 f=2.8 mm、像元 3 µm 时 f<sub>x</sub>≈933 px，一个 10 cm 宽的靶在 1 m 处占 93 px，角点提取错 1 px 就是 1.1%、即 1 cm。要提精度只有两条路：换长焦（f<sub>x</sub> 变大）或做亚像素角点（cornerSubPix 可到 0.1 px）。</li>
+      <li><b>已知目标在同一平面</b>——用单应矩阵把像素直接映射到世界平面：<code>s·[u v 1]<sup>T</sup> = H·[X Y 1]<sup>T</sup></code>，H 是 3×3、8 个自由度，至少 4 组不共线的点对即可解。这条路测的是平面内尺寸，不给出真实深度，但对"测桌面上物体边长"这类题精度最高，因为它把内参和外参一起吸收进 H。</li>
+      <li><b>消失点/已知安装高度</b>——摄像头固定俯角、目标贴地时，由地平线消失点恢复俯仰角，再用几何算地面距离。精度依赖安装角稳定性，适合走廊、赛道类题。</li>
+    </ul>
+
+    <p>PnP 是从 n 个"已知三维坐标 + 对应像素"的点对求相机位姿 R、t，前提是<b>内参已标定</b>且这些点三维坐标已知。P3P 用 3 点给出最多 4 组解、需第 4 点消歧；OpenCV 的 <code>solvePnP</code> 默认迭代法要求 ≥4 点，且这 4 点<b>不能共线也不能全部近似共面加上远离画幅中心</b>——共面 4 点是可以的（内部走 IPPE），但共面时对俯仰角敏感、容易出现"翻转歧义"，两组解镜像对称。稳妥做法是用 <code>SOLVEPNP_IPPE_SQUARE</code> 处理正方形标志，或直接贴 AprilTag/ArUco 由库给出唯一位姿。</p>
+
+    <p>标定质量的唯一客观判据是<b>重投影误差 RMS</b>：把标定板角点用解出的内外参重新投影回图像，与实测角点的像素距离均方根。工程合格线是 <b>&lt;0.5 px</b>，做得好应在 0.15–0.3 px；&gt;1 px 说明标定板不平、图像模糊、角点误检或者畸变模型阶数选错，必须重标而不是硬用。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 C 题「基于单目视觉的目标物测量装置」几乎就是本条的直接考核：1–2 m 距离下测目标物边长与形状，基本要求靠 <code>Z = f·W/w</code> 或单应矩阵就能过，发挥部分的高精度与斜置目标测量则必须靠亚像素角点 + 完整畸变校正，重投影误差控制不到 0.5 px 就别想稳定过线。2020 年赛区赛 G 题「非接触物体尺寸形态测量」是同一题型的早期版本。2021 年国赛 D 题「基于互联网的摄像测量系统」把标定后的测量结果通过网络回传，测量环节仍是内参 + 单应。2017 年国赛 M 题「管道内钢珠运动测量装置」要从图像序列反推运动学量，同样绕不开像素到毫米的尺度换算。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是标定完之后改了摄像头分辨率或开了数字变焦，内参立刻作废——f<sub>x</sub>、c<sub>x</sub> 都随分辨率线性缩放，换分辨率必须重标或按比例换算。二是用手机屏幕显示棋盘格做标定，屏幕平面度和摩尔纹会让角点偏，必须打印贴在玻璃或亚克力板上。三是标定图只拍正对的十几张，畸变系数解不准，正确做法是拍 15–25 张，覆盖画面四角、带明显俯仰和滚转倾斜。四是自动对焦镜头标完之后又重新对焦，f 变了。五是把 PnP 的世界坐标单位写成毫米、后面又当米用，位姿差 1000 倍。六是共面 4 点 PnP 出现位姿跳变（翻转歧义）却没做时间域一致性检查。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-04">
+  <div class="k-h">
+    <span class="k-no">04</span>
+    <h3>识别选型与端侧算力内存预算</h3>
+  </div>
+  <div class="k-tags"><span class="tag">阈值分割</span><span class="tag">轮廓</span><span class="tag">霍夫变换</span><span class="tag">模板匹配</span><span class="tag">MACs</span><span class="tag">int8 量化</span></div>
+  <div class="k-b">
+    <p><b class="lead">电赛里"能用传统 CV 解决的绝不上神经网络"——传统方法可解释、可调参、不吃算力、不需要数据集，而比赛只有四天。</b>选型的判据是<b>目标的类内变化有多大</b>：颜色/形状固定的刚性目标（色块、棋子、纸张边缘、几何靶）用阈值 + 形态学 + 轮廓就够；有旋转但无形变的用旋转不变的轮廓矩或模板匹配多角度库；直线圆等参数化几何用霍夫；只有当目标是"同一类里长得各不相同"（人脸、手势、任意花纹）时，轻量 CNN 才是必要的。</p>
+
+    <ul class="k-list">
+      <li><b>阈值</b>：优先在 HSV/LAB 空间对 H 或 a/b 通道分割，比 RGB 抗光照变化强得多；亮度阈值一律用 Otsu 或自适应阈值，不要写死常数。</li>
+      <li><b>轮廓</b>：<code>findContours</code> 后按面积过滤，再 <code>approxPolyDP</code> 做多边形近似取顶点（epsilon 取周长的 1%–3%），拼图/棋盘/矩形靶的顶点就是这么来的。</li>
+      <li><b>霍夫</b>：直线用累加器分辨率 ρ=1 px、θ=1°，圆检测对参数极敏感，先做梯度增强再限定半径范围。</li>
+      <li><b>模板匹配</b>：<code>TM_CCOEFF_NORMED</code> 对亮度偏移鲁棒；不抗旋转和缩放，只适合固定视角固定距离。</li>
+    </ul>
+
+    <p>要上 CNN，先算<b>两笔账：算力和内存</b>。卷积层乘累加次数为：</p>
+    <div class="k-formula">
+      <div class="f">MACs<sub>conv</sub> = k<sup>2</sup> · C<sub>in</sub> · C<sub>out</sub> · H<sub>out</sub> · W<sub>out</sub>　（深度可分离时 ≈ k<sup>2</sup>·C<sub>in</sub>·H·W + C<sub>in</sub>·C<sub>out</sub>·H·W）</div>
+      <div class="fn">k 卷积核边长，C 通道数，H/W 输出特征图尺寸。全网 MACs 求和即单帧计算量</div>
+    </div>
+    <div class="k-formula">
+      <div class="f">t<sub>infer</sub> ≈ MACs<sub>total</sub> / (吞吐 MAC/s)　,　权重内存 ≈ N<sub>param</sub> × B<sub>byte</sub></div>
+      <div class="fn">int8 量化 B=1，float32 B=4；激活内存 ≈ max over layers (输入张量 + 输出张量) 字节数</div>
+    </div>
+    <p>量级参考：<b>OpenMV H7</b>（STM32H743，Cortex-M7 @480 MHz，1 MB SRAM + 2 MB Flash，H7 Plus 外挂 32 MB SDRAM/Flash）用 CMSIS-NN 实测吞吐约 0.05–0.2 GMAC/s，跑一个 5 MMACs 的 96×96 小分类网大约 30–100 ms，权重预算实际就是 100–300 kB。<b>K210</b>（MaixPy）带 KPU 硬件加速器，标称 0.25 TOPS @400 MHz，6 MB 通用 SRAM + 2 MB KPU 专用 SRAM，可以实打实跑 224×224 输入的 MobileNet-v1 或 YOLOv2-tiny，帧率 10–30 fps，但模型权重必须压到 2 MB 以内并转成 kmodel。<b>ESP32-CAM</b> 只适合采集与传输，本地推理能力接近于零。结论很明确：想在 MCU 上做目标检测，K210 是下限，OpenMV 更适合"传统 CV 为主 + 极小分类网点缀"。</p>
+    <p>还有一条常被忽略的硬约束：<b>激活内存峰值</b>。96×96×16 的 int8 中间特征图就是 147 kB，两层同时驻留接近 300 kB，在 1 MB SRAM 的 H7 上还要留给帧缓冲（QVGA RGB565 一帧 150 kB）——所以输入分辨率往往不是被算力卡死，而是被 RAM 卡死。</p>
+
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>方案</th><th>适用</th><th>代价</th></tr></thead>
+        <tbody>
+          <tr><td>HSV 阈值 + 轮廓</td><td>色块、棋子、几何靶、纸张边缘</td><td>光照一变阈值失效，需自适应</td></tr>
+          <tr><td>模板匹配</td><td>固定视角固定尺度的图案比对</td><td>不抗旋转缩放，模板库线性膨胀</td></tr>
+          <tr><td>AprilTag / ArUco</td><td>需要唯一 ID + 六自由度位姿</td><td>需在场地贴码，部分题目不允许</td></tr>
+          <tr><td>轻量 CNN（K210）</td><td>类内差异大的分类/检测</td><td>要数据集与训练时间，模型 ≤2 MB</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2022 年 10 月赛区赛 D 题「盲盒识别装置」是典型的"类内差异大"场景，花纹/图案识别用传统模板匹配容易翻车，是少数值得上轻量 CNN 的题；但即使上网络，也必须先算清 MACs 与权重能否塞进模组。2024 年赛区赛 E 题「三子棋游戏装置」相反——棋子颜色形状固定，用 HSV 阈值 + 圆检测 + 网格投影就能稳定过基本要求，上神经网络纯属自找麻烦。2019 年国赛 F 题「纸张计数显示装置」考的是边缘/条纹的周期性特征提取，属于纯传统 CV。2018 年赛区赛 D 题「手势识别」介于两者之间：静态手势可用轮廓凸缺陷（凸包指尖计数）解决，动态手势序列则更适合状态机而非端到端网络。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是先选模组再选算法，结果模型编译出来 4 MB 塞不进去——顺序应该反过来：先估 MACs 和权重大小，再定硬件。二是量化后没做校准（calibration）就部署，int8 精度断崖式下降，必须用 100–300 张真实场景图做后训练量化校准。三是在 PC 上用 float 训练时准确率 98%，部署后掉到 70%，多半是预处理不一致（归一化方式、通道顺序 BGR/RGB、resize 插值方法）——务必让端侧预处理和训练时逐字节对齐。四是数据集全在实验室灯光下采集，赛场灯一换全废，采数据时要故意变换光照、角度、背景。五是阈值参数硬编码在代码里，现场调试时改一次要重新烧录，应该做成可通过按键/串口在线调整并显示中间二值图。</p>
+    </div>
+  </div>
+</article>
+
+<h2 class="k-group">器件与电路</h2>
+
+<article class="k" id="k-05">
+  <div class="k-h">
+    <span class="k-no">05</span>
+    <h3>无线定位器件：UWB 与 AoA 阵列</h3>
+  </div>
+  <div class="k-tags"><span class="tag">DW1000</span><span class="tag">DW3000</span><span class="tag">PDoA</span><span class="tag">BLE 5.1 AoA</span><span class="tag">CIR 首径</span></div>
+  <div class="k-b">
+    <p><b class="lead">要在 3 m 尺度上做到分米级无线测距，可选器件其实只有超宽带（UWB）一类。</b>原因是距离分辨率由带宽决定，<code>Δd ≈ c/(2B)</code>：UWB 占用约 500 MHz 带宽 → 约 30 cm 的本征分辨率，配合首径超分辨算法可到 10 cm；而 BLE/WiFi 只有 1–20 MHz 带宽，靠幅度或窄带相位是做不到的。</p>
+    <ul class="k-list">
+      <li><b>DW1000</b>：老牌 IEEE 802.15.4-2011 UWB 收发器，SPI 接口，支持 CH1–CH7（3.5–6.5 GHz），时间戳分辨率 15.65 ps（≈4.7 mm），典型静态测距精度 ±10 cm，视距 30–100 m。生态最成熟，<code>thotro/arduino-dw1000</code> 直接给出 TWR 例程，是电赛最省时间的起点。</li>
+      <li><b>DW3000</b>：新一代，功耗更低、支持 802.15.4z、原生带 <b>PDoA</b>（相位差到达角）——双天线接收同一帧，用两路的相位差直接算方位角，比外挂 AoA 阵列省事得多，典型角度精度 ±5°–10°（视距、近法线方向）。</li>
+      <li><b>BLE 5.1 AoA</b>：低成本替代（如 nRF52 系列 + 天线阵列 + CTE 恒定音调扩展），角度可做到 ±5° 量级，但因带宽窄，<b>距离</b>只能靠 RSSI，做不到 0.3 m。因此它适合"只要角度"的场景，或与超声/红外测距混合。</li>
+    </ul>
+    <p>方位角支路的物理约束还是 <code>Δφ = 2π·d·sinθ/λ</code> 与 <code>d ≤ λ/2</code>：CH5 中心 6.5 GHz，λ ≈ 4.6 cm，两根天线中心距必须 ≤2.3 cm，PCB 布局上要保证两条馈线<b>等长等阻抗</b>，长度差 1 mm 在 6.5 GHz 上就是约 8° 的固定相位偏差（介质中波长约 45 mm 时），必须靠已知角度下的标定表把它减掉。</p>
+    <p>UWB 抗多径的真正来源是<b>信道冲激响应（CIR）可分辨</b>：DW1000 可读出 CIR 累加器，直接看到直射径与反射径分开的多个峰。默认的 LDE 算法给出的是首径而非最强径，这是它在室内比窄带方案强的根本原因。但当直射径被遮挡（NLOS，如人体挡住），首径能量骤降，测距会正偏 0.3–1 m。工程判据是读 <code>FP_AMPL</code>（首径幅度）与 <code>CIR_PWR</code>（总接收功率）的比值，比值低于阈值即判 NLOS，该次测量丢弃或降权。</p>
+    <div class="k-formula">
+      <div class="f">d = c · T<sub>prop</sub> − d<sub>ant</sub>　,　1 DW1000 时间单位 = 15.65 ps ≈ 4.7 mm</div>
+      <div class="fn">d<sub>ant</sub> 为天线延迟等效距离，默认天线延迟约 16400 单位 ≈ 257 ns ≈ 77 m，不标定则测距全盘失真</div>
+    </div>
+    <p>发射功率与合规：UWB 的 EIRP 谱密度上限为 −41.3 dBm/MHz，这决定了它天生是短距设备，别指望靠加大功率提高距离。多标签系统要做时分调度（TDMA），单次 DS-TWR 交互约 3–5 ms，4 个基站轮询一个标签约 20 ms，即 50 Hz 的定位更新率上限。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」的三项指标——径向距离误差 ≤0.3 m、方位角 ≤10°、分区判定 ≤0.2 m——基本锁死了器件选择：距离用 UWB DS-TWR（0.3 m 就是 1 ns 时间分辨率，窄带方案物理上做不到），角度用 DW3000 的 PDoA 或多天线 AoA，纯 BLE RSSI 方案只能拿基础分。分区判定 0.2 m 比径向 0.3 m 还严，说明考的不是单次测量精度而是边界处的滤波稳定性。2020 年赛区赛 A 题「无线运动传感器节点设计」虽然主考低功耗无线节点，但同样要处理"射频链路 + 传感数据 + 功耗预算"的整体权衡，天线与射频前端的调试经验是共通的。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是买回模块直接测距，读数系统性偏几十米——那是天线延迟没标（见第 09 条）。二是模块贴在金属板或电池上方，天线方向图被严重畸变，UWB 天线周围必须留净空区（至少 10 mm 无铜、无金属）。三是标签和基站天线极化方向不一致（一个立着一个躺着），接收功率掉 10 dB 以上，测距抖动加倍。四是 PDoA 两根天线的射频走线不等长，出厂就带固定角度偏差，必须在转台上做 −60°…+60° 的标定曲线。五是把人站在链路中间当作"正常工况"，NLOS 下不做检测直接送入最小二乘，一个坏测量就把整个解拉偏——务必加 NLOS 判据 + RANSAC 或加权最小二乘。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-06">
+  <div class="k-h">
+    <span class="k-no">06</span>
+    <h3>声学链路：换能器驱动与多通道同步采样</h3>
+  </div>
+  <div class="k-tags"><span class="tag">超声收发切换</span><span class="tag">MEMS 麦克风</span><span class="tag">同步采样</span><span class="tag">TGC</span><span class="tag">射频同步触发</span></div>
+  <div class="k-b">
+    <p><b class="lead">声学定位的电路难点有两个：发射端要够大的驱动幅度，接收端要够干净的多通道同步。</b>40 kHz 分体式换能器发射端典型做法是 MCU 出 40 kHz 方波 → 推挽或 H 桥 → 变压器升压，把峰峰值做到 20–40 V<sub>pp</sub>，声压随电压线性上升，直接决定作用距离。单端 5 V 驱动只能测 1 m 内，H 桥（双倍摆幅）+ 小型升压变压器（1:5）能把有效距离推到 4–8 m。</p>
+    <p>接收端是微伏到毫伏量级，需要两级放大共 60–80 dB：一级低噪声运放（NE5532/OPA2350 一类，注意带宽增益积要 ≥ 增益 × 40 kHz × 10）+ 40 kHz 带通（Q 取 5–10，太窄会拖长响应包络、损害时延精度）+ 包络检波或直接高速采样。想要高时延精度就<b>不要用包络检波</b>——包络会引入几百微秒的群延迟，应该直接 ADC 采原始波形，交给 GCC 或匹配滤波处理。</p>
+    <p>回波幅度按 <code>1/d<sup>2</sup></code>（球面扩散）叠加空气吸收（40 kHz 时约 1.2 dB/m）快速下降，动态范围可达 60 dB，固定增益必然要么近处饱和要么远处淹没。解法是<b>时间增益补偿（TGC）</b>：发射后按时间用 DAC 或数控增益放大器（VCA810、AD8331）线性抬升增益，斜率大致按 40·lg(d) 走。</p>
+    <ul class="k-list">
+      <li><b>收发切换</b>：同一只换能器收发时，发射高压会打穿接收前级，必须加背靠背二极管钳位 + 模拟开关（如 CD4066/TS5A 系列）在发射期间断开接收通路，并在发射结束后延时 0.5–1 ms 再使能接收，避开振铃盲区。分体式收发头（收发各一只）省掉这套电路，电赛首选。</li>
+      <li><b>麦克风阵列</b>：驻极体（ECM）便宜但一致性差（灵敏度分散 ±3 dB，相位一致性无保证）；数字 MEMS（如 ICS-43434、INMP441，I²S/PDM 输出）的最大优势是<b>多路共用同一 BCLK/WS，天然采样同步</b>，通道间相位一致性厂家给保证，是做 TDoA 阵列的正确选择。两路 I²S 麦克风可以共用一条数据线（L/R 选择），4 路用两组 I²S 或一片 PDM 多路接口。</li>
+      <li><b>同步采样</b>：如果用模拟麦克风 + MCU ADC，必须用同步采样 ADC（如 AD7606、ADS131）或多个 ADC 共用同一采样触发；用同一片 ADC 轮询扫描会引入固定通道偏斜，48 kHz 下每差一个通道就是 7 mm 的距离差误差——如果非用不可，务必测出偏斜量并在软件里减掉。</li>
+    </ul>
+    <p>TDoA 只需要接收阵元之间同步，不需要和发射端同步；但如果要测<b>绝对</b>飞行时间（ToF），发射与接收必须共时基。信标类题目的标准做法是<b>射频同步触发</b>：信标同时发出一个 2.4 GHz（nRF24L01）或 433 MHz 的触发包，电磁波传播时间在 3 m 内只有 10 ns，相对声波的毫秒级完全可忽略，接收端收到射频包即启动计时器，声波到达时停止。这是电赛超声定位题最常用、最稳的架构。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 J 题「超声信标定位系统」正是上述"射频触发 + 超声测距 + 阵列 TDoA"架构的直接映射：基本要求的定点定位靠 ToF 就能过，发挥部分的移动跟踪与更高精度必须解决动态范围（TGC）和多通道同步。2023 年国赛 F 题「基于声传播的智能定位系统」与 2022 年 7 月赛区赛 E 题「声源定位跟踪系统」考的是被动接收侧——没有发射端可控，只能靠麦克风阵列做 TDoA，此时通道一致性就是全部，数字 MEMS 阵列几乎是唯一稳妥选择。2023 年国赛 K 题「辨音识键奏乐系统」对阵列没要求，但对单通道音频前端的信噪比与不失真动态范围要求很高。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是发射级和接收级共地平面且靠得近，发射瞬间地弹把接收前级打饱和，恢复要几毫秒——发射与接收要分地、单点连接，接收前级远离升压变压器。二是带通滤波 Q 值取到 20 以上，虽然信噪比好看，但包络被拉长几百微秒，时延测量反而变差。三是麦克风阵列的几何尺寸测量马虎，阵元间距标称 5 cm 实际 4.8 cm，直接变成角度系统误差——用游标卡尺测并写进程序，别信 PCB 丝印。四是 I²S 麦克风的启动瞬态（上电后前 20–50 ms 输出无效），采集前要丢弃。五是采样率取得刚好等于 2 倍信号频率，抗混叠余量为零，40 kHz 超声至少采 200 kHz。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-07">
+  <div class="k-h">
+    <span class="k-no">07</span>
+    <h3>光学感知：可见光通信与光电开关</h3>
+  </div>
+  <div class="k-tags"><span class="tag">VLC</span><span class="tag">光电二极管</span><span class="tag">跨阻放大</span><span class="tag">漫反射光电开关</span><span class="tag">调制解调</span></div>
+  <div class="k-b">
+    <p><b class="lead">可见光定位（VLP）的做法是把若干盏 LED 各自用不同频率或不同码调制，接收端用光电二极管解出每盏灯的强度或相位，再按光强模型或 TDoA 解位置。</b>关键在于"调制"二字——不调制就无法区分光源、也无法抑制环境光。最简单可靠的方案是<b>频分</b>：每盏 LED 各自用 1 kHz、2 kHz、3 kHz…的方波调制其亮度（调制深度 20%–50%，肉眼看不出闪烁），接收端采样后做 FFT 或多路数字锁相，各频点幅度即各灯的到达光强。</p>
+    <p>接收前端是跨阻放大器（TIA）：光电二极管（如 BPW34，有效面积 7.5 mm²，灵敏度约 0.6 A/W @900 nm）零偏或反偏工作，电流灌进运放反相端，输出电压为</p>
+    <div class="k-formula">
+      <div class="f">V<sub>out</sub> = I<sub>PD</sub> · R<sub>f</sub>　,　带宽 f<sub>−3dB</sub> ≈ 1 / (2π·R<sub>f</sub>·C<sub>in</sub>)　,　C<sub>f</sub> ≈ √( C<sub>in</sub> / (2π·R<sub>f</sub>·GBW) )</div>
+      <div class="fn">R<sub>f</sub> 反馈电阻（常取 100 kΩ–10 MΩ），C<sub>in</sub> 为 PD 结电容 + 运放输入电容（BPW34 零偏约 70 pF，反偏 5 V 时降到约 25 pF），C<sub>f</sub> 为保证稳定所必需的反馈补偿电容</div>
+    </div>
+    <p>这里有个必须理解的折中：<b>R<sub>f</sub> 越大增益越高，但带宽按 1/R<sub>f</sub> 下降</b>。要 10 kHz 带宽、C<sub>in</sub>=25 pF，R<sub>f</sub> 上限约 640 kΩ。想同时要增益和带宽，就给 PD 加反偏（降结电容）再选高 GBW 的运放。TIA 之后必须接<b>交流耦合 + 带通</b>，把日光/白炽灯的直流与 100 Hz 工频分量滤掉，否则强环境光会把 TIA 直接推饱和。</p>
+    <p>光强测距的模型是朗伯辐射体：</p>
+    <div class="k-formula">
+      <div class="f">P<sub>r</sub> = P<sub>t</sub> · (m+1)·A<sub>r</sub> / (2π·d<sup>2</sup>) · cos<sup>m</sup>(φ) · cos(ψ)</div>
+      <div class="fn">m 朗伯阶数（由 LED 半功率角决定，m = −ln2 / ln cos(φ<sub>1/2</sub>)），A<sub>r</sub> 接收面积，φ 发射角，ψ 入射角，d 距离</div>
+    </div>
+    <p>注意 <code>1/d<sup>2</sup></code> 意味着接收光强对距离的敏感度和 RSSI 类似——理论上比 RF 的 RSSI 好（因为 LED 光路更接近理想、无多径衰落），但同样受<b>接收面朝向 ψ</b> 强烈影响，所以 VLP 装置必须把 PD 姿态固定水平，或用三个不同朝向的 PD 联合解算。</p>
+    <p>另一类光学器件是<b>漫反射式光电开关</b>（如 E3F-DS30 系列）：发射红外 + 接收反射光，内部已带调制解调（通常 38 kHz 载波），因此天生抗环境光，输出是 NPN/PNP 开关量，检测距离 3–80 cm 可调。它不给距离值，只给"有没有物体"，把 4–8 个排成阵列，就能用<b>遮挡的先后顺序与持续时间</b>做手势时序识别，本质是状态机 + 阈值判决，完全不需要机器学习。紫外感光靶纸则是另一种思路：用 UV LED 照射，靶纸受激发光，摄像头加滤光片只收该波段，等效于把信噪比拉满。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2017 年国赛 I 题「可见光室内定位装置」是本条的原题：多盏 LED 分频调制、PD 接收、按光强或相位解位置，基本要求的定点定位靠上面的朗伯模型 + 三边解算，发挥部分对精度和抗环境光的要求把大部分队伍卡在 TIA 前端设计上。2025 年国赛 I 题「非接触式控制盘」与 2018 年赛区赛 D 题「手势识别」则是漫反射光电开关阵列的用武之地：多路开关量的时序组合 + 超声距离档位即可覆盖大部分动作，比上视觉方案稳定得多且延迟极低。2017 年国赛 P 题「简易水情检测系统」中的液位/浊度检测也常用光路透射法，同样是 LED + PD + TIA 这套链路。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是 TIA 不加反馈电容 C<sub>f</sub>，电路自激振荡，示波器上看到叠加的高频毛刺却以为是噪声——先按上式估 C<sub>f</sub>（常在 1–10 pF），再微调到阶跃响应过冲 &lt;10%。二是 PD 到 TIA 反相输入端的走线太长，拾取工频与开关电源噪声，这段走线必须短到几毫米并包地。三是用 PWM 调光的 LED 台灯当环境光做测试，其 kHz 级纹波正好落在信号带内，赛场用的是什么灯要提前问清并实测频谱。四是调制深度开太大导致 LED 明显闪烁被扣"影响照明功能"的分。五是光电开关直接对着高反射率的白墙，反射光超过阈值一直输出有效，安装时要避开背景或把灵敏度旋钮调到刚好。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-08">
+  <div class="k-h">
+    <span class="k-no">08</span>
+    <h3>视觉模组选型与"不得使用 PC"约束</h3>
+  </div>
+  <div class="k-tags"><span class="tag">OpenMV</span><span class="tag">K210</span><span class="tag">ESP32-CAM</span><span class="tag">Jetson</span><span class="tag">帧缓冲</span></div>
+  <div class="k-b">
+    <p><b class="lead">视觉模组的选择先看题目的合规约束，再看算力。</b>电赛题目常明确写"不得使用 PC / 不得使用便携式计算机 / 计算与控制必须在自制装置上完成"，这条直接排除笔记本跑 OpenCV 的路线，也让树莓派、Jetson 这类"通用计算机"处在灰色地带——保守做法是不用，实在要用也要在报告里说明它作为嵌入式模块的角色。</p>
+    <div class="k-cmp">
+      <table>
+        <thead><tr><th>模组</th><th>核心 / 算力</th><th>内存</th><th>典型能力</th><th>代价</th></tr></thead>
+        <tbody>
+          <tr><td>OpenMV H7</td><td>STM32H743 Cortex-M7 @480 MHz</td><td>1 MB SRAM + 2 MB Flash</td><td>色块、轮廓、AprilTag、模板匹配；QVGA 30 fps</td><td>跑不动检测网络；RAM 卡分辨率</td></tr>
+          <tr><td>OpenMV H7 Plus / RT</td><td>同上 / RT1062 @600 MHz</td><td>+32 MB SDRAM、32 MB Flash</td><td>可跑 TFLite Micro 小分类网，VGA 可用</td><td>吞吐仍在 0.1–0.3 GMAC/s 量级</td></tr>
+          <tr><td>K210（MaixPy）</td><td>双核 RISC-V @400 MHz + KPU 0.25 TOPS</td><td>6 MB SRAM + 2 MB KPU SRAM</td><td>MobileNet / YOLOv2-tiny 检测 10–30 fps</td><td>工具链偏门，模型须转 kmodel 且 ≤2 MB</td></tr>
+          <tr><td>ESP32-CAM</td><td>Xtensa LX6 @240 MHz</td><td>520 kB SRAM + 4 MB PSRAM</td><td>采集 + WiFi 回传、极简阈值处理</td><td>本地推理能力近乎为零</td></tr>
+          <tr><td>树莓派 / Jetson Nano</td><td>ARM A72 / A57 + GPU</td><td>2–8 GB</td><td>完整 OpenCV、实时检测</td><td>功耗大、启动慢，且可能违反"不得用 PC"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>选型时算三笔账：<b>帧缓冲内存</b>——QVGA(320×240) RGB565 一帧 150 kB，VGA 就是 600 kB，OpenMV H7 的 1 MB SRAM 装两帧就满了，所以做帧间差分/背景建模必须降到 QQVGA 或只存灰度（VGA 灰度 300 kB）。<b>处理时延</b>——传统 CV 在 M7 上处理一帧 QVGA 的阈值 + 轮廓约 10–30 ms，加上传感器曝光与传输，端到端典型 30–60 ms，这就是控制回路能拿到的最快反馈周期。<b>接口带宽</b>——模组把结果吐给主控 MCU 用 UART 时，115200 bps 每帧只能传约 100 字节，传坐标够、传图像不够；要传图必须上 SPI（几 Mbps）或直接在模组上做完决策。</p>
+    <p>架构上强烈推荐<b>"视觉模组只输出结构化结果、主控 MCU 负责运动与决策"</b>的分工：OpenMV/K210 通过 UART 吐出 <code>(类别, x, y, θ, 置信度)</code> 这样的定长帧（加帧头 + 校验），STM32 收到后跑状态机和 PID。这样调试时两边可以独立验证，也避免在 MicroPython 里写实时控制。</p>
+    <p>镜头同样是选型的一部分：OpenMV 标配约 2.8 mm 广角，视场大但畸变重、单位像素对应的实际尺寸大（测量精度低）；做测量类题应换 6–8 mm 长焦，牺牲视场换角分辨率。工作距离 1 m 时，2.8 mm 镜头一个像素约对应 1.1 mm，8 mm 镜头约 0.37 mm——直接影响能达到的测量精度。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2025 年国赛 C 题「基于单目视觉的目标物测量装置」是模组选型直接决定成绩的题：用标配广角镜头 + QVGA，1–2 m 处单像素就对应 1 mm 以上，发挥部分的精度指标物理上够不着；换长焦 + VGA 才有余量。2022 年 10 月赛区赛 D 题「盲盒识别装置」需要图案分类，OpenMV 的算力跑不动像样的分类网，K210 是更合适的选择。2024 年赛区赛 E 题「三子棋游戏装置」用 OpenMV 做棋盘格与棋子识别绰绰有余，把算力预算留给机械臂控制才是正解。2026 年赛区赛 E 题「拼图装置」要在 2 分钟内完成识别 + 拼接，视觉端每帧的处理时间必须压到 50 ms 以内，模组算力和分辨率的取舍要在方案阶段就定死。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是把模组当"黑盒"用，出问题不知道是曝光、白平衡还是算法——OpenMV 一定要先关掉自动增益和自动白平衡（<code>set_auto_gain(False)</code>、<code>set_auto_whitebal(False)</code>）并固定曝光，否则同一场景两次运行阈值就不一样。二是 MicroPython 里用 Python 循环逐像素处理，慢上百倍，必须调用 <code>image</code> 模块的 C 实现函数。三是 UART 传输不加帧头和校验，偶发丢字节后坐标解析全乱，主控还按错误坐标去抓取。四是模组供电从主控板的 3.3 V LDO 分出来，摄像头瞬态电流拉低电压导致复位——视觉模组独立供电或至少加大容量去耦。五是赛前只在实验室桌面调好，没试过实际安装高度和角度，镜头视场装上去发现拍不全。</p>
+    </div>
+  </div>
+</article>
+
+<h2 class="k-group">实现与调试</h2>
+
+<article class="k" id="k-09">
+  <div class="k-h">
+    <span class="k-no">09</span>
+    <h3>三类标定：内参、手眼与零点延迟</h3>
+  </div>
+  <div class="k-tags"><span class="tag">重投影误差</span><span class="tag">AX=XB</span><span class="tag">仿射标定</span><span class="tag">天线延迟</span><span class="tag">超声零点</span></div>
+  <div class="k-b">
+    <p><b class="lead">标定是把"传感器读数"和"物理世界"对齐的过程，几乎所有系统性误差都在这一步被消掉或被留下。</b>本赛道要做三类。</p>
+    <p><b>一、相机内参标定。</b>打印棋盘格（推荐 9×6 内角点、格边 20–25 mm）贴在硬平板上，拍 15–25 张覆盖画面四角与不同倾角的图，<code>calibrateCamera</code> 解出 f<sub>x</sub>、f<sub>y</sub>、c<sub>x</sub>、c<sub>y</sub> 和畸变系数。唯一验收标准是<b>重投影误差 RMS &lt; 0.5 px</b>（做得好 0.15–0.3 px）；超标就重标，别硬用。</p>
+    <p><b>二、手眼标定。</b>要解的是相机坐标系与机器人坐标系之间那个未知的固定变换 X。让机械臂走到两个不同位姿，各拍一次标定板：</p>
+    <div class="k-formula">
+      <div class="f">A · X = X · B</div>
+      <div class="fn">A = 机械臂末端在两个位姿之间的相对变换（由正运动学算出，已知）；B = 相机相对于标定板在两个位姿之间的相对变换（由 PnP 解出，已知）；X = 相机→末端（eye-in-hand）或相机→机器人基座（eye-to-hand）的未知固定变换</div>
+    </div>
+    <p>直观理解：从"末端"和从"相机"两条路径描述同一段刚体运动，结果必须相同，X 就是让这两条路径闭合的那个桥。旋转与平移可以分开解（Tsai-Lenz 法先解 R<sub>X</sub> 再解 t<sub>X</sub>），至少需要 <b>2 组绕不同轴的独立运动</b>，实际取 10–15 组求最小二乘。OpenCV 有 <code>calibrateHandEye</code> 直接调用。</p>
+    <p><b>实操简化做法（电赛强烈推荐）</b>：如果相机是<b>固定俯视</b>、目标都在<b>同一水平面</b>（拼图、分拣、下棋全都是这个场景），根本不需要解 AX=XB。直接标一个从像素到机器人平面坐标的<b>仿射/单应变换</b>：</p>
+    <div class="k-formula">
+      <div class="f">[ X<sub>r</sub> , Y<sub>r</sub> ]<sup>T</sup> = M · [ u , v , 1 ]<sup>T</sup>　,　M 为 2×3，6 个未知数</div>
+      <div class="fn">操作：手动示教机械臂末端依次去触碰 9–12 个已知点，记录每点的机器人坐标 (X<sub>r</sub>,Y<sub>r</sub>) 与图像中的像素 (u,v)，用最小二乘解 M；若镜头畸变明显或平面有倾斜，改用 3×3 单应矩阵（<code>findHomography</code>，8 个自由度）</div>
+    </div>
+    <p>这个做法把内参、外参、安装误差一次性全部吸收进 M，30 分钟能做完并且精度往往优于分步标定。验收方法：留 3 个点不参与拟合，用 M 预测其机器人坐标，残差应 &lt;2 mm。</p>
+    <p><b>三、零点/延迟标定。</b>超声测距的固定偏差来自换能器和电路的群延迟：把接收头放在已知距离 d<sub>0</sub>（如 1.000 m）处测得 d<sub>meas</sub>，零点 <code>t<sub>0</sub> = (d<sub>meas</sub> − d<sub>0</sub>)/c</code>，写进程序每次减掉；要更准就取 0.5/1/1.5/2/2.5 m 五个点做线性拟合，截距是零点、斜率偏离 1 说明声速取错。UWB 天线延迟同理但量级惊人：DW1000 默认天线延迟约 16400 个时间单位 ≈ 257 ns ≈ 77 m 等效距离，不标定测距完全无意义。标定方法是把两个模块放在精确已知距离（用卷尺量准，如 5.000 m），二分调整 <code>TX_ANTD/RX_ANTD</code> 寄存器，直到测量均值等于真值；一个时间单位 15.65 ps 对应 4.7 mm，所以能调到毫米级。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2026 年赛区赛 E 题「拼图装置」和 2016 年赛区赛 B 题「物品分拣搬送装置」都是"看到→抓到"的闭环，手眼标定不准表现为"识别框画得很准但吸盘每次都偏 5 mm"，直接导致抓取失败，是这类题最集中的失分点；用上面的九点仿射标定法半小时可解决。2024 年赛区赛 E 题「三子棋游戏装置」的落子精度同样吃这一条。2025 年国赛 C 题「基于单目视觉的目标物测量装置」的全部精度都建立在内参标定质量上，重投影误差 &gt;0.5 px 时发挥部分基本无望。2025 年国赛 J 题「超声信标定位系统」若不做零点标定，所有距离会带同一个固定偏差，三边解算后表现为位置整体平移。2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」要求径向误差 ≤0.3 m，UWB 天线延迟不标就是几十米的错，是这道题的第一道门槛。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是标定完之后动了摄像头（拧了一下支架、换了对焦），前功尽弃——标定结束必须用螺丝 + 热熔胶固定，并在装置上做个可快速重标的流程。二是手眼标定的机械臂位姿变化太小或只绕一个轴转，AX=XB 方程退化，必须让姿态变化覆盖不同旋转轴、角度差 ≥20°。三是九点标定时示教点全挤在画面中心一小块，外推到边缘误差成倍放大——标定点要撑满整个工作区。四是超声零点用一个距离点标，把速度误差也算进了零点，换个距离就不准，务必多点线性拟合。五是 UWB 标定在室内桌面进行，桌面反射造成多径，标定值本身就偏，应该在空旷处、天线离地 &gt;1 m 做。六是标定参数写死在代码里没有版本记录，比赛现场重标后不知道原来是多少。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-10">
+  <div class="k-h">
+    <span class="k-no">10</span>
+    <h3>抗干扰：多径首径、环境光与背景建模</h3>
+  </div>
+  <div class="k-tags"><span class="tag">首径检测</span><span class="tag">NLOS</span><span class="tag">自适应曝光</span><span class="tag">背景建模</span><span class="tag">RANSAC</span></div>
+  <div class="k-b">
+    <p><b class="lead">赛题里"不得对场地提出特殊光照要求""在正常室内环境下工作"这类措辞，就是明确告诉你干扰是评分的一部分。</b>三条战线要分别打。</p>
+    <p><b>多径与 NLOS。</b>无论声波还是电磁波，接收到的都是直射径 + 若干反射径的叠加。定位只认<b>直射径（首径）</b>，而首径往往不是最强的那个——墙面反射在某些角度能量更高。工程做法：</p>
+    <ul class="k-list">
+      <li>不取全局最大值，而是<b>前沿检测</b>：先找最大峰幅度 A<sub>max</sub>，设门限 <code>0.5·A<sub>max</sub>–0.7·A<sub>max</sub></code>，从时间轴起点向后搜第一个越过门限的位置作为首径到达时刻。</li>
+      <li>UWB 直接读 CIR 与 <code>FP_AMPL</code>/<code>CIR_PWR</code> 比值判 NLOS，低于阈值的测量丢弃或在加权最小二乘里降权。</li>
+      <li>冗余基站 + <b>RANSAC</b>：布 5–6 个基站而不是最少的 3 个，每次随机取 3 个解算，统计一致性最好的那组内点再做最小二乘，可以直接剔除 1–2 个被遮挡的坏测量。</li>
+      <li>时域约束：加卡尔曼滤波或简单的速度门限（目标不可能 20 ms 内跳 1 m），跳变值当野值丢弃。</li>
+    </ul>
+    <p><b>环境光。</b>视觉最脆弱的一环。分三层处理：</p>
+    <ul class="k-list">
+      <li><b>物理层</b>——加窄带滤光片（配合特定波长光源，如 850 nm 红外 + 850 nm 带通片），信噪比可提升一到两个数量级；或者给工作区加自带的均匀补光（题目通常允许装置自带光源，只是不允许要求场地改造）。</li>
+      <li><b>曝光层</b>——不要用摄像头的全自动曝光（AEC 会随画面内容跳变，导致同一物体两帧亮度不同）。正确做法是在画面里放一块<b>已知灰度参考区</b>（白纸或标定色卡），每帧测它的均值，用简单积分控制器调整曝光值使其稳定在目标值（如 8 位下 180），这就是一个可复现的自适应曝光。</li>
+      <li><b>算法层</b>——阈值一律用 Otsu 或自适应阈值；颜色判据放到 HSV 的 H 通道并放宽 S/V 范围；或用相邻两帧的<b>差分</b>（光源开/关各拍一帧相减）把环境光整体消掉，这招对红外补光尤其有效。</li>
+    </ul>
+    <p><b>背景建模。</b>固定相机检测运动目标时，最省算力的是<b>单帧背景差</b>：开机时目标不在场，存一帧作为背景 B，之后 <code>|I−B| &gt; T</code> 即前景。缺点是光照缓慢漂移后背景失效，补一个<b>指数遗忘更新</b>即可：</p>
+    <div class="k-formula">
+      <div class="f">B<sub>t</sub> = α · I<sub>t</sub> + (1−α) · B<sub>t−1</sub>　,　α 取 0.01–0.05</div>
+      <div class="fn">α 为学习率；只在被判为背景的像素上更新，α=0.02 时约 50 帧（1.7 s @30 fps）完成一次光照适应</div>
+    </div>
+    <p>更强的是 MOG2 混合高斯，但在 MCU 上跑不动；OpenMV 级别的硬件上，"背景差 + 形态学开运算去噪 + 面积过滤"这三步已经能应付绝大多数题。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2023 年国赛 F 题「基于声传播的智能定位系统」明确在有混响的室内环境测评，取最强径而非首径是最典型的失分方式；配合冗余麦克风 + RANSAC 才能在边角位置稳住精度。2022 年 7 月赛区赛 E 题「声源定位跟踪系统」的动态跟踪部分对野值极敏感，必须做速度门限或卡尔曼。视觉侧，2025 年国赛 C 题「基于单目视觉的目标物测量装置」与 2020 年赛区赛 G 题「非接触物体尺寸形态测量」在不同光照下测同一物体，边缘提取的稳定性直接决定测量重复性；2022 年 10 月赛区赛 D 题「盲盒识别装置」的识别率在赛场灯光下掉一大截，几乎全是自动曝光和固定阈值造成的。2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」的人体遮挡就是标准 NLOS 场景，不做首径/NLOS 判据，径向 0.3 m 指标在有人走动时必然超标。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是把抗干扰留到最后一天做，此时算法结构已经定死，加不进冗余基站或改不了光路——多径和光照的应对必须在方案阶段就写进架构（多布一两个基站、预留补光位）。二是自动曝光/自动白平衡忘了关，是视觉题第一大玄学来源。三是背景更新率 α 取太大，目标静止几秒就被"学"成背景消失了；正确做法是只在非前景区域更新。四是野值检测的阈值按实验室数据设定，赛场环境更差直接把好数据也滤掉——阈值应基于最近 N 帧的统计量（如中位数 ± 3 倍 MAD）自适应。五是测评时评委和队友站在链路上却没意识到，测试阶段就要故意做遮挡实验。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-11">
+  <div class="k-h">
+    <span class="k-no">11</span>
+    <h3>实时性预算：从时间窗倒推算法复杂度</h3>
+  </div>
+  <div class="k-tags"><span class="tag">时间预算</span><span class="tag">流水线</span><span class="tag">复杂度估算</span><span class="tag">机械臂节拍</span><span class="tag">更新率</span></div>
+  <div class="k-b">
+    <p><b class="lead">凡是题目给了限时，第一件事就是把总时间按环节拆成预算表，倒推每个环节允许多少毫秒，再据此选算法——而不是先写算法再看跑多快。</b></p>
+    <p>以"限时 2 分钟完成 N 片拼图"为例，做一张时间预算表：总 120 s，留 20% 余量即可用 96 s。若 N=9，每片 <code>96/9 ≈ 10.7 s</code>。再往下拆单片节拍：<code>取图 30 ms + 分割与顶点提取 50 ms + 特征匹配 100 ms + 逆解与轨迹规划 10 ms + 机械臂往返移动 4–6 s + 吸放动作 1–2 s</code>。可以看到<b>视觉部分不到 0.2 s，机械运动占 90% 以上</b>——这意味着优化方向根本不是"让 CNN 跑更快"，而是缩短臂的行程、提高加速度、把"取图 + 匹配"和"上一片的搬运动作"做成流水线并行。这个结论只有先做预算表才能得出。</p>
+    <div class="k-formula">
+      <div class="f">T<sub>total</sub> = T<sub>init</sub> + N · max( T<sub>vision</sub> , T<sub>motion</sub> ) + T<sub>final</sub>　（完全流水线时）</div>
+      <div class="fn">串行时是 N·(T<sub>vision</sub>+T<sub>motion</sub>)；流水线把两条支路重叠，节拍由较慢的一支决定。T<sub>init</sub> 含上电、标定加载、首帧曝光稳定（典型 1–3 s）</div>
+    </div>
+    <p>算法复杂度要在选型阶段就估：</p>
+    <ul class="k-list">
+      <li>逐像素操作（阈值、差分、颜色转换）：O(H·W)。QVGA 76800 像素，M7 上每像素约 3–10 个周期，即 0.5–1.6 ms 一遍。<b>关键结论：逐像素遍历很便宜，能做十几遍都不心疼。</b></li>
+      <li>连通域/轮廓：O(H·W) 但常数大，QVGA 上 5–15 ms。</li>
+      <li>模板匹配：O(H·W·h·w)，32×32 模板在 QVGA 上就是 7.8×10<sup>7</sup> 次操作，M7 上要 500 ms 以上——<b>必须先用轮廓/颜色把候选区缩到几个 ROI 再匹配</b>，否则一定超时。</li>
+      <li>两两特征匹配（拼图的边配对）：O(N<sup>2</sup>) 对；N=9 时只有 36 对，随便算；N=100 时 4950 对，就要加哈希或先按边长分桶剪枝。</li>
+      <li>FFT（GCC-PHAT）：O(M·log M)。M=2048 点、4 通道、每帧 6 对互相关，在 Cortex-M4F DSP 指令下约 5–15 ms，支持 30–60 Hz 更新率绰绰有余。</li>
+    </ul>
+    <p>闭环控制类题目还要看<b>端到端延迟</b>而不只是帧率：视觉链路的延迟 = 曝光时间 + 传感器读出 + 传输 + 处理 + 通信，典型 30–60 ms，最差能到 100 ms。这个延迟直接限制控制带宽——经验规则是<b>闭环带宽不超过 1/(5–10 倍延迟)</b>，50 ms 延迟对应控制带宽只有 2–4 Hz，追快速运动目标必须靠预测（常速/常加速卡尔曼外推一个延迟周期）而不是提高增益，否则一定振荡。</p>
+    <p>实测手段要简单粗暴：在每个环节前后翻转一个 GPIO，示波器直接量宽度，比在代码里打印时间戳准且不干扰。OpenMV 里用 <code>pyb.millis()</code> 打点，把每段耗时通过 UART 吐出来做成表。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2026 年赛区赛 E 题「拼图装置」的 2 分钟限时是本条最直接的考点：按上面的预算表可知瓶颈在机械运动而非视觉，队伍常见的错误是花两天优化识别、最后发现臂太慢完不成。2024 年赛区赛 E 题「三子棋游戏装置」要求人机交替落子，每一手的响应时间影响观感与评分，同样要做节拍预算。2025 年国赛 J 题「超声信标定位系统」与 2022 年 7 月赛区赛 E 题「声源定位跟踪系统」的发挥部分要跟踪移动目标，定位更新率与端到端延迟决定跟踪滞后量：目标 0.5 m/s 移动、系统延迟 100 ms 就有 5 cm 的固有滞后，必须靠外推补偿。2016 年赛区赛 B 题「物品分拣搬送装置」的整体完成时间也是评分项，流水线化是拉开差距的关键。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是只测平均耗时不测<b>最坏耗时</b>，某些帧因为噪声导致轮廓数暴增，处理时间从 30 ms 跳到 300 ms，控制回路瞬间失稳——必须限制单帧处理的候选目标数上限，超了就丢弃本帧。二是把耗时的图像处理放在定时器中断里，阻塞其他任务；应放主循环，中断只做数据搬运。三是用 <code>printf</code> 调试没关，串口阻塞几十毫秒。四是忽略机械臂的加减速时间，按最大速度算行程，实测慢一倍。五是没有留失败重试的时间余量——拼图抓空一次要能重来，预算里必须给 15%–20% 的裕度。六是把"帧率 30 fps"当成"延迟 33 ms"，实际流水线深度导致延迟可能是 3 帧即 100 ms。</p>
+    </div>
+  </div>
+</article>
+
+<article class="k" id="k-12">
+  <div class="k-h">
+    <span class="k-no">12</span>
+    <h3>常见失分：边界抖动、光照失效与误差累积</h3>
+  </div>
+  <div class="k-tags"><span class="tag">GDOP</span><span class="tag">迟滞带</span><span class="tag">误差累积</span><span class="tag">闭环校正</span><span class="tag">测评复现</span></div>
+  <div class="k-b">
+    <p><b class="lead">同一套方案，室内中心测得很准、一到边界就超标，几乎是定位题的通病，根源是几何精度衰减因子（GDOP）。</b>位置误差不等于测距误差，而是被几何放大：</p>
+    <div class="k-formula">
+      <div class="f">σ<sub>pos</sub> = GDOP · σ<sub>range</sub>　,　GDOP = √( trace[ (H<sup>T</sup>H)<sup>−1</sup> ] )</div>
+      <div class="fn">H 为各基站到目标的单位方向向量构成的几何矩阵；场地中心 GDOP 通常 1–2，靠近基站连线延长区或外侧可达 5–10</div>
+    </div>
+    <p>10 cm 的测距误差在中心给出 10–20 cm 定位误差，在边角就变成 50 cm–1 m。对策不是"提高测距精度"，而是<b>改布局</b>：基站要包住整个测试区（目标始终在基站构成的凸包内），四角布点优于一字排开；实在包不住就在边界侧增加冗余基站。方案评审时应该画一张全场 GDOP 热力图，把红色区域和题目要求的测试点位对照，提前发现问题。</p>
+    <p><b>分区判定的边界抖动</b>是另一类失分：目标停在分区线附近时，测量噪声让判决结果在两个分区之间来回跳。标准解法是<b>迟滞（施密特）+ 驻留时间</b>：</p>
+    <ul class="k-list">
+      <li>迟滞带：进入 A 区的门限设为 <code>d &lt; d<sub>0</sub> − Δ</code>，退出设为 <code>d &gt; d<sub>0</sub> + Δ</code>，Δ 取单次测量标准差的 2–3 倍（若 σ=5 cm 则 Δ 取 10–15 cm）。</li>
+      <li>驻留时间：状态切换需要连续 K 次（如 K=3–5）判决一致才生效，代价是增加 K 个周期的响应延迟，要和实时性预算一起权衡。</li>
+      <li>输出滤波：对距离/角度做中值滤波（窗长 5）再做判决，中值对野值的抑制远好于均值。</li>
+    </ul>
+    <p><b>误差累积</b>是机械类题的隐形杀手。拼图/搬运任务里每一片的定位误差如果<b>相对于上一片</b>测量，误差会随片数线性甚至随机游走式累积：n 片后偏差约 <code>σ·√n</code>（独立误差）或 <code>n·δ</code>（存在系统偏差时）。单片 2 mm 的系统偏差，第 9 片就是 18 mm，远超"顶点距离 ≤2 cm"这类指标。两条对策：</p>
+    <ul class="k-list">
+      <li><b>绝对基准</b>——所有片的目标位姿都相对于固定的世界坐标系（贴在台面上的基准标志或 AprilTag）计算，而不是相对于已放好的邻片。这是最重要的一条设计原则。</li>
+      <li><b>闭环校正</b>——每放置若干片后重新拍照，测量实际位置与目标位置的偏差，把这个偏差反馈修正后续放置；相当于把开环变闭环，能把累积项压回单次误差量级。</li>
+    </ul>
+    <p>最后是<b>测评复现性</b>：作品在自己桌上跑十次全对，评委面前跑三次错两次，通常来自——摄像头支架被搬动、电池电压下降导致舵机力矩不足、场地背景颜色不同、赛场灯光不同、开机初始化时目标已经在场内导致背景建模把它学进去。对策是做一个<b>可现场执行的开机自检与快速重标流程</b>（30 秒内完成：拍基准标志→重算像素到世界的变换→测一次已知距离验证零点→显示重投影残差），并把关键中间量显示在屏幕上，出问题能当场定位是哪一环。</p>
+
+    <div class="k-callout k-exam">
+      <b>电赛怎么考</b>
+      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」把这三类失分点全考了：分区判定误差 ≤0.2 m 比径向 0.3 m 更严，考的正是边界迟滞与滤波；测试点若布在基站围成区域之外，GDOP 放大会让本来合格的测距变成不合格的定位。2026 年赛区赛 E 题「拼图装置」明确给出顶点距离 ≤2 cm 的精度指标与 2 分钟限时，误差累积是最典型的翻车方式——必须用台面固定基准而非邻片相对定位。2016 年赛区赛 B 题「物品分拣搬送装置」与 2024 年赛区赛 E 题「三子棋游戏装置」同样受累积偏差影响。2022 年 10 月赛区赛 D 题「盲盒识别装置」和 2020 年赛区赛 F 题「简易无接触温度测量与身份识别装置」的识别率在赛场光照下掉分，是"实验室能跑、现场跑不了"的经典案例。</p>
+    </div>
+    <div class="k-callout k-trap">
+      <b>常见坑</b>
+      <p>一是只在场地中心和几个"好点位"测试，从不测边角和基站连线的延长线区域——测试点必须按题目给的网格全覆盖，并单独记录最差点。二是迟滞带 Δ 拍脑袋取值，正确做法是先静止采 200 次测量算出 σ，再取 Δ=2σ–3σ。三是滤波窗口开太长（如 20 点均值），静态精度好看但动态跟踪严重滞后，测评走动时全错。四是拼图/搬运用"贴着上一片放"的策略，看似合理实则累积误差。五是没有开机自检流程，现场出问题只能瞎调。六是电池供电的装置在长时间测试后电压下降，舵机/电机行程变化导致定位偏移，测评前务必换满电电池并测一次。七是把标定参数和阈值散落在代码各处，现场改一个参数要翻五个文件。</p>
+    </div>
+  </div>
+</article>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>参考设计方案</h2>
+    <p>按题型给出可直接落地的技术路线，含拓扑与算法选型。</p></div>
+    <ul class="plan"><li><b>无线数字钥匙（2026 C）</b>：0.3m 径向 + 10° 方位角，两个指标指向不同技术——距离用 UWB TWR（双向测距，天然抗多径且不需时钟同步）；方位角用 UWB PDoA 或多天线 AoA 阵列。低成本替代是 BLE 5.1 AoA 方案。分区判定（开锁 / 迎宾 / 感应）加迟滞带避免边界抖动。</li><li><b>超声信标定位（2025 J）</b>：信标发超声 + 同步用的射频触发；定位端多麦克风阵列做 TDoA，用 GCC-PHAT 求时延，再最小二乘解位置。声速必须按现场温度修正，否则 3m 处误差可达数厘米。</li><li><b>声传播定位（2023 F）</b>：同上思路，注意混响环境下取首径而非最强径。</li><li><b>单目视觉测量（2025 C）</b>：标定内参 → 已知目标物在同一平面 → 用单应矩阵或"已知靶面尺寸反推距离"；1–2m 距离下的边长测量精度主要受标定质量与角点提取精度限制。</li><li><b>拼图 / 分拣 / 棋类（2026 E、2024 E、2022 D、2016 B）</b>：流程统一为 —— 图像分割取碎片轮廓 → 多边形近似取顶点 → 边长与角度特征匹配（花纹题再叠加纹理匹配）→ 求解拼接位姿 → 手眼变换到机械臂坐标 → 吸附搬运。铁质碎片用电磁吸盘最省事。</li><li><b>非接触交互（2025 I、2018 D）</b>：漫反射光电开关阵列做手势时序识别 + 超声测距做距离档位，本质是状态机 + 阈值判决，不需要机器学习。</li></ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>开源工程与参考实现</h2>
+    <p>都是可以直接读源码的成熟项目。附检索关键词，方便自己继续找。</p></div>
+    <div class="repos"><div class="repo"><span class="rn">openmv/openmv</span><span class="rd">嵌入式视觉的默认答案：色块、轮廓、AprilTag、模板匹配、可跑 TFLite</span></div><div class="repo"><span class="rn">sipeed/MaixPy</span><span class="rd">K210 端侧 AI，目标检测与分类，算力优于 OpenMV</span></div><div class="repo"><span class="rn">opencv/opencv</span><span class="rd">算法原型与标定工具链（calibrateCamera / solvePnP / findHomography）</span></div><div class="repo"><span class="rn">thotro/arduino-dw1000</span><span class="rd">DW1000 UWB 模块驱动与 TWR 测距示例，定位题最常用的起点</span></div><div class="repo"><span class="rn">sipeed/TinyMaix / majianjia/nnom</span><span class="rd">超轻量 MCU 神经网络推理框架，适合无 NPU 的场景</span></div><div class="repo"><span class="rn">tensorflow/tflite-micro</span><span class="rd">端侧推理标准框架，OpenMV H7 / RT 可直接部署</span></div></div>
+    <div class="keys">检索关键词：<span class="kw">UWB two way ranging DW1000</span><span class="kw">GCC-PHAT TDOA microphone array</span><span class="kw">monocular distance measurement homography</span><span class="kw">OpenMV shape matching polygon</span><span class="kw">ultrasonic beacon localization temperature compensation</span><span class="kw">eye in hand calibration robotic arm</span></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>过关线</h2></div>
+    <div class="gate"><b>能做到这一点，这个赛道就算过了</b><br>能在一块 3m 见方的场地上，用自制装置把一个移动目标的位置实时测到 10cm 以内，并说明误差主要来自哪一环。</div>
+    <a class="otherbox" href="https://claude.ai/code/artifact/e345f0f5-e096-42ab-8733-c371f4591e81">
+      <div class="otk">其余 7 个赛道 · 回总览页选择</div>
+      <div class="otl"><span class="ot" style="--h:var(--c1)"><span class="otd"></span>电源</span><span class="ot" style="--h:var(--c2)"><span class="otd"></span>测量</span><span class="ot" style="--h:var(--c3)"><span class="otd"></span>信号处理</span><span class="ot" style="--h:var(--c4)"><span class="otd"></span>高频通信</span><span class="ot" style="--h:var(--c5)"><span class="otd"></span>控制</span><span class="ot" style="--h:var(--c6)"><span class="otd"></span>小车</span><span class="ot" style="--h:var(--c7)"><span class="otd"></span>飞行器</span></div>
+    </a>
+  </section>
+
+  <footer>
+    <a href="https://claude.ai/code/artifact/e345f0f5-e096-42ab-8733-c371f4591e81">← 电赛赛题图谱</a> · 赛道 8 / 8<br>
+    赛题来源：全国大学生电子设计竞赛培训网。知识点解析为编者归纳，非官方内容；指标细节以官方赛题原文为准。
+  </footer>
+</main></div>
