@@ -209,7 +209,7 @@ footer a{color:var(--ink-2)}
 <header class="hero"><div class="hero-in"><div class="wrap">
   <div class="eyebrow"><span class="b">17 题 / 104</span><span>12 个知识点</span><span>命题方向 1</span></div>
   <h1>电源与功率变换</h1>
-  <p>把电能从一种形式高效地变成另一种形式，并让它在负载和输入都变化时保持稳定。电赛出题密度最高、指标最硬、最不吃运气的一类——效率、纹波、调整率、THD 全是可量化的死指标。</p>
+  <p>把电能从一种形式高效地变成另一种形式，并让它在负载和输入都变化时保持稳定。电赛出题密度最高、指标最硬、最不吃运气的一类：效率、纹波、调整率、THD 全是可量化的死指标。</p>
 </div></div></header>
 
 <div class="wrap"><main>
@@ -271,7 +271,7 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是把 D = V<sub>o</sub>/V<sub>in</sub> 当成全工况成立——一旦轻载进入 DCM，同样占空比输出电压会抬高，必须要么强制 CCM（同步整流允许电感电流反向），要么在控制环里靠闭环兜住。二是 SPWM 过调制：m<sub>a</sub> &gt; 1 后输出基波不再线性增长，THD 迅速恶化，设计时给母线留 10–15% 余量，让额定输出时 m<sub>a</sub> 落在 0.8–0.9。三是先在 PLECS/ngspice 里把拓扑与调制跑通再画板，尤其三相 SVPWM 的扇区判断，仿真里 10 分钟能看出的错，实物上要烧管子才发现。</p>
+      <p>一是把 D = V<sub>o</sub>/V<sub>in</sub> 当成全工况成立。一旦轻载进入 DCM，同样占空比输出电压会抬高，必须要么强制 CCM（同步整流允许电感电流反向），要么在控制环里靠闭环兜住。二是 SPWM 过调制：m<sub>a</sub> &gt; 1 后输出基波不再线性增长，THD 迅速恶化，设计时给母线留 10–15% 余量，让额定输出时 m<sub>a</sub> 落在 0.8–0.9。三是先在 PLECS/ngspice 里把拓扑与调制跑通再画板，尤其三相 SVPWM 的扇区判断，仿真里 10 分钟能看出的错，实物上要烧管子才发现。</p>
     </div>
   </div>
 </article>
@@ -296,7 +296,7 @@ footer a{color:var(--ink-2)}
       <div class="fn">T(s) 环路增益，ω<sub>c</sub> 穿越频率（|T| = 0dB 处），PM 相位裕度，GM 幅值裕度</div>
     </div>
 
-    <p>双闭环的核心是带宽分离：电流内环快、电压外环慢，让外环看到的内环近似为增益为 1 的比例环节。工程带宽阶梯是——电流环穿越频率 f<sub>c,i</sub> ≈ f<sub>sw</sub>/10（f<sub>sw</sub> = 20kHz 时取 1.5–2kHz），电压外环 f<sub>c,v</sub> ≈ f<sub>c,i</sub>/5～1/10（取 150–400Hz）。数字控制要额外扣掉计算与 PWM 更新带来的延迟，等效为 1.5 个采样周期的纯滞后，在 f<sub>c</sub> 处产生的相移为：</p>
+    <p>双闭环的核心是带宽分离：电流内环快、电压外环慢，让外环看到的内环近似为增益为 1 的比例环节。工程带宽阶梯：电流环穿越频率 f<sub>c,i</sub> ≈ f<sub>sw</sub>/10（f<sub>sw</sub> = 20kHz 时取 1.5–2kHz），电压外环 f<sub>c,v</sub> ≈ f<sub>c,i</sub>/5～1/10（取 150–400Hz）。数字控制要额外扣掉计算与 PWM 更新带来的延迟，等效为 1.5 个采样周期的纯滞后，在 f<sub>c</sub> 处产生的相移为：</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">Δ</span><span class="mord mathnormal">φ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1.5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.5945em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">18</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∘</span></span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span></span></span></span></div>
@@ -317,7 +317,7 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>最典型的错误顺序是"先调外环再调内环"——一定要先把内环单独闭合调稳（外环给固定参考），用阶跃响应看超调 ≤ 10%、无持续振荡，再合外环。第二个坑是只在额定工况下调环路：负载电阻 R 进入 G<sub>vd</sub>，轻载时 LC 双极点 Q 值飙升，满载稳定的参数在空载可能振荡，必须在 10%、50%、100% 三个负载点各验一遍。第三个坑是忘记数字延迟，仿真里 PM 有 60°，实物只剩 30° 就开始"啸叫"。调试手法：在输出并 100–470μF 电解看是否止振，能止住说明是环路问题不是驱动问题。</p>
+      <p>最典型的错误顺序是"先调外环再调内环"。一定要先把内环单独闭合调稳（外环给固定参考），用阶跃响应看超调 ≤ 10%、无持续振荡，再合外环。第二个坑是只在额定工况下调环路：负载电阻 R 进入 G<sub>vd</sub>，轻载时 LC 双极点 Q 值飙升，满载稳定的参数在空载可能振荡，必须在 10%、50%、100% 三个负载点各验一遍。第三个坑是忘记数字延迟，仿真里 PM 有 60°，实物只剩 30° 就开始"啸叫"。调试手法：在输出并 100–470μF 电解看是否止振，能止住说明是环路问题不是驱动问题。</p>
     </div>
   </div>
 </article>
@@ -385,7 +385,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>纹波测量是最容易被扣分的：不能用普通探头带长地线（弹簧地环），必须用探头的接地弹簧或 1:1 同轴短地，示波器设 20MHz 带宽限制，否则测到的一半是探头拾取的空间辐射。第二，THD 的测量带宽要说清楚——一般算到 40 次或 50 次谐波，只算到 10 次会让数据虚好。第三，效率测量点的选取：赛题往往要求给出效率−负载曲线，10%、25%、50%、75%、100% 五个点都要测，轻载点最容易塌陷（见第 12 条）。第四，PF 不等于 cos φ，非线性负载下两者能差 0.3 以上，测 PF 一定用功率分析仪的真 PF 读数，不要用相位差换算。</p>
+      <p>纹波测量是最容易被扣分的：不能用普通探头带长地线（弹簧地环），必须用探头的接地弹簧或 1:1 同轴短地，示波器设 20MHz 带宽限制，否则测到的一半是探头拾取的空间辐射。第二，THD 的测量带宽要说清楚：一般算到 40 次或 50 次谐波，只算到 10 次会让数据虚好。第三，效率测量点的选取：赛题往往要求给出效率−负载曲线，10%、25%、50%、75%、100% 五个点都要测，轻载点最容易塌陷（见第 12 条）。第四，PF 不等于 cos φ，非线性负载下两者能差 0.3 以上，测 PF 一定用功率分析仪的真 PF 读数，不要用相位差换算。</p>
     </div>
   </div>
 </article>
@@ -449,7 +449,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>第一，用万用表/LCR 表在 1kHz、小信号下量出的电感量不等于工作电感量——粉芯在额定直流偏置下电感可能已跌 30%（叠加特性），必须查厂家的 L−I<sub>dc</sub> 曲线，或直接在电路里用示波器看电感电流波形：波形斜率在峰值附近突然变陡就是饱和了，这是最可靠的判饱和方法。第二，绕线不要"随手绕"，初次级要分层、加绝缘、三明治，否则漏感能翻三倍，反激尖峰打穿 MOSFET。第三，磁芯温升要摸：满载连续跑 15 分钟后磁芯温升超过 40K 说明 B<sub>max</sub> 取高了或频率太高，把 B 降到 0.2T 或换大一号磁芯。第四，气隙不是越大越好，气隙边缘的扩散磁通会在附近绕组里感应涡流，气隙处的绕组要退让 2–3mm 或用多段小气隙。</p>
+      <p>第一，用万用表/LCR 表在 1kHz、小信号下量出的电感量不等于工作电感量：粉芯在额定直流偏置下电感可能已跌 30%（叠加特性），必须查厂家的 L−I<sub>dc</sub> 曲线，或直接在电路里用示波器看电感电流波形：波形斜率在峰值附近突然变陡就是饱和了，这是最可靠的判饱和方法。第二，绕线不要"随手绕"，初次级要分层、加绝缘、三明治，否则漏感能翻三倍，反激尖峰打穿 MOSFET。第三，磁芯温升要摸：满载连续跑 15 分钟后磁芯温升超过 40K 说明 B<sub>max</sub> 取高了或频率太高，把 B 降到 0.2T 或换大一号磁芯。第四，气隙不是越大越好，气隙边缘的扩散磁通会在附近绕组里感应涡流，气隙处的绕组要退让 2–3mm 或用多段小气隙。</p>
     </div>
   </div>
 </article>
@@ -492,12 +492,12 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2025 国赛 A《能量回馈的变流器负载试验装置》的核心指标是"从电网只取系统损耗"——整机损耗越小得分越高（节能/效率项 20 分量级），这直接要求把双向变流器两侧的开关损耗与导通损耗都算清楚、把死区压到最小。2026 赛区赛 A《AC-AC 变换电路》的效率与输出 THD 两项互相牵制：死区取 500ns 图省事，THD 会因死区效应恶化 1–2 个百分点；死区取 50ns 又容易直通炸管，只能靠实测桥臂电流波形逐步收敛。2016 赛区赛 A《降压型直流开关稳压电源》则常在发挥部分要求提高效率或扩展输入范围，此时把普通 MOS 换成低 R<sub>ds(on)</sub> 器件 + 同步整流是最直接的加分手段。</p>
+      <p>2025 国赛 A《能量回馈的变流器负载试验装置》的核心指标是"从电网只取系统损耗"，整机损耗越小得分越高（节能/效率项 20 分量级），这直接要求把双向变流器两侧的开关损耗与导通损耗都算清楚、把死区压到最小。2026 赛区赛 A《AC-AC 变换电路》的效率与输出 THD 两项互相牵制：死区取 500ns 图省事，THD 会因死区效应恶化 1–2 个百分点；死区取 50ns 又容易直通炸管，只能靠实测桥臂电流波形逐步收敛。2016 赛区赛 A《降压型直流开关稳压电源》则常在发挥部分要求提高效率或扩展输入范围，此时把普通 MOS 换成低 R<sub>ds(on)</sub> 器件 + 同步整流是最直接的加分手段。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是只按 25℃ 的 R<sub>ds(on)</sub> 算导通损耗，实际结温 100℃ 时要乘 1.5–1.8，效率预估直接偏乐观两个点。二是死区靠"拍脑袋"设：正确做法是用差分探头同时看上下管 V<sub>gs</sub>，确认两者高电平区间无重叠且间隔留有 ≥ 50ns 余量，然后从大往小逐步减，每减一档看桥臂中点是否出现直通尖峰电流。三是驱动电阻取 0Ω 追求"快"：di/dt 过高会在寄生电感上激起振铃，可能把栅极负压打到 −10V 以下击穿。四是忽略 C<sub>oss</sub> 损耗——在 500V 母线、100kHz 下，C<sub>oss</sub> = 200pF 一个管子就有 2.5W，四个管子 10W，足以让效率差 2%。</p>
+      <p>一是只按 25℃ 的 R<sub>ds(on)</sub> 算导通损耗，实际结温 100℃ 时要乘 1.5–1.8，效率预估直接偏乐观两个点。二是死区靠"拍脑袋"设：正确做法是用差分探头同时看上下管 V<sub>gs</sub>，确认两者高电平区间无重叠且间隔留有 ≥ 50ns 余量，然后从大往小逐步减，每减一档看桥臂中点是否出现直通尖峰电流。三是驱动电阻取 0Ω 追求"快"：di/dt 过高会在寄生电感上激起振铃，可能把栅极负压打到 −10V 以下击穿。四是忽略 C<sub>oss</sub> 损耗。500V 母线、100kHz 下，C<sub>oss</sub> = 200pF 一个管子就有 2.5W，四个管子 10W，足以让效率差 2%。</p>
     </div>
   </div>
 </article>
@@ -534,7 +534,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>调试顺序必须是：先不装功率管、只给驱动板供电，用示波器（隔离/差分探头）看四路驱动波形的死区、幅值、上升沿；确认无误后再装管、母线电压从 0 慢慢升（用隔离变压器 + 调压器，从 20V 开始），全程串限流电阻（20–100Ω/50W）。跳过这一步直接上 300V 母线，炸管概率超过一半。第二个坑是自举二极管选普通 1N4007（t<sub>rr</sub> 几微秒），高频下反向恢复期间会把母线电压灌进自举电容击穿驱动 IC，必须用快恢复或超快恢复管。第三，示波器测高侧 V<sub>gs</sub> 时绝对不能用两个普通探头共地——必须用差分探头，否则一接地就短路炸板。</p>
+      <p>调试顺序必须是：先不装功率管、只给驱动板供电，用示波器（隔离/差分探头）看四路驱动波形的死区、幅值、上升沿；确认无误后再装管、母线电压从 0 慢慢升（用隔离变压器 + 调压器，从 20V 开始），全程串限流电阻（20–100Ω/50W）。跳过这一步直接上 300V 母线，炸管概率超过一半。第二个坑是自举二极管选普通 1N4007（t<sub>rr</sub> 几微秒），高频下反向恢复期间会把母线电压灌进自举电容击穿驱动 IC，必须用快恢复或超快恢复管。第三，示波器测高侧 V<sub>gs</sub> 时绝对不能用两个普通探头共地：必须用差分探头，否则一接地就短路炸板。</p>
     </div>
   </div>
 </article>
@@ -574,12 +574,12 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2025 国赛 B《单相有源电力滤波实验装置》必须实时检测非线性负载电流 i<sub>L</sub> 并提取谐波分量，采样链的带宽和相位延迟直接决定能补偿到第几次谐波——要覆盖到 13 次（650Hz）就要求采样通道 −3dB 带宽 ≥ 5kHz 且群延迟可标定，这项做不好，补偿后 THD 指标（20 分量级）就下不来。2022 赛区赛 A（7月）《单相交流电子负载》要模拟恒流/恒阻/整流性负载并保持波形跟随，电流采样精度直接对应"电流有效值误差"与"波形跟随"两条评分线。2021 国赛 B《三相 AC-DC 变换电路》的三相电流采样若各相增益不一致，会产生直流偏置和二次谐波，网侧 THD 与 PF 两项一起掉分。</p>
+      <p>2025 国赛 B《单相有源电力滤波实验装置》必须实时检测非线性负载电流 i<sub>L</sub> 并提取谐波分量，采样链的带宽和相位延迟直接决定能补偿到第几次谐波：要覆盖到 13 次（650Hz）就要求采样通道 −3dB 带宽 ≥ 5kHz 且群延迟可标定，这项做不好，补偿后 THD 指标（20 分量级）就下不来。2022 赛区赛 A（7月）《单相交流电子负载》要模拟恒流/恒阻/整流性负载并保持波形跟随，电流采样精度直接对应"电流有效值误差"与"波形跟随"两条评分线。2021 国赛 B《三相 AC-DC 变换电路》的三相电流采样若各相增益不一致，会产生直流偏置和二次谐波，网侧 THD 与 PF 两项一起掉分。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>第一，采样电阻的自感不可忽略：普通厚膜电阻在 100kHz 以上呈感性，测到的波形前沿会有尖刺，要选四端子（Kelvin）低感封装或用两只并联反向布置。第二，标定必须做——上电后先用直流电子负载/滑动变阻器在 0、25%、50%、100% 四个点记录 ADC 码值，拟合出增益与零偏写进代码，别信手册的理论值。第三，霍尔传感器的零点漂移在温升后能达到满量程的 1–2%，做恒流控制时要在每次上电（无电流状态）自动采零点。第四，CT 次级绝对不能开路，调试时先短接次级再接线，并常驻一只 TVS 或双向二极管做保护。第五，PWM 噪声混进采样最常见的表现是"电流环一闭就啸叫"，先把 ADC 触发点移到 PWM 谷点试一次，往往一步解决。</p>
+      <p>第一，采样电阻的自感不可忽略：普通厚膜电阻在 100kHz 以上呈感性，测到的波形前沿会有尖刺，要选四端子（Kelvin）低感封装或用两只并联反向布置。第二，标定必须做。上电后先用直流电子负载/滑动变阻器在 0、25%、50%、100% 四个点记录 ADC 码值，拟合出增益与零偏写进代码，别信手册的理论值。第三，霍尔传感器的零点漂移在温升后能达到满量程的 1–2%，做恒流控制时要在每次上电（无电流状态）自动采零点。第四，CT 次级绝对不能开路，调试时先短接次级再接线，并常驻一只 TVS 或双向二极管做保护。第五，PWM 噪声混进采样最常见的表现是"电流环一闭就啸叫"，先把 ADC 触发点移到 PWM 谷点试一次，往往一步解决。</p>
     </div>
   </div>
 </article>
@@ -591,7 +591,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">C2000</span><span class="tag">UCC 系列</span><span class="tag">MSPM0</span><span class="tag">硬件比较器</span><span class="tag">CBC 限流</span></div>
   <div class="k-b">
-    <p><b class="lead">控制方案分两条路：模拟专用控制器（快、稳、便宜、不灵活）与数字控制器（灵活、可做复杂算法、但受采样与计算延迟约束）。</b>选择依据是——单一拓扑固定指标就用模拟专用芯片；需要并机、谐波补偿、多模式切换、上位机交互的就必须上数字。</p>
+    <p><b class="lead">控制方案分两条路：模拟专用控制器（快、稳、便宜、不灵活）与数字控制器（灵活、可做复杂算法、但受采样与计算延迟约束）。</b>选择依据：单一拓扑固定指标就用模拟专用芯片；需要并机、谐波补偿、多模式切换、上位机交互的就必须上数字。</p>
 
     <div class="k-cmp">
       <table>
@@ -604,7 +604,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       </table>
     </div>
 
-    <p>逐周期限流（Cycle-By-Cycle, CBC）是所有功率级都该有的最后一道防线，且必须做在硬件里：电流采样信号 → 比较器同相端，DAC 或分压给出的阈值 → 反相端，比较器输出直接接到 PWM 模块的 Trip-Zone / BRK 输入，配置为"本周期立即封锁输出、下周期自动恢复"。这条路径的总延迟必须做到 ＜ 500ns（比较器传播延迟 50–100ns + PWM 封锁 1 个时钟），软件中断做不到——中断响应就已经几微秒，管子早炸了。</p>
+    <p>逐周期限流（Cycle-By-Cycle, CBC）是所有功率级都该有的最后一道防线，且必须做在硬件里：电流采样信号 → 比较器同相端，DAC 或分压给出的阈值 → 反相端，比较器输出直接接到 PWM 模块的 Trip-Zone / BRK 输入，配置为"本周期立即封锁输出、下周期自动恢复"。这条路径的总延迟必须做到 ＜ 500ns（比较器传播延迟 50–100ns + PWM 封锁 1 个时钟），软件中断做不到：中断响应就已经几微秒，管子早炸了。</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">th</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">limit</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">sense</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="ft">　　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">limit</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> <span class="ft">取额定峰值电流的</span> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1.2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">1.5</span></span></span></span> <span class="ft">倍</span></div>
@@ -615,12 +615,12 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2025 国赛 B《单相有源电力滤波实验装置》要在一个控制周期内完成谐波提取（ip-iq 或 FBD 法）+ 电流跟踪，算力和 ISR 时序是硬门槛，用低端 MCU 会被迫降低控制频率，直接压低电流环带宽，补偿效果与 THD 指标一起掉。2023 国赛 A《单相逆变器并联运行系统》要做下垂控制或主从均流，需要软件里实现有功−频率、无功−幅值的下垂系数并支持热插拔投切，这类逻辑只能用数字控制器实现，其中"任一台停机后另一台不间断供电"是明确的发挥部分评分项（10 分量级）。2021 国赛 K《照度稳定可调 LED 台灯》则相反——恒流驱动 + 照度闭环用低成本 MCU 加硬件限流就足够，把成本和功耗做低反而更容易拿分。</p>
+      <p>2025 国赛 B《单相有源电力滤波实验装置》要在一个控制周期内完成谐波提取（ip-iq 或 FBD 法）+ 电流跟踪，算力和 ISR 时序是硬门槛，用低端 MCU 会被迫降低控制频率，直接压低电流环带宽，补偿效果与 THD 指标一起掉。2023 国赛 A《单相逆变器并联运行系统》要做下垂控制或主从均流，需要软件里实现有功−频率、无功−幅值的下垂系数并支持热插拔投切，这类逻辑只能用数字控制器实现，其中"任一台停机后另一台不间断供电"是明确的发挥部分评分项（10 分量级）。2021 国赛 K《照度稳定可调 LED 台灯》则相反：恒流驱动 + 照度闭环用低成本 MCU 加硬件限流就足够，把成本和功耗做低反而更容易拿分。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>第一，把限流做在软件轮询或普通中断里——赛场上一次负载短路就是一块板子，Trip-Zone 硬件路径必须先验证：给比较器输入端手动灌入超阈值电压，用示波器确认 PWM 在 1μs 内封锁。第二，PWM 与 ADC 的触发关系没配对，采到的是开关噪声尖峰而不是电流平均值，表现为电流环增益一提就发散。第三，浮点运算写在 ISR 里但没开 FPU 或用了 double，单次 ISR 从 8μs 变成 40μs，直接超时丢中断；固定用 float 并开硬件 FPU，或直接用 CMSIS-DSP 的 arm_pid_f32。第四，上电瞬间 PWM 引脚状态不定就会直通，MCU 复位期间必须靠驱动 IC 的下拉电阻（10kΩ）把栅极拉死，并在初始化最后一步才使能 PWM 输出。</p>
+      <p>第一，把限流做在软件轮询或普通中断里。赛场上一次负载短路就是一块板子，Trip-Zone 硬件路径必须先验证：给比较器输入端手动灌入超阈值电压，用示波器确认 PWM 在 1μs 内封锁。第二，PWM 与 ADC 的触发关系没配对，采到的是开关噪声尖峰而不是电流平均值，表现为电流环增益一提就发散。第三，浮点运算写在 ISR 里但没开 FPU 或用了 double，单次 ISR 从 8μs 变成 40μs，直接超时丢中断；固定用 float 并开硬件 FPU，或直接用 CMSIS-DSP 的 arm_pid_f32。第四，上电瞬间 PWM 引脚状态不定就会直通，MCU 复位期间必须靠驱动 IC 的下拉电阻（10kΩ）把栅极拉死，并在初始化最后一步才使能 PWM 输出。</p>
     </div>
   </div>
 </article>
@@ -634,7 +634,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">换流回路</span><span class="tag">去耦</span><span class="tag">铜箔载流</span><span class="tag">热阻</span><span class="tag">Y 电容</span></div>
   <div class="k-b">
-    <p><b class="lead">功率 PCB 上真正要死磕的只有一件事：让 di/dt 最大的那个回路面积最小。</b>这个回路（换流回路 / hot loop）是——输入去耦电容正极 → 上管 → 下管 → 电容负极。回路寄生电感 L<sub>loop</sub> 在关断瞬间产生 V<sub>spike</sub> = L<sub>loop</sub>·di/dt，这就是所有电压尖峰和 EMI 的源头。</p>
+    <p><b class="lead">功率 PCB 上真正要死磕的只有一件事：让 di/dt 最大的那个回路面积最小。</b>这个回路（换流回路 / hot loop）是：输入去耦电容正极 → 上管 → 下管 → 电容负极。回路寄生电感 L<sub>loop</sub> 在关断瞬间产生 V<sub>spike</sub> = L<sub>loop</sub>·di/dt，这就是所有电压尖峰和 EMI 的源头。</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">spike</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">loop</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">di</span></span><span class="mord">/</span><span class="mord"><span class="mord mathrm">dt</span></span></span></span></span><span class="ft">　　经验值：</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathrm">PCB</span></span></span></span></span> <span class="ft">走线电感约</span> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathrm">nH</span></span><span class="mord">/</span><span class="mord"><span class="mord mathrm">mm</span></span></span></span></span></div>
@@ -664,7 +664,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>第一，只在原理图上画对、布局却把去耦电容放到板边——判断标准很简单：用手指按住换流回路，如果能在里面塞进一根手指的面积，就是太大了。第二，模拟地和功率地满板混铺，采样基准随着大电流跳动；正确做法是分区铺铜、单点在采样电阻低端汇合。第三，散热片没做绝缘和接地：TO-220 的散热片与漏极相连，涉及 220V 时必须加绝缘垫（导热硅胶片 + 绝缘套管）并把散热器可靠接保护地，否则是致命的触电风险。第四，实测尖峰的正确方法是用探头接地弹簧直接在管子漏源引脚上测，用长地线测出来的"尖峰"有一半是探头自己拾取的。</p>
+      <p>第一，只在原理图上画对、布局却把去耦电容放到板边。判断标准很简单：用手指按住换流回路，如果能在里面塞进一根手指的面积，就是太大了。第二，模拟地和功率地满板混铺，采样基准随着大电流跳动；正确做法是分区铺铜、单点在采样电阻低端汇合。第三，散热片没做绝缘和接地：TO-220 的散热片与漏极相连，涉及 220V 时必须加绝缘垫（导热硅胶片 + 绝缘套管）并把散热器可靠接保护地，否则是致命的触电风险。第四，实测尖峰的正确方法是用探头接地弹簧直接在管子漏源引脚上测，用长地线测出来的"尖峰"有一半是探头自己拾取的。</p>
     </div>
   </div>
 </article>
@@ -676,10 +676,10 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">隔离变压器</span><span class="tag">限流</span><span class="tag">泄放电阻</span><span class="tag">软启动</span><span class="tag">爬电距离</span></div>
   <div class="k-b">
-    <p><b class="lead">凡是题目里出现 220V 交流市电，安全措施不是加分项而是准入条件——做不到，人可能出事，板子一定出事。</b>四件套：隔离变压器、调压器、限流、泄放，缺一不可。</p>
+    <p><b class="lead">凡是题目里出现 220V 交流市电，安全措施就是准入条件。做不到，人可能出事，板子一定出事。</b>四件套：隔离变压器、调压器、限流、泄放，缺一不可。</p>
 
     <ul class="k-list">
-      <li><b>隔离变压器（必须）</b>：1:1 隔离变压器（500VA–1kVA 常用）把被测电路与市电中线断开，这样示波器接地夹接到电路任意点都不会造成短路和触电。<b>没有隔离变压器时，绝对不要把示波器地夹接到强电电路上</b>——示波器地是接大地的，一夹就是相线对地短路，会打出火花并可能击穿仪器。</li>
+      <li><b>隔离变压器（必须）</b>：1:1 隔离变压器（500VA–1kVA 常用）把被测电路与市电中线断开，这样示波器接地夹接到电路任意点都不会造成短路和触电。<b>没有隔离变压器时，绝对不要把示波器地夹接到强电电路上</b>：示波器地是接大地的，一夹就是相线对地短路，会打出火花并可能击穿仪器。</li>
       <li><b>调压器 + 限流</b>：调试时输入电压从 0 缓慢升到 220V，观察输入电流；串一只白炽灯（60–100W）或功率电阻（100Ω/100W）做限流，一旦下管直通，灯泡全亮而管子不炸，这是最经济的保护。</li>
       <li><b>母线泄放电阻</b>：直流母线电容（如 400V/470μF）断电后仍带致命电压，必须并泄放电阻，取值使 τ = R·C 让电压在 10s 内降到 60V 以下（安全电压）。例：C = 470μF，要求 3τ ＜ 10s 即 τ ＜ 3.3s，R ≤ 7kΩ；同时校核功耗 P = V<sub>dc</sub><sup>2</sup>/R = 400<sup>2</sup>/7k ≈ 23W，需分成多只串联的 2W 电阻或把 τ 放宽到 10s（R = 20kΩ，P = 8W）。<b>每次上手前先用万用表实测母线电压 ＜ 36V 再动手。</b></li>
       <li><b>爬电与电气间隙</b>：220V 输入侧的强弱电隔离带上，PCB 上开槽 + 保持 ≥ 6.4mm 爬电距离（污染等级 2、CTI 175–400 的常规 FR4）；变压器初次级之间用三重绝缘线或加挡墙胶带。</li>
@@ -711,7 +711,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>最危险也最常见的错误：没有隔离变压器就把示波器地夹接到整流后的负母线上——半波位置时这一点相对大地是 −310V，会瞬间打出电弧、烧探头、跳闸，且可能伤人。第二，以为断电就安全：470μF 母线电容在没有泄放电阻时能带电几分钟以上，务必装泄放电阻 + 上电指示 LED（LED 灭才算放完）。第三，调试时把限流灯泡取掉图"波形好看"，然后一次编程错误烧掉整个桥臂。第四，MCU 复位期间 PWM 引脚是高阻态，若驱动 IC 输入端没有 10kΩ 下拉，浮空电平可能让上下管同时导通。第五，单人调强电不安全，保持单手操作、另一只手不接触任何接地物体，并让同伴在旁边守着断电开关。</p>
+      <p>最危险也最常见的错误：没有隔离变压器就把示波器地夹接到整流后的负母线上。半波位置时这一点相对大地是 −310V，会瞬间打出电弧、烧探头、跳闸，且可能伤人。第二，以为断电就安全：470μF 母线电容在没有泄放电阻时能带电几分钟以上，务必装泄放电阻 + 上电指示 LED（LED 灭才算放完）。第三，调试时把限流灯泡取掉图"波形好看"，然后一次编程错误烧掉整个桥臂。第四，MCU 复位期间 PWM 引脚是高阻态，若驱动 IC 输入端没有 10kΩ 下拉，浮空电平可能让上下管同时导通。第五，单人调强电不安全，保持单手操作、另一只手不接触任何接地物体，并让同伴在旁边守着断电开关。</p>
     </div>
   </div>
 </article>
@@ -723,18 +723,18 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">功率分析仪</span><span class="tag">差分探头</span><span class="tag">注入法</span><span class="tag">环路分析仪</span><span class="tag">阶跃响应</span></div>
   <div class="k-b">
-    <p><b class="lead">测不出来的指标等于没有——赛场评测都是现场复测，自己的数据必须和评委的仪器对得上。</b>三类测试要各自有一套固定流程。</p>
+    <p><b class="lead">测不出来的指标等于没有：赛场评测都是现场复测，自己的数据必须和评委的仪器对得上。</b>三类测试要各自有一套固定流程。</p>
 
     <p><b>效率与 PF</b>：优先用功率分析仪（如 WT310/PA333）同时接输入与输出，直接读 P<sub>i</sub>、P<sub>o</sub>、PF、THD。没有功率分析仪时用两块四位半以上万用表分别测电压和电流，电压必须在负载端用开尔文接法测，电流用高精度串接。关键约束：<b>辅助电源与控制器的取电必须并在输入侧一起计入 P<sub>i</sub></b>，否则实测效率会虚高 1–3 个百分点。效率曲线至少测 10%、25%、50%、75%、100% 五点，每点稳定 60s 再读数（热稳定后 R<sub>ds(on)</sub> 上升，效率会比冷机低 0.5–1%）。</p>
 
-    <p><b>开关波形</b>：桥臂中点、高侧 V<sub>gs</sub>、母线电压这些不共地的信号必须用高压差分探头（如 THDP0200，带宽 200MHz、共模 1500V）；电流波形用电流探头或在回路里串一段短的电流检测环。低压信号用无源探头时必须用接地弹簧，去掉长鳄鱼夹地线——一根 15cm 的地线约 150nH，与探头 10pF 谐振在 130MHz 附近，会把干净的方波显示成剧烈振铃。示波器设 20MHz 带宽限制看纹波，全带宽看开关尖峰。</p>
+    <p><b>开关波形</b>：桥臂中点、高侧 V<sub>gs</sub>、母线电压这些不共地的信号必须用高压差分探头（如 THDP0200，带宽 200MHz、共模 1500V）；电流波形用电流探头或在回路里串一段短的电流检测环。低压信号用无源探头时必须用接地弹簧，去掉长鳄鱼夹地线。一根 15cm 的地线约 150nH，与探头 10pF 谐振在 130MHz 附近，会把干净的方波显示成剧烈振铃。示波器设 20MHz 带宽限制看纹波，全带宽看开关尖峰。</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="ft">注入法测环路：</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">−</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0502em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mord">/</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></div>
       <div class="fn">在反馈回路里串入一只 20–50Ω 的注入电阻 R<sub>inj</sub>（阻抗要远小于该点向前看的输入阻抗、远大于向后看的输出阻抗），用注入变压器把扫频信号耦合到 R<sub>inj</sub> 两端，A、B 分别是电阻两侧对地电压。扫频范围取 10Hz–100kHz（f<sub>sw</sub> 的 1/2 以内），激励幅度取输出纹波的 1–3 倍，太大会把环路推非线性</div>
     </div>
 
-    <p>没有环路分析仪（Bode 100 / E5061B）时，用<b>负载阶跃法</b>近似估裕度：让负载在 50%↔100% 之间以 1kHz 方波切换（用一只 MOSFET 加电阻做电子开关），观察输出电压的过冲与振铃。经验对照——过冲后无振铃、单调回落 ≈ PM ＞ 70°；振铃 1–2 个周期后收敛 ≈ PM ≈ 45–60°；振铃 4 个周期以上或持续振荡 ≈ PM ＜ 30°，必须重调补偿器。恢复时间 t<sub>rec</sub> 与穿越频率的粗略关系是 t<sub>rec</sub> ≈ 2～3 / f<sub>c</sub>。</p>
+    <p>没有环路分析仪（Bode 100 / E5061B）时，用<b>负载阶跃法</b>近似估裕度：让负载在 50%↔100% 之间以 1kHz 方波切换（用一只 MOSFET 加电阻做电子开关），观察输出电压的过冲与振铃。经验对照：过冲后无振铃、单调回落 ≈ PM ＞ 70°；振铃 1–2 个周期后收敛 ≈ PM ≈ 45–60°；振铃 4 个周期以上或持续振荡 ≈ PM ＜ 30°，必须重调补偿器。恢复时间 t<sub>rec</sub> 与穿越频率的粗略关系是 t<sub>rec</sub> ≈ 2～3 / f<sub>c</sub>。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
@@ -743,7 +743,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>第一，测试前先做仪器自身核对：把万用表和示波器同时接同一个已知直流源，确认读数一致；效率测量前先短接输入输出测线阻（毫欧表或四线法），把线阻压降从数据里剔除。第二，动态测试的负载切换要用电子开关而不是手动拔插，手动切换的边沿是毫秒级，测不出环路的真实响应。第三，报告里要写清测量条件（输入电压、负载、环境温度、带宽限制设置），只给一个数字评委会追问。第四，差分探头有衰减比和偏置，用前必须做零点校准和 DC 平衡，否则测得的死区和母线电压全带系统误差。第五，别在满载连续跑之前就急着测效率——冷机数据答辩时复测不出来是最尴尬的场面。</p>
+      <p>第一，测试前先做仪器自身核对：把万用表和示波器同时接同一个已知直流源，确认读数一致；效率测量前先短接输入输出测线阻（毫欧表或四线法），把线阻压降从数据里剔除。第二，动态测试的负载切换要用电子开关而不是手动拔插，手动切换的边沿是毫秒级，测不出环路的真实响应。第三，报告里要写清测量条件（输入电压、负载、环境温度、带宽限制设置），只给一个数字评委会追问。第四，差分探头有衰减比和偏置，用前必须做零点校准和 DC 平衡，否则测得的死区和母线电压全带系统误差。第五，别在满载连续跑之前就急着测效率：冷机数据答辩时复测不出来，场面很难看。</p>
     </div>
   </div>
 </article>
@@ -774,16 +774,16 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <div class="fn">P<sub>fixed</sub> 与负载无关的固定损耗，k·P<sub>o</sub><sup>2</sup> 代表随电流平方增长的导通/铜损。想把峰值效率点往轻载移，就得先砍 P<sub>fixed</sub></div>
     </div>
 
-    <p><b>② 并机环流。</b>两台逆变器并联时，输出电压幅值、相位、频率的任何微小差异都会在两机之间产生环流 I<sub>cir</sub> ≈ ΔV / (Z<sub>1</sub>+Z<sub>2</sub>)，输出阻抗只有零点几欧时，1V 的幅值差就是几安的环流，白白烧掉效率甚至触发过流。对策：主从均流（一台定电压、另一台定电流跟随）最简单但主机故障即全停；下垂控制（droop）可实现真正的对等并联与热插拔——</p>
+    <p><b>② 并机环流。</b>两台逆变器并联时，输出电压幅值、相位、频率的任何微小差异都会在两机之间产生环流 I<sub>cir</sub> ≈ ΔV / (Z<sub>1</sub>+Z<sub>2</sub>)，输出阻抗只有零点几欧时，1V 的幅值差就是几安的环流，白白烧掉效率甚至触发过流。对策：主从均流（一台定电压、另一台定电流跟随）最简单但主机故障即全停；下垂控制（droop）可实现真正的对等并联与热插拔：</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4445em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span></span></span></span><span class="ft">　　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4445em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span></span></span></span></div>
       <div class="fn">m 有功−频率下垂系数，n 无功−幅值下垂系数。工程取值：频率下垂允许 0.5–1Hz 满载偏移（m = 0.5Hz / P<sub>rated</sub>），电压下垂允许 2–5% 满载跌落。下垂系数越大均流越好但电压/频率精度越差，两者要与赛题的电压精度指标平衡</div>
     </div>
 
-    <p><b>③ 空载/轻载纹波超标。</b>DCM 下电感电流断续，输出电容的充放电节奏被打乱；再加上环路在轻载时增益变化，容易出现低频间歇振荡（打嗝），纹波从 50mV 跳到几百 mV。对策：加一只假负载（bleeder，取额定的 1–3%）、启用强制 CCM、或在轻载时切到 Burst 模式并加大输出电容。测空载纹波时也要确认不是探头拾取——把探头短接到自己的接地弹簧上看本底噪声。</p>
+    <p><b>③ 空载/轻载纹波超标。</b>DCM 下电感电流断续，输出电容的充放电节奏被打乱；再加上环路在轻载时增益变化，容易出现低频间歇振荡（打嗝），纹波从 50mV 跳到几百 mV。对策：加一只假负载（bleeder，取额定的 1–3%）、启用强制 CCM、或在轻载时切到 Burst 模式并加大输出电容。测空载纹波时也要确认不是探头拾取：把探头短接到自己的接地弹簧上看本底噪声。</p>
 
-    <p><b>④ 辅助电源功耗未计入效率。</b>控制板、驱动、风扇、显示屏合计常有 1–3W，在 100W 满载时只影响 1–3%，但在 10W 轻载时就是 10–30%。赛题若无特别说明，一律计入输入功率——而且要在设计阶段就压：MCU 用低功耗模式、显示屏用 OLED 而不是背光 LCD、驱动电源用高效 DC-DC 而不是 7805 线性稳压（7805 从 15V 降到 5V 效率只有 33%）。</p>
+    <p><b>④ 辅助电源功耗未计入效率。</b>控制板、驱动、风扇、显示屏合计常有 1–3W，在 100W 满载时只影响 1–3%，但在 10W 轻载时就是 10–30%。赛题若无特别说明，一律计入输入功率，而且要在设计阶段就压：MCU 用低功耗模式、显示屏用 OLED 而不是背光 LCD、驱动电源用高效 DC-DC 而不是 7805 线性稳压（7805 从 15V 降到 5V 效率只有 33%）。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
@@ -792,7 +792,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>第一，从设计第一天就把效率−负载曲线当成主指标来测，不要等到最后两天才发现轻载塌陷——那时改拓扑已来不及，只能加 Burst 模式补救。第二，并机调试的正确顺序：先单机各自调好电压幅值与频率精度（用同一台仪器标定，两机空载输出电压差压到 ＜ 0.5%），再用示波器同时看两机输出电压差（差分探头跨接两机输出），确认相位对齐后才允许合闸；直接合闸大概率跳保护。第三，下垂系数不要照抄论文，先设小（半个额定跌落）跑起来再逐步加大，同时观察功率分配是否收敛。第四，做一张"损耗账本"表格，把导通、开关、磁芯、铜损、驱动、辅助六项算出来求和，与实测 P<sub>i</sub> − P<sub>o</sub> 对照，差值超过 20% 说明有一项漏算了——这张表在答辩时也是最能证明"你真懂这块板子"的东西。</p>
+      <p>第一，从设计第一天就把效率−负载曲线当成主指标来测，不要等到最后两天才发现轻载塌陷，那时改拓扑已来不及，只能加 Burst 模式补救。第二，并机调试的正确顺序：先单机各自调好电压幅值与频率精度（用同一台仪器标定，两机空载输出电压差压到 ＜ 0.5%），再用示波器同时看两机输出电压差（差分探头跨接两机输出），确认相位对齐后才允许合闸；直接合闸大概率跳保护。第三，下垂系数不要照抄论文，先设小（半个额定跌落）跑起来再逐步加大，同时观察功率分配是否收敛。第四，做一张"损耗账本"表格，把导通、开关、磁芯、铜损、驱动、辅助六项算出来求和，与实测 P<sub>i</sub> − P<sub>o</sub> 对照，差值超过 20% 说明有一项漏算了，这张表答辩时也用得上。</p>
     </div>
   </div>
 </article>

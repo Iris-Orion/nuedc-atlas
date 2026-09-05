@@ -209,7 +209,7 @@ footer a{color:var(--ink-2)}
 <header class="hero"><div class="hero-in"><div class="wrap">
   <div class="eyebrow"><span class="b">10 题 / 104</span><span>12 个知识点</span><span>命题方向 6</span></div>
   <h1>移动机器人 · 小车</h1>
-  <p>轮式平台的循迹、避障、定位与协同。看似入门，实际上失分点密集在"稳定复现"上——十次跑九次成功和十次跑十次成功是两个分数段。</p>
+  <p>轮式平台的循迹、避障、定位与协同。看似入门，实际上失分点密集在"稳定复现"上：十次跑九次成功和十次跑十次成功是两个分数段。</p>
 </div></div></header>
 
 <div class="wrap"><main>
@@ -245,7 +245,7 @@ footer a{color:var(--ink-2)}
       <div class="fn">d 轮距（两驱动轮接地点间距，典型 0.12–0.18 m），D 轮径（典型 0.06–0.08 m），n 为轮端转速；反解 v = (v<sub>R</sub>+v<sub>L</sub>)/2，ω = (v<sub>R</sub>−v<sub>L</sub>)/d</div>
     </div>
 
-    <p>阿克曼车型的核心约束是<b>最小转弯半径</b>。等效自行车模型下，前轮转角 δ 与转弯半径 R 是一一对应的，δ 受舵机行程和轮罩限制（实际常见 ±25°–30°），于是 R<sub>min</sub> 被硬性钉死——这正是自动泊车题的物理瓶颈。</p>
+    <p>阿克曼车型的核心约束是<b>最小转弯半径</b>。等效自行车模型下，前轮转角 δ 与转弯半径 R 是一一对应的，δ 受舵机行程和轮罩限制（实际常见 ±25°–30°），于是 R<sub>min</sub> 被硬性钉死，这正是自动泊车题的物理瓶颈。</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">L</span><span class="mord">/</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop"><span class="mord mathrm">tan</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0379em;">δ</span><span class="mclose">)</span></span></span></span> <span class="ft">，</span> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">v</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">tan</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0379em;">δ</span><span class="mclose">)</span><span class="mord">/</span><span class="mord mathnormal">L</span></span></span></span></div>
@@ -272,7 +272,7 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① d（轮距）绝不能用卡尺量轮子外侧，要量<b>两轮接地印痕中心的距离</b>，而且橡胶轮受压变形后有效 d 比几何值大 2–5 mm，最终必须靠"原地转 10 圈看角度残差"反标定（见第 09 条）。② 别在 ω 到轮速的分解之后再各自加限幅：当 v<sub>R</sub> 超过电机最大转速被削掉时，v 与 ω 的比例就被破坏，车会跑歪。正确做法是<b>等比例缩放</b>——若 max(|v<sub>L</sub>|,|v<sub>R</sub>|) ＞ v<sub>max</sub>，把两者同乘 v<sub>max</sub>/max(...)，保住曲率不变。③ Pure Pursuit 的 L<sub>d</sub> 千万不要写死一个常数就去调 PID，先把 L<sub>d</sub>–v 关系定好再调增益，否则一换速度所有参数作废。</p>
+      <p>① d（轮距）绝不能用卡尺量轮子外侧，要量<b>两轮接地印痕中心的距离</b>，而且橡胶轮受压变形后有效 d 比几何值大 2–5 mm，最终必须靠"原地转 10 圈看角度残差"反标定（见第 09 条）。② 别在 ω 到轮速的分解之后再各自加限幅：当 v<sub>R</sub> 超过电机最大转速被削掉时，v 与 ω 的比例就被破坏，车会跑歪。正确做法是<b>等比例缩放</b>：若 max(|v<sub>L</sub>|,|v<sub>R</sub>|) ＞ v<sub>max</sub>，把两者同乘 v<sub>max</sub>/max(...)，保住曲率不变。③ Pure Pursuit 的 L<sub>d</sub> 千万不要写死一个常数就去调 PID，先把 L<sub>d</sub>–v 关系定好再调增益，否则一换速度所有参数作废。</p>
     </div>
   </div>
 </article>
@@ -284,7 +284,7 @@ footer a{color:var(--ink-2)}
   </div>
   <div class="k-tags"><span class="tag">加权重心法</span><span class="tag">PD 转向</span><span class="tag">弯道前瞻</span><span class="tag">曲率减速</span></div>
   <div class="k-b">
-    <p><b class="lead">循迹的本质是把一排传感器的读数压缩成一个标量偏差 e，再用 e 驱动 ω。</b>红外对管阵列（常见 5/7/8/13 路，间距 8–15 mm）横向排在车头，压在黑线上的管子读数高、在白底上读数低。绝不要用"哪一路触发就转多少"的查表法——那是量化的、只有几个档位，进弯必然抖。正确做法是<b>位置加权求和（重心法）</b>，把离散阵列插值成连续偏差，分辨率能做到管间距的 1/5 以下。</p>
+    <p><b class="lead">循迹的本质是把一排传感器的读数压缩成一个标量偏差 e，再用 e 驱动 ω。</b>红外对管阵列（常见 5/7/8/13 路，间距 8–15 mm）横向排在车头，压在黑线上的管子读数高、在白底上读数低。绝不要用“哪一路触发就转多少”的查表法：那是量化的、只有几个档位，进弯必然抖。正确做法是<b>位置加权求和（重心法）</b>，把离散阵列插值成连续偏差，分辨率能做到管间距的 1/5 以下。</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0269em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathrm">clamp</span></span><span class="mopen">((</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">white</span></span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">/</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">black</span></span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">white</span></span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></div>
@@ -292,9 +292,9 @@ footer a{color:var(--ink-2)}
       <div class="fn">s<sub>i</sub> 第 i 路 ADC 原始值，s<sub>white,i</sub>/s<sub>black,i</sub> 该路<b>逐通道标定</b>的白/黑基准；x<sub>i</sub> 该管相对车体中线的横向坐标（mm，如 7 路取 −45,−30,−15,0,15,30,45）；w<sub>th</sub> 取 0.3–0.5，用来判"丢线"</div>
     </div>
 
-    <p>逐通道归一化是关键：同批对管的暗电流和 LED 光效离散度可达 ±30%，不归一化就等于给每路加了不同的权重，车会天然偏向某一侧。若阵列全 0（Σw ＜ w<sub>th</sub>）判定丢线，应<b>保持上一次 e 的符号并给固定大转角搜索</b>，而不是让 e 归零直行冲出去。</p>
+    <p>逐通道归一化是关键：同批对管的暗电流和 LED 光效离散度可达 ±30%，不归一化就等于给每路加了不同的权重，车会天然偏向某一侧。若阵列全 0（Σw ＜ w<sub>th</sub>）判定丢线，应<b>保持上一次 e 的符号并给固定大转角搜索</b>；此时若让 e 归零直行，车只会冲出去。</p>
 
-    <p>转向控制用 <b>PD 就够，不要加 I</b>。循迹偏差是位置量，积分项会在长直道累积、进弯时暴冲；机械不对称造成的稳态偏差应该由第 09 条的跑偏补偿常数解决，而不是丢给 I。</p>
+    <p>转向控制用 <b>PD 就够，不要加 I</b>。循迹偏差是位置量，积分项会在长直道累积、进弯时暴冲；机械不对称造成的稳态偏差交给第 09 条的跑偏补偿常数去解决，别丢给 I。</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">ω</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.0139em;">prev</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">/</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></div>
@@ -306,12 +306,12 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2019 年国赛 B 题「巡线机器人」</b>的赛道含直角弯、锐角折线与断线段，基本要求就是"不脱线走完全程并计时"，脱线一次基本要求即不满足；加权偏差 + 曲率预减速是把 |e| 峰值压在半个管间距内的唯一办法。<b>2016 年赛区 C 题「自动循迹小车」</b>与 <b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>都是"限时跑完闭合黑线"型，成绩按圈时排序，A 题还叠加了无线供电导致的电压波动——此时 K<sub>p</sub> 若按满电整定，电量掉到 80% 后同样的 ω 指令只得到更小的实际角速度，弯道就冲出去（对策见第 10 条）。</p>
+      <p><b>2019 年国赛 B 题「巡线机器人」</b>的赛道含直角弯、锐角折线与断线段，基本要求就是"不脱线走完全程并计时"，脱线一次基本要求即不满足；加权偏差 + 曲率预减速是把 |e| 峰值压在半个管间距内的唯一办法。<b>2016 年赛区 C 题「自动循迹小车」</b>与 <b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>都是"限时跑完闭合黑线"型，成绩按圈时排序，A 题还叠加了无线供电导致的电压波动：此时 K<sub>p</sub> 若按满电整定，电量掉到 80% 后同样的 ω 指令只得到更小的实际角速度，弯道就冲出去（对策见第 10 条）。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① <b>先测再调</b>：上电第一件事是把 7 路原始 ADC 打到串口/示波器上，人手推着车横扫黑线，确认每路白/黑值的对比度 ≥ 3:1 且曲线单峰；对比度不够就调离地高度（对管典型 8–15 mm，太高信号弱、太低视场太窄）。这一步不做，后面调 PID 全是玄学。② 十字交叉点会让所有管同时变黑、重心法算出 e≈0（假直行）——必须用 Σw<sub>i</sub> ＞ 0.8·N 这个"全黑"特征单独识别为路口事件并锁存上一帧 e，见第 12 条。③ 微分项用 (e−e<sub>prev</sub>) 而不除 T<sub>s</sub> 也行，但换控制周期后 K<sub>d</sub> 必须重调，建议一开始就写成除以 T<sub>s</sub> 的标准形式。</p>
+      <p>① <b>先测再调</b>：上电第一件事是把 7 路原始 ADC 打到串口/示波器上，人手推着车横扫黑线，确认每路白/黑值的对比度 ≥ 3:1 且曲线单峰；对比度不够就调离地高度（对管典型 8–15 mm，太高信号弱、太低视场太窄）。这一步不做，后面调 PID 全是玄学。② 十字交叉点会让所有管同时变黑、重心法算出 e≈0（假直行），必须用 Σw<sub>i</sub> ＞ 0.8·N 这个"全黑"特征单独识别为路口事件并锁存上一帧 e，见第 12 条。③ 微分项用 (e−e<sub>prev</sub>) 而不除 T<sub>s</sub> 也行，但换控制周期后 K<sub>d</sub> 必须重调，建议一开始就写成除以 T<sub>s</sub> 的标准形式。</p>
     </div>
   </div>
 </article>
@@ -334,7 +334,7 @@ footer a{color:var(--ink-2)}
 
     <p><b>误差量级要心里有数</b>：纯轮式里程计在良好平地上，<b>距离误差约 1%–2%</b>（走 10 m 差 10–20 cm），<b>航向误差每 90° 转弯累积 1°–3°</b>，且航向误差会随后续行程线性放大成位置误差（θ 偏 2°，再走 3 m 就横向偏 10 cm）。打滑一次误差直接跳到 5%–10%，坡道和地毯更差。所以<b>航向必须交给 IMU</b>：用陀螺仪 Z 轴积分得 θ，编码器只提供 Δs。MPU6050/ICM42688 级别的 MEMS 陀螺零偏不稳定性约 5–20 °/h，上电前静止 2–3 s 采 500 点求零偏均值扣除后，纯积分 60 s 内航向漂移可压到 1°–2°，比双轮差分算航向好一个量级。</p>
 
-    <p>但漂移终究是无界的，因此必须做<b>重定位</b>：用场地里的已知特征把累积误差清零。可用特征按可靠性排序——</p>
+    <p>但漂移终究是无界的，因此必须做<b>重定位</b>：用场地里的已知特征把累积误差清零。可用特征按可靠性排序：</p>
 
     <div class="k-cmp">
       <table>
@@ -352,12 +352,12 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2021 年国赛 F 题「智能送药小车」</b>是航迹推算 + 重定位的教科书题：车要从药房出发，经多个十字路口到指定病房号再返回，路口数就是天然的里程计校正点——每识别一个路口就把纵向坐标硬置为该路口的标称值，否则跑完全程 8–10 m 后位置误差 15 cm 以上，末端"停在病房门口指定区域内"的指标直接丢。<b>2024 年赛区 H 题「自动行驶小车」</b>在无线的路段（或断线段）必须靠里程计盲走，此时 IMU 航向 + 编码器距离的组合能把盲走 1–2 m 的落点误差控制在 2 cm 内，纯双轮差分航向则常常偏出 5 cm。</p>
+      <p><b>2021 年国赛 F 题「智能送药小车」</b>是航迹推算 + 重定位的教科书题：车要从药房出发，经多个十字路口到指定病房号再返回，路口数就是天然的里程计校正点：每识别一个路口就把纵向坐标硬置为该路口的标称值，否则跑完全程 8–10 m 后位置误差 15 cm 以上，末端"停在病房门口指定区域内"的指标直接丢。<b>2024 年赛区 H 题「自动行驶小车」</b>在无线的路段（或断线段）必须靠里程计盲走，此时 IMU 航向 + 编码器距离的组合能把盲走 1–2 m 的落点误差控制在 2 cm 内，纯双轮差分航向则常常偏出 5 cm。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① 编码器计数<b>必须用定时器编码器模式硬件四倍频</b>，不要用外部中断软件计数：电机 300 r/min、13 ppr、减速比 30 时脉冲率约 7.8 kHz，两路四倍频 62 kHz 的中断会把 MCU 淹掉且丢脉冲，丢脉冲的里程计误差是单向的、不可标定的。② 计数变量要用 <code>int32_t</code> 并处理 16 位定时器溢出（<code>(int16_t)(cnt − cnt_prev)</code> 强制转换取差值），忘了这一步会在跑到第 32768 个脉冲时位姿瞬间跳变。③ 陀螺零偏要在<b>每次上电、车静止时</b>重新采，不要写死常数——温度变化 10 °C 零偏能漂 0.5 °/s，积分 60 s 就是 30°。</p>
+      <p>① 编码器计数<b>必须用定时器编码器模式硬件四倍频</b>，不要用外部中断软件计数：电机 300 r/min、13 ppr、减速比 30 时脉冲率约 7.8 kHz，两路四倍频 62 kHz 的中断会把 MCU 淹掉且丢脉冲，丢脉冲的里程计误差是单向的、不可标定的。② 计数变量要用 <code>int32_t</code> 并处理 16 位定时器溢出（<code>(int16_t)(cnt − cnt_prev)</code> 强制转换取差值），忘了这一步会在跑到第 32768 个脉冲时位姿瞬间跳变。③ 陀螺零偏要在<b>每次上电、车静止时</b>重新采，不要写死常数：温度变化 10 °C 零偏能漂 0.5 °/s，积分 60 s 就是 30°。</p>
     </div>
   </div>
 </article>
@@ -399,7 +399,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2025 年国赛 K 题「自动避障小车」</b>典型场景是场地内布置若干已知形状障碍、要求从起点绕障到终点并计时。此时"离线预规划 + 里程计执行 + 前向 ToF 纠偏"几乎必然快于纯反应式绕障——反应式每遇障碍要减速试探，单次绕障多花 1–2 s，全程差距可达 20%，而计时是主要评分项。只有当题目把障碍位置设为现场随机摆放时，才值得上栅格 A* 或 DWA。<b>2021 年国赛 F 题「智能送药小车」</b>的走廊拓扑是固定的，路径根本不用搜索，全部逻辑就是一个"路口计数 + 病房号匹配 + 返程反向"的状态机；很多队伍在这题上写了 A* 反而因为地图和实际尺寸对不上而失分。</p>
+      <p><b>2025 年国赛 K 题「自动避障小车」</b>典型场景是场地内布置若干已知形状障碍、要求从起点绕障到终点并计时。此时"离线预规划 + 里程计执行 + 前向 ToF 纠偏"几乎必然快于纯反应式绕障：反应式每遇障碍要减速试探，单次绕障多花 1–2 s，全程差距可达 20%，而计时是主要评分项。只有当题目把障碍位置设为现场随机摆放时，才值得上栅格 A* 或 DWA。<b>2021 年国赛 F 题「智能送药小车」</b>的走廊拓扑是固定的，路径根本不用搜索，全部逻辑就是一个"路口计数 + 病房号匹配 + 返程反向"的状态机；很多队伍在这题上写了 A* 反而因为地图和实际尺寸对不上而失分。</p>
     </div>
 
     <div class="k-callout k-trap">
@@ -429,11 +429,11 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <div class="fn">s<sub>on</sub> 为 LED 点亮时的 ADC 值，s<sub>off</sub> 为紧接着熄灭时的 ADC 值（间隔 ＜ 0.5 ms，保证环境光在这段时间内不变）；差分后残留的环境光 ≈ 0，等效抑制比可达 30–40 dB</div>
     </div>
 
-    <p>这个 "<b>亮−灭差分</b>" 是同步检波的一阶近似，用一个定时器 + ADC DMA 就能做，是性价比最高的一招：不需要任何额外硬件，只需在采样时序上多一步。带宽计算上，若解调窗 N 取 8–16 个周期、f<sub>c</sub>=5 kHz，则等效更新率仍有 300–600 Hz，完全够 200 Hz 的循迹环用。硬件上再叠加两层：<b>光学滤光片</b>（850/940 nm 带通，滤掉可见光）和<b>物理遮光罩</b>（对管周围套黑色热缩管或 3D 打印挡光筒，只留 5–8 mm 视场）。三管齐下后，白天靠窗和晚上关灯的读数差异能压到 5% 以内——这直接决定了赛前调的参数在赛场能不能用。</p>
+    <p>这个 "<b>亮−灭差分</b>" 是同步检波的一阶近似，用一个定时器 + ADC DMA 就能做，是性价比最高的一招：不需要任何额外硬件，只需在采样时序上多一步。带宽计算上，若解调窗 N 取 8–16 个周期、f<sub>c</sub>=5 kHz，则等效更新率仍有 300–600 Hz，完全够 200 Hz 的循迹环用。硬件上再叠加两层：<b>光学滤光片</b>（850/940 nm 带通，滤掉可见光）和<b>物理遮光罩</b>（对管周围套黑色热缩管或 3D 打印挡光筒，只留 5–8 mm 视场）。三管齐下后，白天靠窗和晚上关灯的读数差异能压到 5% 以内，这直接决定赛前调的参数在赛场能不能用。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>把无线电能传输和循迹放在一起，发射线圈的强磁场与开关噪声会直接串进对管的模拟前端，此时"调制 + 差分检波"不只是抗环境光，也抗这类周期性电磁干扰——把 f<sub>c</sub> 选成与无线充电开关频率（常见 100–200 kHz）无谐波关系的值，可以显著降低误触发。<b>2019 年国赛 B 题「巡线机器人」</b>的场地在赛场大厅，头顶是高频 LED 照明、四周可能有拍摄补光灯，多支队伍出现"赛前实验室跑十次全过、赛场第一次就脱线"的情况，根因几乎都是没做环境光抑制、白基准漂移导致归一化失效，脱线即基本要求不满足。</p>
+      <p><b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>把无线电能传输和循迹放在一起，发射线圈的强磁场与开关噪声会直接串进对管的模拟前端，此时"调制 + 差分检波"不只是抗环境光，也抗这类周期性电磁干扰：把 f<sub>c</sub> 选成与无线充电开关频率（常见 100–200 kHz）无谐波关系的值，可以显著降低误触发。<b>2019 年国赛 B 题「巡线机器人」</b>的场地在赛场大厅，头顶是高频 LED 照明、四周可能有拍摄补光灯，多支队伍出现"赛前实验室跑十次全过、赛场第一次就脱线"的情况，根因几乎都是没做环境光抑制、白基准漂移导致归一化失效，脱线即基本要求不满足。</p>
     </div>
 
     <div class="k-callout k-trap">
@@ -464,13 +464,13 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       </table>
     </div>
 
-    <p>超声的距离由渡越时间给出：d = c·t/2，c ≈ 331 + 0.6·T（m/s，T 为摄氏温度），20 °C 时 343 m/s，温度从 10 °C 到 35 °C 变化会带来约 4% 的系统误差——比赛环境温度稳定时可忽略，但要知道这个量级。<b>多传感器互扰</b>是超声的大坑：多个 HC-SR04 必须<b>轮流触发</b>（每个间隔 ≥ 60 ms），否则 A 收到 B 的回波，测出的距离毫无规律。三个超声轮询一圈就要 180 ms，只有 5.5 Hz，1 m/s 时相当于 18 cm 才更新一次——这就是为什么高速避障必须换 ToF。</p>
+    <p>超声的距离由渡越时间给出：d = c·t/2，c ≈ 331 + 0.6·T（m/s，T 为摄氏温度），20 °C 时 343 m/s，温度从 10 °C 到 35 °C 变化会带来约 4% 的系统误差，比赛环境温度稳定时可忽略，但要知道这个量级。<b>多传感器互扰</b>是超声的大坑：多个 HC-SR04 必须<b>轮流触发</b>（每个间隔 ≥ 60 ms），否则 A 收到 B 的回波，测出的距离毫无规律。三个超声轮询一圈就要 180 ms，只有 5.5 Hz，1 m/s 时相当于 18 cm 才更新一次，高速避障必须换 ToF 就是这个原因。</p>
 
-    <p>布局建议：<b>前向主测距用 VL53L1X（15° 窄 ROI）</b>做正前方障碍与跟车距离，<b>左右斜前 45° 各一个</b>用于绕障时的贴边和车位边界扫描。滤波用<b>中值滤波（窗口 3–5）而不是均值</b>——测距最典型的故障是偶发的野值（回波丢失时返回最大量程），均值会被野值拉走，中值直接免疫。</p>
+    <p>布局建议：<b>前向主测距用 VL53L1X（15° 窄 ROI）</b>做正前方障碍与跟车距离，<b>左右斜前 45° 各一个</b>用于绕障时的贴边和车位边界扫描。滤波用<b>中值滤波（窗口 3–5）</b>，别用均值：测距最典型的故障是偶发的野值（回波丢失时返回最大量程），均值会被野值拉走，中值直接免疫。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2025 年国赛 K 题「自动避障小车」</b>的核心指标是"不碰撞地绕过障碍并计时"，碰撞通常直接扣分甚至该项不得分。用 20 Hz 的超声在 0.8 m/s 下，相邻两次测距间车已走了 4 cm，加上 30–60 ms 的测量耗时，等效反应距离要留 15 cm 以上余量，速度上不去；换 VL53L1X（50 Hz、±5 mm）能把余量压到 5–8 cm，直接换来速度分。<b>2022 年赛区 C 题（7 月）「小车跟随行驶系统」</b>要求后车与前车保持给定车距（典型 20–50 cm 且要求波动小），测距噪声会直接变成车距波动：超声 ±1 cm 的抖动经距离环 P 增益放大成速度抖动，肉眼可见地"一顿一顿"，用 ToF 的 ±5 mm 才能跑出平顺跟随。<b>2017 年国赛 L 题「自动泊车系统」</b>用侧向测距扫描找车位边界，需要的是"边界跳变位置"的精度而非绝对距离，此时窄视场（GP2Y 或 ToF 窄 ROI）远好于锥形视场的超声——超声的 30° 锥角会把车位边界"抹平"5–10 cm。</p>
+      <p><b>2025 年国赛 K 题「自动避障小车」</b>的核心指标是"不碰撞地绕过障碍并计时"，碰撞通常直接扣分甚至该项不得分。用 20 Hz 的超声在 0.8 m/s 下，相邻两次测距间车已走了 4 cm，加上 30–60 ms 的测量耗时，等效反应距离要留 15 cm 以上余量，速度上不去；换 VL53L1X（50 Hz、±5 mm）能把余量压到 5–8 cm，直接换来速度分。<b>2022 年赛区 C 题（7 月）「小车跟随行驶系统」</b>要求后车与前车保持给定车距（典型 20–50 cm 且要求波动小），测距噪声会直接变成车距波动：超声 ±1 cm 的抖动经距离环 P 增益放大成速度抖动，肉眼可见地"一顿一顿"，用 ToF 的 ±5 mm 才能跑出平顺跟随。<b>2017 年国赛 L 题「自动泊车系统」</b>用侧向测距扫描找车位边界，需要的是"边界跳变位置"的精度而非绝对距离，此时窄视场（GP2Y 或 ToF 窄 ROI）远好于锥形视场的超声，后者的 30° 锥角会把车位边界“抹平”5–10 cm。</p>
     </div>
 
     <div class="k-callout k-trap">
@@ -497,18 +497,18 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <p>速度环用 <b>PI（不要 D）</b>：编码器测速本身就是差分，噪声大，再加微分等于放大噪声。<b>必须做积分限幅（anti-windup）</b>：当输出 u 已经饱和在 ±100% 时冻结积分累加，否则起步或堵转后积分器充满，松开时电机猛冲。测速方法在低速时要从"M 法（固定时间数脉冲）"切到"T 法（测脉冲间隔）"，或干脆把测速周期拉到 10 ms 以保证每周期至少 10 个脉冲。</p>
 
-    <p><b>电池管理</b>是最被低估的一项。两节 18650 串联（7.4 V 标称）满电 8.4 V、放电末端 6.0 V，全程电压跌 <b>28%</b>；再叠加加速瞬间的内阻压降（内阻 50–100 mΩ，2 A 电流即 0.1–0.2 V，双电机堵转瞬间可达 0.5 V 以上）。后果有两个：其一，同样的 PWM 占空比在不同电量下对应的实际转速差 20% 以上——这是第 10 条前馈补偿要解决的；其二，MCU 的 LDO 输入若被瞬时拉到欠压阈值以下会<b>复位</b>，表现为"跑着跑着重启"。</p>
+    <p><b>电池管理</b>是最被低估的一项。两节 18650 串联（7.4 V 标称）满电 8.4 V、放电末端 6.0 V，全程电压跌 <b>28%</b>；再叠加加速瞬间的内阻压降（内阻 50–100 mΩ，2 A 电流即 0.1–0.2 V，双电机堵转瞬间可达 0.5 V 以上）。后果有两个：其一，同样的 PWM 占空比在不同电量下对应的实际转速差 20% 以上，这是第 10 条前馈补偿要解决的；其二，MCU 的 LDO 输入若被瞬时拉到欠压阈值以下会<b>复位</b>，表现为"跑着跑着重启"。</p>
 
     <ul class="k-list">
       <li><b>电源分区</b>：电机功率地与 MCU/传感器数字地单点连接（在电池负极一点汇合），驱动板输入端并 470–1000 μF 电解 + 0.1 μF 陶瓷。</li>
       <li><b>逻辑供电独立</b>：MCU 用单独的 LDO/DCDC 从电池取电，输入端加二极管 + 220 μF 做<b>保持电容</b>，扛住 10–20 ms 的瞬时跌落。</li>
-      <li><b>掉压保护</b>：用 ADC 分压监测电池（分压比使满量程对应 9 V 左右），低于 6.4 V 时降低最大速度并点亮告警 LED，低于 6.0 V 停机——锂电过放一次容量就永久损失。</li>
+      <li><b>掉压保护</b>：用 ADC 分压监测电池（分压比使满量程对应 9 V 左右），低于 6.4 V 时降低最大速度并点亮告警 LED，低于 6.0 V 停机，锂电过放一次容量就永久损失。</li>
       <li><b>驱动器使能</b>（TB6612 的 STBY、DRV8833 的 nSLEEP）上电默认应是禁用态并加下拉电阻，否则 MCU 复位瞬间引脚浮空可能让电机全速冲出。</li>
     </ul>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2020 年赛区 C 题「坡道行驶电动小车」</b>是驱动能力的极限考验：上坡时电机负载转矩显著增加、电流逼近堵转值，TB6612 的 1.2 A 连续能力常常不够（会触发热关断，表现为爬到一半停住），此时必须换 DRV8701 类大电流方案或降低整车重量；同时坡上的速度环若没有 anti-windup，一旦上坡失速积分器充满，到坡顶就会窜出去。<b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>的能量来自无线接收端，等效电源内阻远大于电池，负载突变时母线电压跌落更剧烈，电源分区和保持电容做得不好会直接导致 MCU 复位——这类"随机重启"在评分表上就是一次跑不完。</p>
+      <p><b>2020 年赛区 C 题「坡道行驶电动小车」</b>是驱动能力的极限考验：上坡时电机负载转矩显著增加、电流逼近堵转值，TB6612 的 1.2 A 连续能力常常不够（会触发热关断，表现为爬到一半停住），此时必须换 DRV8701 类大电流方案或降低整车重量；同时坡上的速度环若没有 anti-windup，一旦上坡失速积分器充满，到坡顶就会窜出去。<b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>的能量来自无线接收端，等效电源内阻远大于电池，负载突变时母线电压跌落更剧烈，电源分区和保持电容做得不好会直接导致 MCU 复位，这类“随机重启”在评分表上就是一次跑不完。</p>
     </div>
 
     <div class="k-callout k-trap">
@@ -525,10 +525,10 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">STM32</span><span class="tag">MSPM0</span><span class="tag">OpenMV</span><span class="tag">K210</span></div>
   <div class="k-b">
-    <p><b class="lead">正确的架构是"MCU 管实时闭环、视觉模块管识别"，两者用串口低频通信，各自独立可测。</b>不要试图在一颗 MCU 上又跑图像又跑控制环——图像处理的耗时是抖动的（十几毫秒到上百毫秒），一旦阻塞了 5 ms 的控制周期，闭环就会震荡甚至发散。</p>
+    <p><b class="lead">正确的架构是"MCU 管实时闭环、视觉模块管识别"，两者用串口低频通信，各自独立可测。</b>不要试图在一颗 MCU 上又跑图像又跑控制环：图像处理的耗时是抖动的（十几毫秒到上百毫秒），一旦阻塞了 5 ms 的控制周期，闭环就会震荡甚至发散。</p>
 
     <ul class="k-list">
-      <li><b>主控</b>：STM32F4（168 MHz、带 FPU、定时器资源丰富）是最稳的选择——四个定时器分别做双路编码器、双路 PWM，加 ADC+DMA 扫描红外阵列。MSPM0（80 MHz Cortex-M0+）近年在电赛中大量出现（TI 赞助），资源够用但无 FPU，控制环里要注意用定点或限制浮点运算量。</li>
+      <li><b>主控</b>：STM32F4（168 MHz、带 FPU、定时器资源丰富）是最稳的选择：四个定时器分别做双路编码器、双路 PWM，加 ADC+DMA 扫描红外阵列。MSPM0（80 MHz Cortex-M0+）近年在电赛中大量出现（TI 赞助），资源够用但无 FPU，控制环里要注意用定点或限制浮点运算量。</li>
       <li><b>视觉协处理</b>：OpenMV（STM32H7 + MicroPython）适合色块、AprilTag、简单模板匹配和巡线，开发极快，30–60 fps；K210（MaixPy，带 KPU 神经网络加速）适合数字/物体识别这类需要 CNN 的场景，跑 MobileNet 级模型可达 15–30 fps。</li>
     </ul>
 
@@ -540,16 +540,16 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <div class="fn">v=0.8 m/s、t=50 ms 时 Δx = 4 cm。这就是为什么视觉结论只能用于<b>决策</b>（转哪边、停不停）和<b>前瞻</b>，不能进近端跟踪的高带宽回路</div>
     </div>
 
-    <p>时序设计上，MCU 主循环用固定节拍（如 1 kHz 系统 tick，循迹环 200 Hz、速度环 200 Hz、决策 50 Hz），视觉数据到达时只更新一个带时间戳的共享变量，决策层读最新值即可。共享变量必须做<b>原子更新</b>（关中断或双缓冲），否则会读到半帧数据。视觉模块要有<b>心跳</b>：超过 200 ms 未收到帧就判定视觉失效并进入纯循迹降级模式，而不是抱着最后一个陈旧结论继续跑。</p>
+    <p>时序设计上，MCU 主循环用固定节拍（如 1 kHz 系统 tick，循迹环 200 Hz、速度环 200 Hz、决策 50 Hz），视觉数据到达时只更新一个带时间戳的共享变量，决策层读最新值即可。共享变量必须做<b>原子更新</b>（关中断或双缓冲），否则会读到半帧数据。视觉模块要有<b>心跳</b>：超过 200 ms 未收到帧就判定视觉失效并进入纯循迹降级模式，不能抱着最后一个陈旧结论继续跑。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2021 年国赛 F 题「智能送药小车」</b>要求识别病房号数字（贴在路口的阿拉伯数字）并据此选择转向，这是 OpenMV/K210 的典型分工场景：视觉只回一个 "房间号=205"，路径决策与转弯执行全在 MCU 的状态机里。若把巡线也交给视觉、MCU 只做执行器，一旦视觉帧率掉到 15 fps（光照差时曝光时间自动拉长），循迹环带宽从 200 Hz 掉到 15 Hz，直道就开始蛇形。<b>2019 年国赛 B 题「巡线机器人」</b>有断线与交叉的复杂拓扑，摄像头看远处能提前判断"前方是十字还是折线"，把这个结论提前 30–50 cm 给到状态机，比等对管压上去再判断可靠得多——但近端跟踪仍必须由红外阵列以 200 Hz 闭环。</p>
+      <p><b>2021 年国赛 F 题「智能送药小车」</b>要求识别病房号数字（贴在路口的阿拉伯数字）并据此选择转向，这是 OpenMV/K210 的典型分工场景：视觉只回一个 "房间号=205"，路径决策与转弯执行全在 MCU 的状态机里。若把巡线也交给视觉、MCU 只做执行器，一旦视觉帧率掉到 15 fps（光照差时曝光时间自动拉长），循迹环带宽从 200 Hz 掉到 15 Hz，直道就开始蛇形。<b>2019 年国赛 B 题「巡线机器人」</b>有断线与交叉的复杂拓扑，摄像头看远处能提前判断"前方是十字还是折线"，把这个结论提前 30–50 cm 给到状态机，比等对管压上去再判断可靠得多，但近端跟踪仍必须由红外阵列以 200 Hz 闭环。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① OpenMV/K210 与 MCU 之间<b>共地必须可靠</b>，且视觉模块建议独立供电（自带 LDO 从电池取电），从 MCU 板 3.3 V 引脚取电时，视觉模块的百毫安级瞬时电流会把 MCU 的 3.3 V 拉出几十毫伏纹波，污染 ADC 读数。② 视觉的白平衡/自动增益必须<b>锁死</b>（OpenMV 里 <code>set_auto_gain(False)</code>、<code>set_auto_whitebal(False)</code>），否则场地一换、阴影一晃，色块阈值全部失效。锁定前先在赛场光照下跑一次自动曝光，取到的值写死。③ 别把串口接收放在阻塞函数里，也别在中断服务里做图像结论的解析和状态跳转——中断只负责搬数据和置标志。</p>
+      <p>① OpenMV/K210 与 MCU 之间<b>共地必须可靠</b>，且视觉模块建议独立供电（自带 LDO 从电池取电），从 MCU 板 3.3 V 引脚取电时，视觉模块的百毫安级瞬时电流会把 MCU 的 3.3 V 拉出几十毫伏纹波，污染 ADC 读数。② 视觉的白平衡/自动增益必须<b>锁死</b>（OpenMV 里 <code>set_auto_gain(False)</code>、<code>set_auto_whitebal(False)</code>），否则场地一换、阴影一晃，色块阈值全部失效。锁定前先在赛场光照下跑一次自动曝光，取到的值写死。③ 别把串口接收放在阻塞函数里，也别在中断服务里做图像结论的解析和状态跳转；中断只负责搬数据和置标志。</p>
     </div>
   </div>
 </article>
@@ -563,11 +563,11 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">UMBmark</span><span class="tag">跑偏补偿</span><span class="tag">死区</span><span class="tag">前馈</span></div>
   <div class="k-b">
-    <p><b class="lead">标定不是"量一下尺寸"，而是用车自己跑出来的结果反推参数。</b>几何测量值（游标卡尺量轮径、量轮距）和有效值之间差 2%–5%，来源是轮胎受压变形、接地面滑移和装配不对称。三个参数按顺序标定，顺序错了会互相污染。</p>
+    <p><b class="lead">标定的有效参数要用车自己跑出来的结果反推，卡尺量出来的尺寸只能当参考。</b>几何测量值（游标卡尺量轮径、量轮距）和有效值之间差 2%–5%，来源是轮胎受压变形、接地面滑移和装配不对称。三个参数按顺序标定，顺序错了会互相污染。</p>
 
     <ul class="k-list">
       <li><b>① 有效轮径 D<sub>eff</sub></b>：让车沿直线跑一段实测长度 L<sub>real</sub>（用卷尺量，建议 3–5 m，越长越准），记录两轮平均脉冲数 N̄。D<sub>eff</sub> = L<sub>real</sub>·(4·P·G) / (π·N̄)。跑 3 次取均值。</li>
-      <li><b>② 左右轮径比 e<sub>d</sub></b>：这是<b>直线跑偏</b>的根源。让车按"两轮等脉冲数"开环走 3 m，量末端横向偏移 y。e<sub>d</sub> = D<sub>R</sub>/D<sub>L</sub> ≈ 1 + 2y/(3 m 的路程 · d/…) ——实操上更简单的做法是二分调整：给右轮乘一个补偿系数 k<sub>R</sub>（初值 1.000），每次跑 3 m 后按偏移方向调整 k<sub>R</sub> ±0.002，直到 3 m 偏移 ＜ 1 cm。</li>
+      <li><b>② 左右轮径比 e<sub>d</sub></b>：这是<b>直线跑偏</b>的根源。让车按"两轮等脉冲数"开环走 3 m，量末端横向偏移 y。e<sub>d</sub> = D<sub>R</sub>/D<sub>L</sub> ≈ 1 + 2y/(3 m 的路程 · d/…)。实操上更简单的做法是二分调整：给右轮乘一个补偿系数 k<sub>R</sub>（初值 1.000），每次跑 3 m 后按偏移方向调整 k<sub>R</sub> ±0.002，直到 3 m 偏移 ＜ 1 cm。</li>
       <li><b>③ 有效轮距 d<sub>eff</sub></b>：轮径比标好后，让车原地转 <b>10 整圈</b>（3600°），用 IMU 或地面标记读实际转角误差 Δθ<sub>err</sub>。d<sub>eff</sub> ← d<sub>nominal</sub> · (3600° + Δθ<sub>err</sub>) / 3600°。转 10 圈是为了把单圈的小误差放大 10 倍再除回去，分辨率提高一个量级。</li>
     </ul>
 
@@ -587,12 +587,12 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2024 年赛区 H 题「自动行驶小车」</b>常含"按指定距离行驶后停止"或"无引导段盲走"的指标，容差通常在厘米级；轮径若差 2%，走 2 m 就偏 4 cm，直接超差。而这 2% 只需要一次 5 m 直线标定就能消掉，是全赛道<b>投入产出比最高</b>的半小时。<b>2016 年赛区 C 题「自动循迹小车」</b>虽然全程有黑线引导，但左右轮径不一致会让循迹 PD 长期工作在非零偏差点上（相当于给系统一个恒定扰动），表现为直道上稳定偏向一侧、弯道一边好一边差——很多人误以为是 PID 没调好，反复调增益，真正的解是标定 k<sub>R</sub>。</p>
+      <p><b>2024 年赛区 H 题「自动行驶小车」</b>常含"按指定距离行驶后停止"或"无引导段盲走"的指标，容差通常在厘米级；轮径若差 2%，走 2 m 就偏 4 cm，直接超差。而这 2% 只需要一次 5 m 直线标定就能消掉，是全赛道<b>投入产出比最高</b>的半小时。<b>2016 年赛区 C 题「自动循迹小车」</b>虽然全程有黑线引导，但左右轮径不一致会让循迹 PD 长期工作在非零偏差点上（相当于给系统一个恒定扰动），表现为直道上稳定偏向一侧、弯道一边好一边差。很多人误以为是 PID 没调好，反复调增益，真正的解是标定 k<sub>R</sub>。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① <b>顺序不能乱</b>：必须先标轮径比（消跑偏）再标轮距（消转角），反过来的话跑偏会污染转圈实验的结果。② 标定要在<b>比赛用的地面材质</b>上做——PVC 赛道、木地板、瓷砖的滑移率不同，有效轮径能差 1%。③ 死区值会随电池电压变化（低电压时死区更大），所以死区补偿也应该跟着电压走（见第 10 条），至少要在满电和半电各测一次取中间值。④ 换轮胎、换电机、甚至只是重新拧紧一次底盘螺丝，都要重标——把标定做成一个"按住按键 3 秒进入标定模式"的固件功能，10 分钟能重做一遍，而不是重新翻代码改宏定义。</p>
+      <p>① <b>顺序不能乱</b>：必须先标轮径比（消跑偏）再标轮距（消转角），反过来的话跑偏会污染转圈实验的结果。② 标定要在<b>比赛用的地面材质</b>上做，PVC 赛道、木地板、瓷砖的滑移率不同，有效轮径能差 1%。③ 死区值会随电池电压变化（低电压时死区更大），所以死区补偿也应该跟着电压走（见第 10 条），至少要在满电和半电各测一次取中间值。④ 换轮胎、换电机、甚至只是重新拧紧一次底盘螺丝，都要重标。把标定做成一个“按住按键 3 秒进入标定模式”的固件功能，10 分钟能重做一遍，省得重新翻代码改宏定义。</p>
     </div>
   </div>
 </article>
@@ -606,7 +606,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   <div class="k-b">
     <p><b class="lead">这个赛道真正的分差不在"能不能跑"，而在"第十次还能不能跑"。</b>过关线是：同一辆车、同一套参数，连续十次跑完全程且停车偏差都在 2 cm 内。破坏复现性的因素排序是：<b>电池电压（最大）＞ 地面反光/环境光 ＞ 起始摆放位姿 ＞ 温度导致的死区与陀螺零偏漂移</b>。前两项都能用工程手段消掉。</p>
 
-    <p><b>电压前馈补偿</b>的原理：直流电机的稳态转速近似正比于电枢电压，而电枢电压 = 电池电压 × 占空比。所以"占空比"这个量根本不是转速指令，<b>电压才是</b>。把控制器输出理解成"期望电枢电压 u<sub>v</sub>"，再除以实测电池电压得到占空比，就把电压变化从闭环扰动变成了已知的前馈项：</p>
+    <p><b>电压前馈补偿</b>的原理：直流电机的稳态转速近似正比于电枢电压，而电枢电压 = 电池电压 × 占空比。所以真正对应转速指令的量是<b>电压</b>，占空比只是换算中间量。把控制器输出理解成"期望电枢电压 u<sub>v</sub>"，再除以实测电池电压得到占空比，就把电压变化从闭环扰动变成了已知的前馈项：</p>
 
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0359em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">bat</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">norm</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">nom</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">/</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">bat</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="ft">，并限幅到</span> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></div>
@@ -621,18 +621,18 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <li>定义"成功"的量化判据（跑完 + 无碰撞 + 停车偏差 ≤ 2 cm + 用时 ≤ T<sub>限</sub>），任何一条不满足即失败，不许事后解释。</li>
       <li>每次跑完记录一行：<code>序号 | 电池电压 | 用时 | 停车偏差 | 成功? | 失败位置与现象</code>。用表格或串口日志自动记，不要靠脑子。</li>
       <li>连续跑 10 次为一组，改任何参数后<b>重跑一整组</b>。改了参数只跑一次成功就说"好了"是这个赛道最常见的自欺。</li>
-      <li>10 次全过的置信度：按二项分布，10/10 成功对应真实成功率 ≥ 74% 的 95% 置信下限——也就是说 10/10 只能保证"大概率不差"，20/20 才把下限抬到 86%。所以时间允许就跑 20 次。</li>
+      <li>10 次全过的置信度：按二项分布，10/10 成功对应真实成功率 ≥ 74% 的 95% 置信下限，也就是说 10/10 只能保证“大概率不差”，20/20 才把下限抬到 86%。所以时间允许就跑 20 次。</li>
       <li>失败要按<b>位置</b>分类统计（"3 次都是在第二个弯冲出"比"成功率 70%"信息量大得多），修完再跑一组验证。</li>
     </ul>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>是电压问题的放大器：能量来自无线接收链路，母线电压随耦合距离、负载而变，不做前馈补偿就会出现"刚上电跑得快、跑两圈慢下来、弯道又冲出去"的典型症状。<b>2025 年国赛 K 题「自动避障小车」</b>和 <b>2020 年赛区 C 题「坡道行驶电动小车」</b>在测评时通常允许多次尝试但取有效成绩、且每次尝试都消耗时间与电量——若第一次跑完电池就掉到 7.0 V 而参数是按 8.4 V 整定的，第二次的表现会明显劣化，前馈补偿正是让"第二次、第三次"和第一次一样的关键；坡道题还叠加上坡负载导致的额外压降，更依赖这项。</p>
+      <p><b>2022 年赛区 A 题（10 月）「无线充电可循迹电动小车」</b>是电压问题的放大器：能量来自无线接收链路，母线电压随耦合距离、负载而变，不做前馈补偿就会出现"刚上电跑得快、跑两圈慢下来、弯道又冲出去"的典型症状。<b>2025 年国赛 K 题「自动避障小车」</b>和 <b>2020 年赛区 C 题「坡道行驶电动小车」</b>在测评时通常允许多次尝试但取有效成绩、且每次尝试都消耗时间与电量。若第一次跑完电池就掉到 7.0 V 而参数是按 8.4 V 整定的，第二次的表现会明显劣化，前馈补偿正是让"第二次、第三次"和第一次一样的关键；坡道题还叠加上坡负载导致的额外压降，更依赖这项。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① 电池 ADC 分压电阻要用 <b>1% 精度</b>并在软件里做一次一点标定（用万用表读实际电压写入偏置），否则前馈补偿本身就带 5% 的系统误差。② 前馈的低通不能太快：如果直接用瞬时 V<sub>bat</sub>，加速时电压跌落会让占空比立刻上调，与速度环 PI 叠加形成正反馈式的抖动。1 Hz 左右的低通是安全值。③ <b>每次测试前把电池充到同一水位</b>并记录起始电压——不同起始电压的测试数据混在一起，你根本分不清是参数问题还是电量问题。准备两块电池轮换充电，让每组 10 次都在 8.4→7.4 V 这个窗口内完成。④ 地面反光变化用第 05 条的调制检波 + 赛场重标定解决，不要靠"再调调 K<sub>p</sub>"。</p>
+      <p>① 电池 ADC 分压电阻要用 <b>1% 精度</b>并在软件里做一次一点标定（用万用表读实际电压写入偏置），否则前馈补偿本身就带 5% 的系统误差。② 前馈的低通不能太快：如果直接用瞬时 V<sub>bat</sub>，加速时电压跌落会让占空比立刻上调，与速度环 PI 叠加形成正反馈式的抖动。1 Hz 左右的低通是安全值。③ <b>每次测试前把电池充到同一水位</b>并记录起始电压。不同起始电压的测试数据混在一起，你根本分不清是参数问题还是电量问题。准备两块电池轮换充电，让每组 10 次都在 8.4→7.4 V 这个窗口内完成。④ 地面反光变化用第 05 条的调制检波 + 赛场重标定解决，不要靠"再调调 K<sub>p</sub>"。</p>
     </div>
   </div>
 </article>
@@ -644,7 +644,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">减速段规划</span><span class="tag">基准线检测</span><span class="tag">制动</span><span class="tag">位置闭环</span></div>
   <div class="k-b">
-    <p><b class="lead">停车偏差不要交给里程计，要交给一个物理基准（停止线、挡板、二维码）。</b>理由是第 03 条给过的量级：里程计走 5–10 m 的累积误差是 5–15 cm，而多数题目要求停车偏差 ≤ 2 cm——差了一个数量级。正确结构是<b>"里程计粗定位 → 基准线精触发 → 减速段收尾"</b>三段式。</p>
+    <p><b class="lead">停车偏差不要交给里程计，要交给一个物理基准（停止线、挡板、二维码）。</b>理由是第 03 条给过的量级：里程计走 5–10 m 的累积误差是 5–15 cm，而多数题目要求停车偏差 ≤ 2 cm，差了一个数量级。正确结构是<b>"里程计粗定位 → 基准线精触发 → 减速段收尾"</b>三段式。</p>
 
     <ul class="k-list">
       <li><b>粗定位</b>：用里程计判断"快到了"（如距标称停车点还有 40–60 cm），此时把速度从 v<sub>max</sub> 降到 v<sub>slow</sub>（典型 0.15–0.25 m/s）。这一步的容差是 ±10 cm，里程计完全够用。</li>
@@ -659,18 +659,18 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <div class="fn">这就是为什么必须先减速：v = 0.8 m/s 时 s<sub>制动</sub> ≈ 16 cm 且不可控，v = 0.2 m/s 时不到 1 cm。停车精度的 90% 由"进入基准检测时的速度"决定，而不是由控制算法决定</div>
     </div>
 
-    <p>制动方式上，<b>不要只把 PWM 置零让车滑行</b>——滑行距离受地面和电量影响极大。TB6612/DRV8833 都支持<b>短接制动（brake）</b>模式（两个半桥同时接低边，电机反电动势在绕组内形成回路，产生制动转矩），停车时先 brake 100–200 ms 再进入自由态，重复性能提高 3–5 倍。更精细的做法是触发后切到<b>位置闭环</b>：以触发点为零，用编码器算已走距离 s，做 P 控制 v<sub>ref</sub> = K·(s<sub>stop</sub> − s) 并限幅，让车"贴"到目标点——这样最终误差只取决于编码器分辨率（0.14 mm）和静摩擦死区，实测可达 ±3 mm。</p>
+    <p>制动方式上，<b>不要只把 PWM 置零让车滑行</b>：滑行距离受地面和电量影响极大。TB6612/DRV8833 都支持<b>短接制动（brake）</b>模式（两个半桥同时接低边，电机反电动势在绕组内形成回路，产生制动转矩），停车时先 brake 100–200 ms 再进入自由态，重复性能提高 3–5 倍。更精细的做法是触发后切到<b>位置闭环</b>：以触发点为零，用编码器算已走距离 s，做 P 控制 v<sub>ref</sub> = K·(s<sub>stop</sub> − s) 并限幅，让车“贴”到目标点，这样最终误差只取决于编码器分辨率（0.14 mm）和静摩擦死区，实测可达 ±3 mm。</p>
 
     <p>横向精度同理：停车前的最后 30 cm 必须保持循迹闭环有效（不要提前关掉转向控制），并且停车点前的黑线要保证是直的；若停车区无引导线，就用两侧的 ToF 测距对正墙面（左右读数差做 P 控制修正航向）。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2017 年国赛 L 题「自动泊车系统」</b>与 <b>2022 年赛区 B 题（10 月）「具有自动泊车功能的电动车」</b>的入库位置与姿态都有明确容差（车身完全在库内、与库线的距离/角度在给定范围内），且往往还要求"车轮不压线"——这时纯里程计倒库必然超差，必须用侧向 ToF 扫到库线边界作为触发基准，再按上面的三段式收尾。<b>2024 年赛区 H 题「自动行驶小车」</b>的"停在指定标志处"指标同理：把最后 50 cm 降到 0.2 m/s 再靠停止线触发，偏差能压进 1 cm；直接按里程计在 0.8 m/s 上硬停，光制动距离的离散度就有 3–5 cm。</p>
+      <p><b>2017 年国赛 L 题「自动泊车系统」</b>与 <b>2022 年赛区 B 题（10 月）「具有自动泊车功能的电动车」</b>的入库位置与姿态都有明确容差（车身完全在库内、与库线的距离/角度在给定范围内），且往往还要求“车轮不压线”，这时纯里程计倒库必然超差，必须用侧向 ToF 扫到库线边界作为触发基准，再按上面的三段式收尾。<b>2024 年赛区 H 题「自动行驶小车」</b>的"停在指定标志处"指标同理：把最后 50 cm 降到 0.2 m/s 再靠停止线触发，偏差能压进 1 cm；直接按里程计在 0.8 m/s 上硬停，光制动距离的离散度就有 3–5 cm。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① 基准线检测要有<b>防重复触发</b>：一条 2 cm 宽的停止线在 0.2 m/s 下会持续被检测 100 ms（约 20 个控制周期），必须用"上升沿 + 锁存 + 至少 30 cm 内不再触发"的逻辑，否则状态机会连跳几次。② 传感器到车体基准点的机械偏置 s<sub>offset</sub> 一定要<b>实测</b>而不是看图纸——对管阵列常常装在保险杠前方，实际前伸量和 CAD 差几毫米，直接体现在停车偏差里。③ 制动后<b>不要马上关电机使能</b>：斜面或惯性会让车再滑几毫米，保持 brake 500 ms 或直接保持位置闭环到全程结束。④ 千万别为了"看起来快"而不减速——评分表里停车偏差是硬指标，全程快 0.5 s 换不回超差扣掉的分。</p>
+      <p>① 基准线检测要有<b>防重复触发</b>：一条 2 cm 宽的停止线在 0.2 m/s 下会持续被检测 100 ms（约 20 个控制周期），必须用"上升沿 + 锁存 + 至少 30 cm 内不再触发"的逻辑，否则状态机会连跳几次。② 传感器到车体基准点的机械偏置 s<sub>offset</sub> 一定要<b>实测</b>，不能照图纸：对管阵列常常装在保险杠前方，实际前伸量和 CAD 差几毫米，直接体现在停车偏差里。③ 制动后<b>不要马上关电机使能</b>：斜面或惯性会让车再滑几毫米，保持 brake 500 ms 或直接保持位置闭环到全程结束。④ 千万别为了“看起来快”而不减速：评分表里停车偏差是硬指标，全程快 0.5 s 换不回超差扣掉的分。</p>
     </div>
   </div>
 </article>
@@ -696,18 +696,18 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       </table>
     </div>
 
-    <p>还有两个"非技术"失分点值得单列。其一是<b>起点摆放</b>：人工摆车的位姿离散度可达 ±2 cm、±3°，这个初始误差会被后续放大。做一个 3D 打印或亚克力的定位挡块（两边靠住车轮、前面顶住保险杠），把摆放离散度压到 ±2 mm，成本几乎为零。其二是<b>日志</b>：车上留一段 RAM 环形缓冲（如 2000 条 × 16 字节，只占 32 KB），以 50 Hz 记录 <code>时刻 | 状态 | e | v | ω | V<sub>bat</sub> | 传感器 raw</code>，跑完后一键从串口 dump 出来。没有日志的调试等于盲调——"刚才为什么冲出去了"这个问题，只有日志能回答。</p>
+    <p>还有两个"非技术"失分点值得单列。其一是<b>起点摆放</b>：人工摆车的位姿离散度可达 ±2 cm、±3°，这个初始误差会被后续放大。做一个 3D 打印或亚克力的定位挡块（两边靠住车轮、前面顶住保险杠），把摆放离散度压到 ±2 mm，成本几乎为零。其二是<b>日志</b>：车上留一段 RAM 环形缓冲（如 2000 条 × 16 字节，只占 32 KB），以 50 Hz 记录 <code>时刻 | 状态 | e | v | ω | V<sub>bat</sub> | 传感器 raw</code>，跑完后一键从串口 dump 出来。没有日志的调试等于盲调。“刚才为什么冲出去了”这个问题，只有日志能回答。</p>
 
     <p>上场前的最后检查表：编码器方向自检通过、电池电压 ≥ 8.2 V、赛场光照下重做过白/黑标定、定位挡块就位、连续 10 次演练全过、失败逃逸逻辑全部打开。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p><b>2019 年国赛 B 题「巡线机器人」</b>的赛道有多处交叉与断线，交叉线误判会让机器人走错分支，直接判定该项失败；断线段则考验"丢线后按上一帧 e 的符号搜索"的兜底逻辑是否健全。<b>2021 年国赛 F 题「智能送药小车」</b>要求按病房号在正确路口转弯并原路返回，一次路口误判会导致后续全部走错，且返程还要沿原路——路口识别的鲁棒性直接决定这题拿基本分还是零分。<b>2025 年国赛 K 题「自动避障小车」</b>把用时作为主要排序依据，弯道/绕障时的过度保守减速与逃逸超时都会实打实体现在成绩里。</p>
+      <p><b>2019 年国赛 B 题「巡线机器人」</b>的赛道有多处交叉与断线，交叉线误判会让机器人走错分支，直接判定该项失败；断线段则考验"丢线后按上一帧 e 的符号搜索"的兜底逻辑是否健全。<b>2021 年国赛 F 题「智能送药小车」</b>要求按病房号在正确路口转弯并原路返回，一次路口误判会导致后续全部走错，且返程还要沿原路，路口识别的鲁棒性直接决定这题拿基本分还是零分。<b>2025 年国赛 K 题「自动避障小车」</b>把用时作为主要排序依据，弯道/绕障时的过度保守减速与逃逸超时都会实打实体现在成绩里。</p>
     </div>
 
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>① 不要在赛前最后一晚"再优化一点速度"——所有失败案例里，最后时刻改参数导致复现性崩掉的占比极高。<b>冻结期</b>应该定在比赛前一天：之后只做重复演练和记录，不改代码。② 逃逸逻辑要能<b>逃到能继续跑的状态</b>，而不是逃到停机。"检测不到线 → 停车"意味着放弃全程，正确的是"检测不到线 → 保持上一帧转向搜索 1 s → 仍无则原地小角度扫描 → 再无则按里程计盲走到下一个标称路口"。③ 演练要在<b>不同时段</b>做（上午、傍晚、开灯/关灯），把环境光的变化真正跑进数据里，而不是只在实验室固定光照下刷成功率。</p>
+      <p>① 不要在赛前最后一晚“再优化一点速度”。所有失败案例里，最后时刻改参数导致复现性崩掉的占比极高。<b>冻结期</b>应该定在比赛前一天：之后只做重复演练和记录，不改代码。② 逃逸逻辑要能<b>逃到能继续跑的状态</b>，不能逃到停机。"检测不到线 → 停车"意味着放弃全程，正确的是"检测不到线 → 保持上一帧转向搜索 1 s → 仍无则原地小角度扫描 → 再无则按里程计盲走到下一个标称路口"。③ 演练要在<b>不同时段</b>做（上午、傍晚、开灯/关灯），把环境光的变化真正跑进数据里，而不是只在实验室固定光照下刷成功率。</p>
     </div>
   </div>
 </article>
@@ -728,7 +728,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 
   <section class="sec">
     <div class="sec-h"><h2>过关线</h2></div>
-    <div class="gate"><b>能做到这一点，这个赛道就算过了</b><br>同一辆车、同一套参数，连续十次跑完全程且停车偏差都在 2cm 内 —— 能做到这一点比跑得快重要得多。</div>
+    <div class="gate"><b>能做到这一点，这个赛道就算过了</b><br>同一辆车、同一套参数，连续十次跑完全程且停车偏差都在 2cm 内。能做到这一点比跑得快重要得多。</div>
     <a class="otherbox" href="../index.html">
       <div class="otk">其余 7 个赛道 · 回总览页选择</div>
       <div class="otl"><span class="ot" style="--h:var(--c1)"><span class="otd"></span>电源</span><span class="ot" style="--h:var(--c2)"><span class="otd"></span>测量</span><span class="ot" style="--h:var(--c3)"><span class="otd"></span>信号处理</span><span class="ot" style="--h:var(--c4)"><span class="otd"></span>高频通信</span><span class="ot" style="--h:var(--c5)"><span class="otd"></span>控制</span><span class="ot" style="--h:var(--c7)"><span class="otd"></span>飞行器</span><span class="ot" style="--h:var(--c8)"><span class="otd"></span>传感视觉</span></div>

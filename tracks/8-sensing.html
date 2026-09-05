@@ -237,7 +237,7 @@ footer a{color:var(--ink-2)}
   </div>
   <div class="k-tags"><span class="tag">ToF</span><span class="tag">TWR</span><span class="tag">TDoA</span><span class="tag">最小二乘</span><span class="tag">RSSI</span><span class="tag">AoA</span></div>
   <div class="k-b">
-    <p><b class="lead">定位的本质是把"时间"或"角度"换算成"距离"，再用几何约束求交点。</b>电磁波 1 ns 走 30 cm，声波 1 ms 走 34 cm——两者相差六个数量级，这决定了电磁定位必须靠专用芯片打时间戳（DW1000 的时间戳分辨率 15.65 ps，对应 4.7 mm），而声学定位用普通 ADC 采样就够。电赛里能落地的测距体制只有四种：单向 ToF（要严格同步）、双向测距 TWR（不要同步）、TDoA（只要基站间同步）、RSSI（不要任何同步但精度差）。</p>
+    <p><b class="lead">定位的本质是把"时间"或"角度"换算成"距离"，再用几何约束求交点。</b>电磁波 1 ns 走 30 cm，声波 1 ms 走 34 cm，两者相差六个数量级。这决定了电磁定位必须靠专用芯片打时间戳（DW1000 的时间戳分辨率 15.65 ps，对应 4.7 mm），而声学定位用普通 ADC 采样就够。电赛里能落地的测距体制只有四种：单向 ToF（要严格同步）、双向测距 TWR（不要同步）、TDoA（只要基站间同步）、RSSI（不要任何同步但精度差）。</p>
 
     <p>TWR 的精髓是<b>用往返消掉未知的时钟起点</b>。单边 SS-TWR 为：</p>
     <div class="k-formula">
@@ -281,7 +281,7 @@ footer a{color:var(--ink-2)}
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是基站/麦克风布得近似共线或近似正三角的退化位置，A<sup>T</sup>A 条件数爆炸，表现为"某一个方向误差特别大"——先算一下几何精度因子 GDOP，场地四角布点最稳。二是直接用 SS-TWR 交作品，静态测着还行、换一块板子就整体偏半米，那是晶振偏差没消，务必改 DS-TWR 或先做时钟漂移补偿。三是最小二乘直接解闭式后不迭代，靠近基站连线延长区误差成倍放大，建议闭式解当初值再跑 2–3 次 Gauss-Newton。四是把 RSSI 的模型参数 n 在实验室拟合好就拿去比赛现场用，换个房间 n 变了全盘失效。</p>
+      <p>一是基站/麦克风布得近似共线或近似正三角的退化位置，A<sup>T</sup>A 条件数爆炸，表现为"某一个方向误差特别大"。先算一下几何精度因子 GDOP，场地四角布点最稳。二是直接用 SS-TWR 交作品，静态测着还行、换一块板子就整体偏半米，那是晶振偏差没消，务必改 DS-TWR 或先做时钟漂移补偿。三是最小二乘直接解闭式后不迭代，靠近基站连线延长区误差成倍放大，建议闭式解当初值再跑 2–3 次 Gauss-Newton。四是把 RSSI 的模型参数 n 在实验室拟合好就拿去比赛现场用，换个房间 n 变了全盘失效。</p>
     </div>
   </div>
 </article>
@@ -298,7 +298,7 @@ footer a{color:var(--ink-2)}
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4831em;"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">331.3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">0.606</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span></span></span></span><span class="ft">　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mord">/</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></div>
       <div class="fn">T 摄氏温度；20 ℃ 时 c ≈ 343.4 m/s。湿度影响约 +0.1%，相对温度可忽略；风速则是矢量误差，室内一般不计</div>
     </div>
-    <p>温度估错 10 ℃ 带来 Δc = 6.06 m/s，相对误差 6.06/343.4 = 1.76%。在 3 m 处 <b>3 × 1.76% ≈ 5.3 cm</b> 的系统性误差——足以把一道要求 5 cm 精度的题直接判掉。所以凡是超声/声源题，必须挂一颗 DS18B20 或 SHT30 实时读温度算 c，代价只有几毛钱，收益是把最大的系统误差项归零。</p>
+    <p>温度估错 10 ℃ 带来 Δc = 6.06 m/s，相对误差 6.06/343.4 = 1.76%。在 3 m 处 <b>3 × 1.76% ≈ 5.3 cm</b> 的系统性误差，足以把一道要求 5 cm 精度的题直接判掉。所以凡是超声/声源题，必须挂一颗 DS18B20 或 SHT30 实时读温度算 c，代价只有几毛钱，收益是把最大的系统误差项归零。</p>
 
     <p>时延估计不能用简单峰值检测，混响下会抓到反射径。标准做法是广义互相关（GCC），在频域加权后反变换：</p>
     <div class="k-formula">
@@ -311,7 +311,7 @@ footer a{color:var(--ink-2)}
     </div>
     <p>PHAT 的作用是把互相关峰从"宽而钝"变成"窄而尖"：普通互相关的峰宽由信号带宽决定，宽带白化后峰宽逼近 1/B（B 为带宽），对宽带扫频或宽带噪声源尤其有效，抗混响能力明显强于纯互相关。代价是低信噪比时噪声频段被同等放大，所以实现时要在 ψ 分母加一个小正则项 ε（取信号谱均值的 1%–10%），或只对信号真正有能量的频段（如 1–8 kHz）做 PHAT。</p>
 
-    <p>采样率决定时延分辨率：f<sub>s</sub> = 48 kHz 时一个采样点 20.8 µs，对应 <code>c/f<sub>s</sub></code> ≈ 7.2 mm 的距离差；要更细必须做<b>亚采样点插值</b>——对相关峰的三点做抛物线拟合 <code>δ = 0.5(R<sub>−1</sub>−R<sub>+1</sub>)/(R<sub>−1</sub>−2R<sub>0</sub>+R<sub>+1</sub>)</code>，通常能把分辨率再提高 5–10 倍。</p>
+    <p>采样率决定时延分辨率：f<sub>s</sub> = 48 kHz 时一个采样点 20.8 µs，对应 <code>c/f<sub>s</sub></code> ≈ 7.2 mm 的距离差；要更细必须做<b>亚采样点插值</b>：对相关峰的三点做抛物线拟合 <code>δ = 0.5(R<sub>−1</sub>−R<sub>+1</sub>)/(R<sub>−1</sub>−2R<sub>0</sub>+R<sub>+1</sub>)</code>，通常能把分辨率再提高 5–10 倍。</p>
 
     <p>超声换能器是个高 Q 谐振体：40 kHz 分体式收发对 Q 常在 20–30，带宽 B ≈ f<sub>0</sub>/Q ≈ 1.3–2 kHz，激励停止后要振铃衰减 0.5–1 ms，这段时间接收头被自身余振淹没，形成<b>盲区</b> <code>d<sub>min</sub> = c·t<sub>ring</sub>/2 ≈ 343×1 ms/2 ≈ 17 cm</code>。窄带也意味着不能用宽带 chirp，脉冲压缩增益受限，只能靠多周期串（典型 8–16 个 40 kHz 方波）累积能量。</p>
 
@@ -321,7 +321,7 @@ footer a{color:var(--ink-2)}
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是把温度传感器贴在发热的功放或 MCU 旁边，读数偏高好几度，反而引入误差——要外置到空气中。二是多通道 ADC 用软件轮询采样，通道间存在固定采样偏斜，48 kHz 下一个通道错开一个采样就是 7 mm，必须用同步采样 ADC 或同一 ADC 的同步扫描并把已知偏斜标定掉。三是 GCC-PHAT 的 FFT 长度短于信号往返时延跨度，出现循环卷积混叠，务必补零到至少两倍。四是直接找相关最大值——在混响室里最强径经常是墙面反射，正确做法是在最大峰之前设一个门限（如峰值的 0.5–0.7 倍）向前搜第一个越限点作为首径。五是忽略换能器盲区，把 15 cm 内的读数当有效值上报。</p>
+      <p>一是把温度传感器贴在发热的功放或 MCU 旁边，读数偏高好几度，反而引入误差，要外置到空气中。二是多通道 ADC 用软件轮询采样，通道间存在固定采样偏斜，48 kHz 下一个通道错开一个采样就是 7 mm，必须用同步采样 ADC 或同一 ADC 的同步扫描并把已知偏斜标定掉。三是 GCC-PHAT 的 FFT 长度短于信号往返时延跨度，出现循环卷积混叠，务必补零到至少两倍。四是直接找相关最大值。在混响室里最强径经常是墙面反射，正确做法是在最大峰之前设一个门限（如峰值的 0.5–0.7 倍）向前搜第一个越限点作为首径。五是忽略换能器盲区，把 15 cm 内的读数当有效值上报。</p>
     </div>
   </div>
 </article>
@@ -346,14 +346,14 @@ footer a{color:var(--ink-2)}
 
     <p>单目测距三条路，按可用先验选：</p>
     <ul class="k-list">
-      <li><b>已知实际尺寸</b>——最常用也最稳：<code>Z = f<sub>x</sub>·W / w</code>，W 是物体实际宽度（m），w 是它在图上的像素宽度。误差传递是 <code>ΔZ/Z = −Δw/w</code>：镜头 f=2.8 mm、像元 3 µm 时 f<sub>x</sub>≈933 px，一个 10 cm 宽的靶在 1 m 处占 93 px，角点提取错 1 px 就是 1.1%、即 1 cm。要提精度只有两条路：换长焦（f<sub>x</sub> 变大）或做亚像素角点（cornerSubPix 可到 0.1 px）。</li>
-      <li><b>已知目标在同一平面</b>——用单应矩阵把像素直接映射到世界平面：<code>s·[u v 1]<sup>T</sup> = H·[X Y 1]<sup>T</sup></code>，H 是 3×3、8 个自由度，至少 4 组不共线的点对即可解。这条路测的是平面内尺寸，不给出真实深度，但对"测桌面上物体边长"这类题精度最高，因为它把内参和外参一起吸收进 H。</li>
-      <li><b>消失点/已知安装高度</b>——摄像头固定俯角、目标贴地时，由地平线消失点恢复俯仰角，再用几何算地面距离。精度依赖安装角稳定性，适合走廊、赛道类题。</li>
+      <li><b>已知实际尺寸</b>，最常用也最稳：<code>Z = f<sub>x</sub>·W / w</code>，W 是物体实际宽度（m），w 是它在图上的像素宽度。误差传递是 <code>ΔZ/Z = −Δw/w</code>：镜头 f=2.8 mm、像元 3 µm 时 f<sub>x</sub>≈933 px，一个 10 cm 宽的靶在 1 m 处占 93 px，角点提取错 1 px 就是 1.1%、即 1 cm。要提精度只有两条路：换长焦（f<sub>x</sub> 变大）或做亚像素角点（cornerSubPix 可到 0.1 px）。</li>
+      <li><b>已知目标在同一平面</b>，用单应矩阵把像素直接映射到世界平面：<code>s·[u v 1]<sup>T</sup> = H·[X Y 1]<sup>T</sup></code>，H 是 3×3、8 个自由度，至少 4 组不共线的点对即可解。这条路测的是平面内尺寸，不给出真实深度，但对"测桌面上物体边长"这类题精度最高，因为它把内参和外参一起吸收进 H。</li>
+      <li><b>消失点/已知安装高度</b>：摄像头固定俯角、目标贴地时，由地平线消失点恢复俯仰角，再用几何算地面距离。精度依赖安装角稳定性，适合走廊、赛道类题。</li>
     </ul>
 
-    <p>PnP 是从 n 个"已知三维坐标 + 对应像素"的点对求相机位姿 R、t，前提是<b>内参已标定</b>且这些点三维坐标已知。P3P 用 3 点给出最多 4 组解、需第 4 点消歧；OpenCV 的 <code>solvePnP</code> 默认迭代法要求 ≥4 点，且这 4 点<b>不能共线也不能全部近似共面加上远离画幅中心</b>——共面 4 点是可以的（内部走 IPPE），但共面时对俯仰角敏感、容易出现"翻转歧义"，两组解镜像对称。稳妥做法是用 <code>SOLVEPNP_IPPE_SQUARE</code> 处理正方形标志，或直接贴 AprilTag/ArUco 由库给出唯一位姿。</p>
+    <p>PnP 是从 n 个"已知三维坐标 + 对应像素"的点对求相机位姿 R、t，前提是<b>内参已标定</b>且这些点三维坐标已知。P3P 用 3 点给出最多 4 组解、需第 4 点消歧；OpenCV 的 <code>solvePnP</code> 默认迭代法要求 ≥4 点，且这 4 点<b>不能共线也不能全部近似共面加上远离画幅中心</b>；共面 4 点是可以的（内部走 IPPE），但共面时对俯仰角敏感、容易出现"翻转歧义"，两组解镜像对称。稳妥做法是用 <code>SOLVEPNP_IPPE_SQUARE</code> 处理正方形标志，或直接贴 AprilTag/ArUco 由库给出唯一位姿。</p>
 
-    <p>标定质量的唯一客观判据是<b>重投影误差 RMS</b>：把标定板角点用解出的内外参重新投影回图像，与实测角点的像素距离均方根。工程合格线是 <b>&lt;0.5 px</b>，做得好应在 0.15–0.3 px；&gt;1 px 说明标定板不平、图像模糊、角点误检或者畸变模型阶数选错，必须重标而不是硬用。</p>
+    <p>标定质量的唯一客观判据是<b>重投影误差 RMS</b>：把标定板角点用解出的内外参重新投影回图像，与实测角点的像素距离均方根。工程合格线是 <b>&lt;0.5 px</b>，做得好应在 0.15–0.3 px；&gt;1 px 说明标定板不平、图像模糊、角点误检或者畸变模型阶数选错，必须重标，别硬用。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
@@ -361,7 +361,7 @@ footer a{color:var(--ink-2)}
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是标定完之后改了摄像头分辨率或开了数字变焦，内参立刻作废——f<sub>x</sub>、c<sub>x</sub> 都随分辨率线性缩放，换分辨率必须重标或按比例换算。二是用手机屏幕显示棋盘格做标定，屏幕平面度和摩尔纹会让角点偏，必须打印贴在玻璃或亚克力板上。三是标定图只拍正对的十几张，畸变系数解不准，正确做法是拍 15–25 张，覆盖画面四角、带明显俯仰和滚转倾斜。四是自动对焦镜头标完之后又重新对焦，f 变了。五是把 PnP 的世界坐标单位写成毫米、后面又当米用，位姿差 1000 倍。六是共面 4 点 PnP 出现位姿跳变（翻转歧义）却没做时间域一致性检查。</p>
+      <p>一是标定完之后改了摄像头分辨率或开了数字变焦，内参立刻作废：f<sub>x</sub>、c<sub>x</sub> 都随分辨率线性缩放，换分辨率必须重标或按比例换算。二是用手机屏幕显示棋盘格做标定，屏幕平面度和摩尔纹会让角点偏，必须打印贴在玻璃或亚克力板上。三是标定图只拍正对的十几张，畸变系数解不准，正确做法是拍 15–25 张，覆盖画面四角、带明显俯仰和滚转倾斜。四是自动对焦镜头标完之后又重新对焦，f 变了。五是把 PnP 的世界坐标单位写成毫米、后面又当米用，位姿差 1000 倍。六是共面 4 点 PnP 出现位姿跳变（翻转歧义）却没做时间域一致性检查。</p>
     </div>
   </div>
 </article>
@@ -373,7 +373,7 @@ footer a{color:var(--ink-2)}
   </div>
   <div class="k-tags"><span class="tag">阈值分割</span><span class="tag">轮廓</span><span class="tag">霍夫变换</span><span class="tag">模板匹配</span><span class="tag">MACs</span><span class="tag">int8 量化</span></div>
   <div class="k-b">
-    <p><b class="lead">电赛里"能用传统 CV 解决的绝不上神经网络"——传统方法可解释、可调参、不吃算力、不需要数据集，而比赛只有四天。</b>选型的判据是<b>目标的类内变化有多大</b>：颜色/形状固定的刚性目标（色块、棋子、纸张边缘、几何靶）用阈值 + 形态学 + 轮廓就够；有旋转但无形变的用旋转不变的轮廓矩或模板匹配多角度库；直线圆等参数化几何用霍夫；只有当目标是"同一类里长得各不相同"（人脸、手势、任意花纹）时，轻量 CNN 才是必要的。</p>
+    <p><b class="lead">电赛里"能用传统 CV 解决的绝不上神经网络"。传统方法可解释、可调参、不吃算力、不需要数据集，而比赛只有四天。</b>选型的判据是<b>目标的类内变化有多大</b>：颜色/形状固定的刚性目标（色块、棋子、纸张边缘、几何靶）用阈值 + 形态学 + 轮廓就够；有旋转但无形变的用旋转不变的轮廓矩或模板匹配多角度库；直线圆等参数化几何用霍夫；只有当目标是"同一类里长得各不相同"（人脸、手势、任意花纹）时，轻量 CNN 才是必要的。</p>
 
     <ul class="k-list">
       <li><b>阈值</b>：优先在 HSV/LAB 空间对 H 或 a/b 通道分割，比 RGB 抗光照变化强得多；亮度阈值一律用 Otsu 或自适应阈值，不要写死常数。</li>
@@ -392,7 +392,7 @@ footer a{color:var(--ink-2)}
       <div class="fn">int8 量化 B=1，float32 B=4；激活内存 ≈ max over layers (输入张量 + 输出张量) 字节数</div>
     </div>
     <p>量级参考：<b>OpenMV H7</b>（STM32H743，Cortex-M7 @480 MHz，1 MB SRAM + 2 MB Flash，H7 Plus 外挂 32 MB SDRAM/Flash）用 CMSIS-NN 实测吞吐约 0.05–0.2 GMAC/s，跑一个 5 MMACs 的 96×96 小分类网大约 30–100 ms，权重预算实际就是 100–300 kB。<b>K210</b>（MaixPy）带 KPU 硬件加速器，标称 0.25 TOPS @400 MHz，6 MB 通用 SRAM + 2 MB KPU 专用 SRAM，可以实打实跑 224×224 输入的 MobileNet-v1 或 YOLOv2-tiny，帧率 10–30 fps，但模型权重必须压到 2 MB 以内并转成 kmodel。<b>ESP32-CAM</b> 只适合采集与传输，本地推理能力接近于零。结论很明确：想在 MCU 上做目标检测，K210 是下限，OpenMV 更适合"传统 CV 为主 + 极小分类网点缀"。</p>
-    <p>还有一条常被忽略的硬约束：<b>激活内存峰值</b>。96×96×16 的 int8 中间特征图就是 147 kB，两层同时驻留接近 300 kB，在 1 MB SRAM 的 H7 上还要留给帧缓冲（QVGA RGB565 一帧 150 kB）——所以输入分辨率往往不是被算力卡死，而是被 RAM 卡死。</p>
+    <p>还有一条常被忽略的硬约束：<b>激活内存峰值</b>。96×96×16 的 int8 中间特征图就是 147 kB，两层同时驻留接近 300 kB，在 1 MB SRAM 的 H7 上还要留给帧缓冲（QVGA RGB565 一帧 150 kB），所以输入分辨率往往先被 RAM 卡住。</p>
 
     <div class="k-cmp">
       <table>
@@ -408,11 +408,11 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2022 年 10 月赛区赛 D 题「盲盒识别装置」是典型的"类内差异大"场景，花纹/图案识别用传统模板匹配容易翻车，是少数值得上轻量 CNN 的题；但即使上网络，也必须先算清 MACs 与权重能否塞进模组。2024 年赛区赛 E 题「三子棋游戏装置」相反——棋子颜色形状固定，用 HSV 阈值 + 圆检测 + 网格投影就能稳定过基本要求，上神经网络纯属自找麻烦。2019 年国赛 F 题「纸张计数显示装置」考的是边缘/条纹的周期性特征提取，属于纯传统 CV。2018 年赛区赛 D 题「手势识别」介于两者之间：静态手势可用轮廓凸缺陷（凸包指尖计数）解决，动态手势序列则更适合状态机而非端到端网络。</p>
+      <p>2022 年 10 月赛区赛 D 题「盲盒识别装置」是典型的"类内差异大"场景，花纹/图案识别用传统模板匹配容易翻车，是少数值得上轻量 CNN 的题；但即使上网络，也必须先算清 MACs 与权重能否塞进模组。2024 年赛区赛 E 题「三子棋游戏装置」正相反：棋子颜色形状固定，用 HSV 阈值 + 圆检测 + 网格投影就能稳定过基本要求，上神经网络纯属自找麻烦。2019 年国赛 F 题「纸张计数显示装置」考的是边缘/条纹的周期性特征提取，属于纯传统 CV。2018 年赛区赛 D 题「手势识别」介于两者之间：静态手势可用轮廓凸缺陷（凸包指尖计数）解决，动态手势序列则更适合状态机而非端到端网络。</p>
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是先选模组再选算法，结果模型编译出来 4 MB 塞不进去——顺序应该反过来：先估 MACs 和权重大小，再定硬件。二是量化后没做校准（calibration）就部署，int8 精度断崖式下降，必须用 100–300 张真实场景图做后训练量化校准。三是在 PC 上用 float 训练时准确率 98%，部署后掉到 70%，多半是预处理不一致（归一化方式、通道顺序 BGR/RGB、resize 插值方法）——务必让端侧预处理和训练时逐字节对齐。四是数据集全在实验室灯光下采集，赛场灯一换全废，采数据时要故意变换光照、角度、背景。五是阈值参数硬编码在代码里，现场调试时改一次要重新烧录，应该做成可通过按键/串口在线调整并显示中间二值图。</p>
+      <p>一是先选模组再选算法，结果模型编译出来 4 MB 塞不进去。顺序应该反过来：先估 MACs 和权重大小，再定硬件。二是量化后没做校准（calibration）就部署，int8 精度断崖式下降，必须用 100–300 张真实场景图做后训练量化校准。三是在 PC 上用 float 训练时准确率 98%，部署后掉到 70%，多半是预处理不一致（归一化方式、通道顺序 BGR/RGB、resize 插值方法），务必让端侧预处理和训练时逐字节对齐。四是数据集全在实验室灯光下采集，赛场灯一换全废，采数据时要故意变换光照、角度、背景。五是阈值参数硬编码在代码里，现场调试时改一次要重新烧录，应该做成可通过按键/串口在线调整并显示中间二值图。</p>
     </div>
   </div>
 </article>
@@ -429,7 +429,7 @@ footer a{color:var(--ink-2)}
     <p><b class="lead">要在 3 m 尺度上做到分米级无线测距，可选器件其实只有超宽带（UWB）一类。</b>原因是距离分辨率由带宽决定，<code>Δd ≈ c/(2B)</code>：UWB 占用约 500 MHz 带宽 → 约 30 cm 的本征分辨率，配合首径超分辨算法可到 10 cm；而 BLE/WiFi 只有 1–20 MHz 带宽，靠幅度或窄带相位是做不到的。</p>
     <ul class="k-list">
       <li><b>DW1000</b>：老牌 IEEE 802.15.4-2011 UWB 收发器，SPI 接口，支持 CH1–CH7（3.5–6.5 GHz），时间戳分辨率 15.65 ps（≈4.7 mm），典型静态测距精度 ±10 cm，视距 30–100 m。生态最成熟，<code>thotro/arduino-dw1000</code> 直接给出 TWR 例程，是电赛最省时间的起点。</li>
-      <li><b>DW3000</b>：新一代，功耗更低、支持 802.15.4z、原生带 <b>PDoA</b>（相位差到达角）——双天线接收同一帧，用两路的相位差直接算方位角，比外挂 AoA 阵列省事得多，典型角度精度 ±5°–10°（视距、近法线方向）。</li>
+      <li><b>DW3000</b>：新一代，功耗更低、支持 802.15.4z、原生带 <b>PDoA</b>（相位差到达角）：双天线接收同一帧，用两路的相位差直接算方位角，比外挂 AoA 阵列省事得多，典型角度精度 ±5°–10°（视距、近法线方向）。</li>
       <li><b>BLE 5.1 AoA</b>：低成本替代（如 nRF52 系列 + 天线阵列 + CTE 恒定音调扩展），角度可做到 ±5° 量级，但因带宽窄，<b>距离</b>只能靠 RSSI，做不到 0.3 m。因此它适合"只要角度"的场景，或与超声/红外测距混合。</li>
     </ul>
     <p>方位角支路的物理约束还是 <code>Δφ = 2π·d·sinθ/λ</code> 与 <code>d ≤ λ/2</code>：CH5 中心 6.5 GHz，λ ≈ 4.6 cm，两根天线中心距必须 ≤2.3 cm，PCB 布局上要保证两条馈线<b>等长等阻抗</b>，长度差 1 mm 在 6.5 GHz 上就是约 8° 的固定相位偏差（介质中波长约 45 mm 时），必须靠已知角度下的标定表把它减掉。</p>
@@ -442,11 +442,11 @@ footer a{color:var(--ink-2)}
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」的三项指标——径向距离误差 ≤0.3 m、方位角 ≤10°、分区判定 ≤0.2 m——基本锁死了器件选择：距离用 UWB DS-TWR（0.3 m 就是 1 ns 时间分辨率，窄带方案物理上做不到），角度用 DW3000 的 PDoA 或多天线 AoA，纯 BLE RSSI 方案只能拿基础分。分区判定 0.2 m 比径向 0.3 m 还严，说明考的不是单次测量精度而是边界处的滤波稳定性。2020 年赛区赛 A 题「无线运动传感器节点设计」虽然主考低功耗无线节点，但同样要处理"射频链路 + 传感数据 + 功耗预算"的整体权衡，天线与射频前端的调试经验是共通的。</p>
+      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」径向距离误差 ≤0.3 m、方位角 ≤10°、分区判定 ≤0.2 m 三项指标基本锁死了器件选择：距离用 UWB DS-TWR（0.3 m 就是 1 ns 时间分辨率，窄带方案物理上做不到），角度用 DW3000 的 PDoA 或多天线 AoA，纯 BLE RSSI 方案只能拿基础分。分区判定 0.2 m 比径向 0.3 m 还严，难点在边界处的滤波稳定性，光单次测得准还不够。2020 年赛区赛 A 题「无线运动传感器节点设计」虽然主考低功耗无线节点，但同样要处理"射频链路 + 传感数据 + 功耗预算"的整体权衡，天线与射频前端的调试经验是共通的。</p>
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是买回模块直接测距，读数系统性偏几十米——那是天线延迟没标（见第 09 条）。二是模块贴在金属板或电池上方，天线方向图被严重畸变，UWB 天线周围必须留净空区（至少 10 mm 无铜、无金属）。三是标签和基站天线极化方向不一致（一个立着一个躺着），接收功率掉 10 dB 以上，测距抖动加倍。四是 PDoA 两根天线的射频走线不等长，出厂就带固定角度偏差，必须在转台上做 −60°…+60° 的标定曲线。五是把人站在链路中间当作"正常工况"，NLOS 下不做检测直接送入最小二乘，一个坏测量就把整个解拉偏——务必加 NLOS 判据 + RANSAC 或加权最小二乘。</p>
+      <p>一是买回模块直接测距，读数系统性偏几十米，那是天线延迟没标（见第 09 条）。二是模块贴在金属板或电池上方，天线方向图被严重畸变，UWB 天线周围必须留净空区（至少 10 mm 无铜、无金属）。三是标签和基站天线极化方向不一致（一个立着一个躺着），接收功率掉 10 dB 以上，测距抖动加倍。四是 PDoA 两根天线的射频走线不等长，出厂就带固定角度偏差，必须在转台上做 −60°…+60° 的标定曲线。五是把人站在链路中间当作"正常工况"，NLOS 下不做检测直接送入最小二乘，一个坏测量就把整个解拉偏，务必加 NLOS 判据 + RANSAC 或加权最小二乘。</p>
     </div>
   </div>
 </article>
@@ -459,22 +459,22 @@ footer a{color:var(--ink-2)}
   <div class="k-tags"><span class="tag">超声收发切换</span><span class="tag">MEMS 麦克风</span><span class="tag">同步采样</span><span class="tag">TGC</span><span class="tag">射频同步触发</span></div>
   <div class="k-b">
     <p><b class="lead">声学定位的电路难点有两个：发射端要够大的驱动幅度，接收端要够干净的多通道同步。</b>40 kHz 分体式换能器发射端典型做法是 MCU 出 40 kHz 方波 → 推挽或 H 桥 → 变压器升压，把峰峰值做到 20–40 V<sub>pp</sub>，声压随电压线性上升，直接决定作用距离。单端 5 V 驱动只能测 1 m 内，H 桥（双倍摆幅）+ 小型升压变压器（1:5）能把有效距离推到 4–8 m。</p>
-    <p>接收端是微伏到毫伏量级，需要两级放大共 60–80 dB：一级低噪声运放（NE5532/OPA2350 一类，注意带宽增益积要 ≥ 增益 × 40 kHz × 10）+ 40 kHz 带通（Q 取 5–10，太窄会拖长响应包络、损害时延精度）+ 包络检波或直接高速采样。想要高时延精度就<b>不要用包络检波</b>——包络会引入几百微秒的群延迟，应该直接 ADC 采原始波形，交给 GCC 或匹配滤波处理。</p>
+    <p>接收端是微伏到毫伏量级，需要两级放大共 60–80 dB：一级低噪声运放（NE5532/OPA2350 一类，注意带宽增益积要 ≥ 增益 × 40 kHz × 10）+ 40 kHz 带通（Q 取 5–10，太窄会拖长响应包络、损害时延精度）+ 包络检波或直接高速采样。想要高时延精度就<b>不要用包络检波</b>：包络会引入几百微秒的群延迟，应该直接 ADC 采原始波形，交给 GCC 或匹配滤波处理。</p>
     <p>回波幅度按 <code>1/d<sup>2</sup></code>（球面扩散）叠加空气吸收（40 kHz 时约 1.2 dB/m）快速下降，动态范围可达 60 dB，固定增益必然要么近处饱和要么远处淹没。解法是<b>时间增益补偿（TGC）</b>：发射后按时间用 DAC 或数控增益放大器（VCA810、AD8331）线性抬升增益，斜率大致按 40·lg(d) 走。</p>
     <ul class="k-list">
       <li><b>收发切换</b>：同一只换能器收发时，发射高压会打穿接收前级，必须加背靠背二极管钳位 + 模拟开关（如 CD4066/TS5A 系列）在发射期间断开接收通路，并在发射结束后延时 0.5–1 ms 再使能接收，避开振铃盲区。分体式收发头（收发各一只）省掉这套电路，电赛首选。</li>
       <li><b>麦克风阵列</b>：驻极体（ECM）便宜但一致性差（灵敏度分散 ±3 dB，相位一致性无保证）；数字 MEMS（如 ICS-43434、INMP441，I²S/PDM 输出）的最大优势是<b>多路共用同一 BCLK/WS，天然采样同步</b>，通道间相位一致性厂家给保证，是做 TDoA 阵列的正确选择。两路 I²S 麦克风可以共用一条数据线（L/R 选择），4 路用两组 I²S 或一片 PDM 多路接口。</li>
-      <li><b>同步采样</b>：如果用模拟麦克风 + MCU ADC，必须用同步采样 ADC（如 AD7606、ADS131）或多个 ADC 共用同一采样触发；用同一片 ADC 轮询扫描会引入固定通道偏斜，48 kHz 下每差一个通道就是 7 mm 的距离差误差——如果非用不可，务必测出偏斜量并在软件里减掉。</li>
+      <li><b>同步采样</b>：如果用模拟麦克风 + MCU ADC，必须用同步采样 ADC（如 AD7606、ADS131）或多个 ADC 共用同一采样触发；用同一片 ADC 轮询扫描会引入固定通道偏斜，48 kHz 下每差一个通道就是 7 mm 的距离差误差，如果非用不可，务必测出偏斜量并在软件里减掉。</li>
     </ul>
     <p>TDoA 只需要接收阵元之间同步，不需要和发射端同步；但如果要测<b>绝对</b>飞行时间（ToF），发射与接收必须共时基。信标类题目的标准做法是<b>射频同步触发</b>：信标同时发出一个 2.4 GHz（nRF24L01）或 433 MHz 的触发包，电磁波传播时间在 3 m 内只有 10 ns，相对声波的毫秒级完全可忽略，接收端收到射频包即启动计时器，声波到达时停止。这是电赛超声定位题最常用、最稳的架构。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2025 年国赛 J 题「超声信标定位系统」正是上述"射频触发 + 超声测距 + 阵列 TDoA"架构的直接映射：基本要求的定点定位靠 ToF 就能过，发挥部分的移动跟踪与更高精度必须解决动态范围（TGC）和多通道同步。2023 年国赛 F 题「基于声传播的智能定位系统」与 2022 年 7 月赛区赛 E 题「声源定位跟踪系统」考的是被动接收侧——没有发射端可控，只能靠麦克风阵列做 TDoA，此时通道一致性就是全部，数字 MEMS 阵列几乎是唯一稳妥选择。2023 年国赛 K 题「辨音识键奏乐系统」对阵列没要求，但对单通道音频前端的信噪比与不失真动态范围要求很高。</p>
+      <p>2025 年国赛 J 题「超声信标定位系统」正是上述"射频触发 + 超声测距 + 阵列 TDoA"架构的直接映射：基本要求的定点定位靠 ToF 就能过，发挥部分的移动跟踪与更高精度必须解决动态范围（TGC）和多通道同步。2023 年国赛 F 题「基于声传播的智能定位系统」与 2022 年 7 月赛区赛 E 题「声源定位跟踪系统」考的是被动接收侧：没有发射端可控，只能靠麦克风阵列做 TDoA，此时通道一致性就是全部，数字 MEMS 阵列几乎是唯一稳妥选择。2023 年国赛 K 题「辨音识键奏乐系统」对阵列没要求，但对单通道音频前端的信噪比与不失真动态范围要求很高。</p>
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是发射级和接收级共地平面且靠得近，发射瞬间地弹把接收前级打饱和，恢复要几毫秒——发射与接收要分地、单点连接，接收前级远离升压变压器。二是带通滤波 Q 值取到 20 以上，虽然信噪比好看，但包络被拉长几百微秒，时延测量反而变差。三是麦克风阵列的几何尺寸测量马虎，阵元间距标称 5 cm 实际 4.8 cm，直接变成角度系统误差——用游标卡尺测并写进程序，别信 PCB 丝印。四是 I²S 麦克风的启动瞬态（上电后前 20–50 ms 输出无效），采集前要丢弃。五是采样率取得刚好等于 2 倍信号频率，抗混叠余量为零，40 kHz 超声至少采 200 kHz。</p>
+      <p>一是发射级和接收级共地平面且靠得近，发射瞬间地弹把接收前级打饱和，恢复要几毫秒，发射与接收要分地、单点连接，接收前级远离升压变压器。二是带通滤波 Q 值取到 20 以上，虽然信噪比好看，但包络被拉长几百微秒，时延测量反而变差。三是麦克风阵列的几何尺寸测量马虎，阵元间距标称 5 cm 实际 4.8 cm，直接变成角度系统误差，用游标卡尺测并写进程序，别信 PCB 丝印。四是 I²S 麦克风的启动瞬态（上电后前 20–50 ms 输出无效），采集前要丢弃。五是采样率取得刚好等于 2 倍信号频率，抗混叠余量为零，40 kHz 超声至少采 200 kHz。</p>
     </div>
   </div>
 </article>
@@ -486,7 +486,7 @@ footer a{color:var(--ink-2)}
   </div>
   <div class="k-tags"><span class="tag">VLC</span><span class="tag">光电二极管</span><span class="tag">跨阻放大</span><span class="tag">漫反射光电开关</span><span class="tag">调制解调</span></div>
   <div class="k-b">
-    <p><b class="lead">可见光定位（VLP）的做法是把若干盏 LED 各自用不同频率或不同码调制，接收端用光电二极管解出每盏灯的强度或相位，再按光强模型或 TDoA 解位置。</b>关键在于"调制"二字——不调制就无法区分光源、也无法抑制环境光。最简单可靠的方案是<b>频分</b>：每盏 LED 各自用 1 kHz、2 kHz、3 kHz…的方波调制其亮度（调制深度 20%–50%，肉眼看不出闪烁），接收端采样后做 FFT 或多路数字锁相，各频点幅度即各灯的到达光强。</p>
+    <p><b class="lead">可见光定位（VLP）的做法是把若干盏 LED 各自用不同频率或不同码调制，接收端用光电二极管解出每盏灯的强度或相位，再按光强模型或 TDoA 解位置。</b>关键在于"调制"二字：不调制就无法区分光源，也无法抑制环境光。最简单可靠的方案是<b>频分</b>：每盏 LED 各自用 1 kHz、2 kHz、3 kHz…的方波调制其亮度（调制深度 20%–50%，肉眼看不出闪烁），接收端采样后做 FFT 或多路数字锁相，各频点幅度即各灯的到达光强。</p>
     <p>接收前端是跨阻放大器（TIA）：光电二极管（如 BPW34，有效面积 7.5 mm²，灵敏度约 0.6 A/W @900 nm）零偏或反偏工作，电流灌进运放反相端，输出电压为</p>
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">out</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">PD</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1076em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span><span class="ft">　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.3em;vertical-align:-0.1944em;"></span><span class="mpunct">,</span></span></span></span><span class="ft">　带宽</span> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.9028em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">3</span><span class="mord mtight"><span class="mord mathrm mtight">dB</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mopen">(</span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1076em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3175em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">in</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><span class="ft">　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.3em;vertical-align:-0.1944em;"></span><span class="mpunct">,</span></span></span></span><span class="ft">　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1076em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.24em;vertical-align:-0.3231em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9169em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3175em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">in</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mopen">(</span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1076em;">f</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathrm" style="margin-right:0.0139em;">GBW</span></span><span class="mclose">)</span></span></span><span style="top:-2.8769em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.28em" viewBox="0 0 400000 1296" preserveAspectRatio="xMinYMin slice"><path d="M263,681c0.7,0,18,39.7,52,119
@@ -508,7 +508,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mopen">(</span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mop"><span class="mord mathrm">cos</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">φ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">cos</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0359em;">ψ</span><span class="mclose">)</span></span></span></span></div>
       <div class="fn">m 朗伯阶数（由 LED 半功率角决定，m = −ln2 / ln cos(φ<sub>1/2</sub>)），A<sub>r</sub> 接收面积，φ 发射角，ψ 入射角，d 距离</div>
     </div>
-    <p>注意 <code>1/d<sup>2</sup></code> 意味着接收光强对距离的敏感度和 RSSI 类似——理论上比 RF 的 RSSI 好（因为 LED 光路更接近理想、无多径衰落），但同样受<b>接收面朝向 ψ</b> 强烈影响，所以 VLP 装置必须把 PD 姿态固定水平，或用三个不同朝向的 PD 联合解算。</p>
+    <p>注意 <code>1/d<sup>2</sup></code> 意味着接收光强对距离的敏感度和 RSSI 类似，理论上比 RF 的 RSSI 好（因为 LED 光路更接近理想、无多径衰落），但同样受<b>接收面朝向 ψ</b> 强烈影响，所以 VLP 装置必须把 PD 姿态固定水平，或用三个不同朝向的 PD 联合解算。</p>
     <p>另一类光学器件是<b>漫反射式光电开关</b>（如 E3F-DS30 系列）：发射红外 + 接收反射光，内部已带调制解调（通常 38 kHz 载波），因此天生抗环境光，输出是 NPN/PNP 开关量，检测距离 3–80 cm 可调。它不给距离值，只给"有没有物体"，把 4–8 个排成阵列，就能用<b>遮挡的先后顺序与持续时间</b>做手势时序识别，本质是状态机 + 阈值判决，完全不需要机器学习。紫外感光靶纸则是另一种思路：用 UV LED 照射，靶纸受激发光，摄像头加滤光片只收该波段，等效于把信噪比拉满。</p>
 
     <div class="k-callout k-exam">
@@ -517,7 +517,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是 TIA 不加反馈电容 C<sub>f</sub>，电路自激振荡，示波器上看到叠加的高频毛刺却以为是噪声——先按上式估 C<sub>f</sub>（常在 1–10 pF），再微调到阶跃响应过冲 &lt;10%。二是 PD 到 TIA 反相输入端的走线太长，拾取工频与开关电源噪声，这段走线必须短到几毫米并包地。三是用 PWM 调光的 LED 台灯当环境光做测试，其 kHz 级纹波正好落在信号带内，赛场用的是什么灯要提前问清并实测频谱。四是调制深度开太大导致 LED 明显闪烁被扣"影响照明功能"的分。五是光电开关直接对着高反射率的白墙，反射光超过阈值一直输出有效，安装时要避开背景或把灵敏度旋钮调到刚好。</p>
+      <p>一是 TIA 不加反馈电容 C<sub>f</sub>，电路自激振荡，示波器上看到叠加的高频毛刺却以为是噪声。先按上式估 C<sub>f</sub>（常在 1–10 pF），再微调到阶跃响应过冲 &lt;10%。二是 PD 到 TIA 反相输入端的走线太长，拾取工频与开关电源噪声，这段走线必须短到几毫米并包地。三是用 PWM 调光的 LED 台灯当环境光做测试，其 kHz 级纹波正好落在信号带内，赛场用的是什么灯要提前问清并实测频谱。四是调制深度开太大导致 LED 明显闪烁被扣"影响照明功能"的分。五是光电开关直接对着高反射率的白墙，反射光超过阈值一直输出有效，安装时要避开背景或把灵敏度旋钮调到刚好。</p>
     </div>
   </div>
 </article>
@@ -529,7 +529,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">OpenMV</span><span class="tag">K210</span><span class="tag">ESP32-CAM</span><span class="tag">Jetson</span><span class="tag">帧缓冲</span></div>
   <div class="k-b">
-    <p><b class="lead">视觉模组的选择先看题目的合规约束，再看算力。</b>电赛题目常明确写"不得使用 PC / 不得使用便携式计算机 / 计算与控制必须在自制装置上完成"，这条直接排除笔记本跑 OpenCV 的路线，也让树莓派、Jetson 这类"通用计算机"处在灰色地带——保守做法是不用，实在要用也要在报告里说明它作为嵌入式模块的角色。</p>
+    <p><b class="lead">视觉模组的选择先看题目的合规约束，再看算力。</b>电赛题目常明确写"不得使用 PC / 不得使用便携式计算机 / 计算与控制必须在自制装置上完成"，这条直接排除笔记本跑 OpenCV 的路线，也让树莓派、Jetson 这类"通用计算机"处在灰色地带，保守做法是不用，实在要用也要在报告里说明它作为嵌入式模块的角色。</p>
     <div class="k-cmp">
       <table>
         <thead><tr><th>模组</th><th>核心 / 算力</th><th>内存</th><th>典型能力</th><th>代价</th></tr></thead>
@@ -542,9 +542,9 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
         </tbody>
       </table>
     </div>
-    <p>选型时算三笔账：<b>帧缓冲内存</b>——QVGA(320×240) RGB565 一帧 150 kB，VGA 就是 600 kB，OpenMV H7 的 1 MB SRAM 装两帧就满了，所以做帧间差分/背景建模必须降到 QQVGA 或只存灰度（VGA 灰度 300 kB）。<b>处理时延</b>——传统 CV 在 M7 上处理一帧 QVGA 的阈值 + 轮廓约 10–30 ms，加上传感器曝光与传输，端到端典型 30–60 ms，这就是控制回路能拿到的最快反馈周期。<b>接口带宽</b>——模组把结果吐给主控 MCU 用 UART 时，115200 bps 每帧只能传约 100 字节，传坐标够、传图像不够；要传图必须上 SPI（几 Mbps）或直接在模组上做完决策。</p>
+    <p>选型时算三笔账。<b>帧缓冲内存</b>：QVGA(320×240) RGB565 一帧 150 kB，VGA 就是 600 kB，OpenMV H7 的 1 MB SRAM 装两帧就满了，所以做帧间差分/背景建模必须降到 QQVGA 或只存灰度（VGA 灰度 300 kB）。<b>处理时延</b>：传统 CV 在 M7 上处理一帧 QVGA 的阈值 + 轮廓约 10–30 ms，加上传感器曝光与传输，端到端典型 30–60 ms，这就是控制回路能拿到的最快反馈周期。<b>接口带宽</b>：模组把结果吐给主控 MCU 用 UART 时，115200 bps 每帧只能传约 100 字节，传坐标够、传图像不够；要传图必须上 SPI（几 Mbps）或直接在模组上做完决策。</p>
     <p>架构上强烈推荐<b>"视觉模组只输出结构化结果、主控 MCU 负责运动与决策"</b>的分工：OpenMV/K210 通过 UART 吐出 <code>(类别, x, y, θ, 置信度)</code> 这样的定长帧（加帧头 + 校验），STM32 收到后跑状态机和 PID。这样调试时两边可以独立验证，也避免在 MicroPython 里写实时控制。</p>
-    <p>镜头同样是选型的一部分：OpenMV 标配约 2.8 mm 广角，视场大但畸变重、单位像素对应的实际尺寸大（测量精度低）；做测量类题应换 6–8 mm 长焦，牺牲视场换角分辨率。工作距离 1 m 时，2.8 mm 镜头一个像素约对应 1.1 mm，8 mm 镜头约 0.37 mm——直接影响能达到的测量精度。</p>
+    <p>镜头同样是选型的一部分：OpenMV 标配约 2.8 mm 广角，视场大但畸变重、单位像素对应的实际尺寸大（测量精度低）；做测量类题应换 6–8 mm 长焦，牺牲视场换角分辨率。工作距离 1 m 时，2.8 mm 镜头一个像素约对应 1.1 mm，8 mm 镜头约 0.37 mm，直接影响能达到的测量精度。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
@@ -552,7 +552,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是把模组当"黑盒"用，出问题不知道是曝光、白平衡还是算法——OpenMV 一定要先关掉自动增益和自动白平衡（<code>set_auto_gain(False)</code>、<code>set_auto_whitebal(False)</code>）并固定曝光，否则同一场景两次运行阈值就不一样。二是 MicroPython 里用 Python 循环逐像素处理，慢上百倍，必须调用 <code>image</code> 模块的 C 实现函数。三是 UART 传输不加帧头和校验，偶发丢字节后坐标解析全乱，主控还按错误坐标去抓取。四是模组供电从主控板的 3.3 V LDO 分出来，摄像头瞬态电流拉低电压导致复位——视觉模组独立供电或至少加大容量去耦。五是赛前只在实验室桌面调好，没试过实际安装高度和角度，镜头视场装上去发现拍不全。</p>
+      <p>一是把模组当"黑盒"用，出问题不知道是曝光、白平衡还是算法。OpenMV 一定要先关掉自动增益和自动白平衡（<code>set_auto_gain(False)</code>、<code>set_auto_whitebal(False)</code>）并固定曝光，否则同一场景两次运行阈值就不一样。二是 MicroPython 里用 Python 循环逐像素处理，慢上百倍，必须调用 <code>image</code> 模块的 C 实现函数。三是 UART 传输不加帧头和校验，偶发丢字节后坐标解析全乱，主控还按错误坐标去抓取。四是模组供电从主控板的 3.3 V LDO 分出来，摄像头瞬态电流拉低电压导致复位，视觉模组要独立供电或至少加大容量去耦。五是赛前只在实验室桌面调好，没试过实际安装高度和角度，镜头视场装上去发现拍不全。</p>
     </div>
   </div>
 </article>
@@ -588,7 +588,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是标定完之后动了摄像头（拧了一下支架、换了对焦），前功尽弃——标定结束必须用螺丝 + 热熔胶固定，并在装置上做个可快速重标的流程。二是手眼标定的机械臂位姿变化太小或只绕一个轴转，AX=XB 方程退化，必须让姿态变化覆盖不同旋转轴、角度差 ≥20°。三是九点标定时示教点全挤在画面中心一小块，外推到边缘误差成倍放大——标定点要撑满整个工作区。四是超声零点用一个距离点标，把速度误差也算进了零点，换个距离就不准，务必多点线性拟合。五是 UWB 标定在室内桌面进行，桌面反射造成多径，标定值本身就偏，应该在空旷处、天线离地 &gt;1 m 做。六是标定参数写死在代码里没有版本记录，比赛现场重标后不知道原来是多少。</p>
+      <p>一是标定完之后动了摄像头（拧了一下支架、换了对焦），前功尽弃，标定结束必须用螺丝 + 热熔胶固定，并在装置上做个可快速重标的流程。二是手眼标定的机械臂位姿变化太小或只绕一个轴转，AX=XB 方程退化，必须让姿态变化覆盖不同旋转轴、角度差 ≥20°。三是九点标定时示教点全挤在画面中心一小块，外推到边缘误差成倍放大，标定点要撑满整个工作区。四是超声零点用一个距离点标，把速度误差也算进了零点，换个距离就不准，务必多点线性拟合。五是 UWB 标定在室内桌面进行，桌面反射造成多径，标定值本身就偏，应该在空旷处、天线离地 &gt;1 m 做。六是标定参数写死在代码里没有版本记录，比赛现场重标后不知道原来是多少。</p>
     </div>
   </div>
 </article>
@@ -601,18 +601,18 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   <div class="k-tags"><span class="tag">首径检测</span><span class="tag">NLOS</span><span class="tag">自适应曝光</span><span class="tag">背景建模</span><span class="tag">RANSAC</span></div>
   <div class="k-b">
     <p><b class="lead">赛题里"不得对场地提出特殊光照要求""在正常室内环境下工作"这类措辞，就是明确告诉你干扰是评分的一部分。</b>三条战线要分别打。</p>
-    <p><b>多径与 NLOS。</b>无论声波还是电磁波，接收到的都是直射径 + 若干反射径的叠加。定位只认<b>直射径（首径）</b>，而首径往往不是最强的那个——墙面反射在某些角度能量更高。工程做法：</p>
+    <p><b>多径与 NLOS。</b>无论声波还是电磁波，接收到的都是直射径 + 若干反射径的叠加。定位只认<b>直射径（首径）</b>，而首径往往不是最强的那个，墙面反射在某些角度能量更高。工程做法：</p>
     <ul class="k-list">
-      <li>不取全局最大值，而是<b>前沿检测</b>：先找最大峰幅度 A<sub>max</sub>，设门限 <code>0.5·A<sub>max</sub>–0.7·A<sub>max</sub></code>，从时间轴起点向后搜第一个越过门限的位置作为首径到达时刻。</li>
+      <li><b>前沿检测</b>：先找最大峰幅度 A<sub>max</sub>，设门限 <code>0.5·A<sub>max</sub>–0.7·A<sub>max</sub></code>，从时间轴起点向后搜第一个越过门限的位置作为首径到达时刻。</li>
       <li>UWB 直接读 CIR 与 <code>FP_AMPL</code>/<code>CIR_PWR</code> 比值判 NLOS，低于阈值的测量丢弃或在加权最小二乘里降权。</li>
-      <li>冗余基站 + <b>RANSAC</b>：布 5–6 个基站而不是最少的 3 个，每次随机取 3 个解算，统计一致性最好的那组内点再做最小二乘，可以直接剔除 1–2 个被遮挡的坏测量。</li>
+      <li>冗余基站 + <b>RANSAC</b>：布 5–6 个基站，多于解算所需的最少 3 个，每次随机取 3 个解算，统计一致性最好的那组内点再做最小二乘，可以直接剔除 1–2 个被遮挡的坏测量。</li>
       <li>时域约束：加卡尔曼滤波或简单的速度门限（目标不可能 20 ms 内跳 1 m），跳变值当野值丢弃。</li>
     </ul>
     <p><b>环境光。</b>视觉最脆弱的一环。分三层处理：</p>
     <ul class="k-list">
-      <li><b>物理层</b>——加窄带滤光片（配合特定波长光源，如 850 nm 红外 + 850 nm 带通片），信噪比可提升一到两个数量级；或者给工作区加自带的均匀补光（题目通常允许装置自带光源，只是不允许要求场地改造）。</li>
-      <li><b>曝光层</b>——不要用摄像头的全自动曝光（AEC 会随画面内容跳变，导致同一物体两帧亮度不同）。正确做法是在画面里放一块<b>已知灰度参考区</b>（白纸或标定色卡），每帧测它的均值，用简单积分控制器调整曝光值使其稳定在目标值（如 8 位下 180），这就是一个可复现的自适应曝光。</li>
-      <li><b>算法层</b>——阈值一律用 Otsu 或自适应阈值；颜色判据放到 HSV 的 H 通道并放宽 S/V 范围；或用相邻两帧的<b>差分</b>（光源开/关各拍一帧相减）把环境光整体消掉，这招对红外补光尤其有效。</li>
+      <li><b>物理层</b>：加窄带滤光片（配合特定波长光源，如 850 nm 红外 + 850 nm 带通片），信噪比可提升一到两个数量级；或者给工作区加自带的均匀补光（题目通常允许装置自带光源，只是不允许要求场地改造）。</li>
+      <li><b>曝光层</b>：不要用摄像头的全自动曝光（AEC 会随画面内容跳变，导致同一物体两帧亮度不同）。正确做法是在画面里放一块<b>已知灰度参考区</b>（白纸或标定色卡），每帧测它的均值，用简单积分控制器调整曝光值使其稳定在目标值（如 8 位下 180），这就是一个可复现的自适应曝光。</li>
+      <li><b>算法层</b>：阈值一律用 Otsu 或自适应阈值；颜色判据放到 HSV 的 H 通道并放宽 S/V 范围；或用相邻两帧的<b>差分</b>（光源开/关各拍一帧相减）把环境光整体消掉，这招对红外补光尤其有效。</li>
     </ul>
     <p><b>背景建模。</b>固定相机检测运动目标时，最省算力的是<b>单帧背景差</b>：开机时目标不在场，存一帧作为背景 B，之后 <code>|I−B| &gt; T</code> 即前景。缺点是光照缓慢漂移后背景失效，补一个<b>指数遗忘更新</b>即可：</p>
     <div class="k-formula">
@@ -627,7 +627,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是把抗干扰留到最后一天做，此时算法结构已经定死，加不进冗余基站或改不了光路——多径和光照的应对必须在方案阶段就写进架构（多布一两个基站、预留补光位）。二是自动曝光/自动白平衡忘了关，是视觉题第一大玄学来源。三是背景更新率 α 取太大，目标静止几秒就被"学"成背景消失了；正确做法是只在非前景区域更新。四是野值检测的阈值按实验室数据设定，赛场环境更差直接把好数据也滤掉——阈值应基于最近 N 帧的统计量（如中位数 ± 3 倍 MAD）自适应。五是测评时评委和队友站在链路上却没意识到，测试阶段就要故意做遮挡实验。</p>
+      <p>一是把抗干扰留到最后一天做，此时算法结构已经定死，加不进冗余基站或改不了光路，多径和光照的应对必须在方案阶段就写进架构（多布一两个基站、预留补光位）。二是自动曝光/自动白平衡忘了关，是视觉题第一大玄学来源。三是背景更新率 α 取太大，目标静止几秒就被"学"成背景消失了；正确做法是只在非前景区域更新。四是野值检测的阈值按实验室数据设定，赛场环境更差直接把好数据也滤掉，阈值应基于最近 N 帧的统计量（如中位数 ± 3 倍 MAD）自适应。五是测评时评委和队友站在链路上却没意识到，测试阶段就要故意做遮挡实验。</p>
     </div>
   </div>
 </article>
@@ -639,8 +639,8 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">时间预算</span><span class="tag">流水线</span><span class="tag">复杂度估算</span><span class="tag">机械臂节拍</span><span class="tag">更新率</span></div>
   <div class="k-b">
-    <p><b class="lead">凡是题目给了限时，第一件事就是把总时间按环节拆成预算表，倒推每个环节允许多少毫秒，再据此选算法——而不是先写算法再看跑多快。</b></p>
-    <p>以"限时 2 分钟完成 N 片拼图"为例，做一张时间预算表：总 120 s，留 20% 余量即可用 96 s。若 N=9，每片 <code>96/9 ≈ 10.7 s</code>。再往下拆单片节拍：<code>取图 30 ms + 分割与顶点提取 50 ms + 特征匹配 100 ms + 逆解与轨迹规划 10 ms + 机械臂往返移动 4–6 s + 吸放动作 1–2 s</code>。可以看到<b>视觉部分不到 0.2 s，机械运动占 90% 以上</b>——这意味着优化方向根本不是"让 CNN 跑更快"，而是缩短臂的行程、提高加速度、把"取图 + 匹配"和"上一片的搬运动作"做成流水线并行。这个结论只有先做预算表才能得出。</p>
+    <p><b class="lead">凡是题目给了限时，第一件事就是把总时间按环节拆成预算表，倒推每个环节允许多少毫秒，再据此选算法；先写算法再看跑多快，顺序就反了。</b></p>
+    <p>以"限时 2 分钟完成 N 片拼图"为例，做一张时间预算表：总 120 s，留 20% 余量即可用 96 s。若 N=9，每片 <code>96/9 ≈ 10.7 s</code>。再往下拆单片节拍：<code>取图 30 ms + 分割与顶点提取 50 ms + 特征匹配 100 ms + 逆解与轨迹规划 10 ms + 机械臂往返移动 4–6 s + 吸放动作 1–2 s</code>。可以看到<b>视觉部分不到 0.2 s，机械运动占 90% 以上</b>。这意味着优化方向根本不是"让 CNN 跑更快"，而是缩短臂的行程、提高加速度、把"取图 + 匹配"和"上一片的搬运动作"做成流水线并行。这个结论只有先做预算表才能得出。</p>
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">total</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3175em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">init</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">max</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3175em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">vision</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3175em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">motion</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">final</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="ft">　（完全流水线时）</span></div>
       <div class="fn">串行时是 N·(T<sub>vision</sub>+T<sub>motion</sub>)；流水线把两条支路重叠，节拍由较慢的一支决定。T<sub>init</sub> 含上电、标定加载、首帧曝光稳定（典型 1–3 s）</div>
@@ -649,11 +649,11 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     <ul class="k-list">
       <li>逐像素操作（阈值、差分、颜色转换）：O(H·W)。QVGA 76800 像素，M7 上每像素约 3–10 个周期，即 0.5–1.6 ms 一遍。<b>关键结论：逐像素遍历很便宜，能做十几遍都不心疼。</b></li>
       <li>连通域/轮廓：O(H·W) 但常数大，QVGA 上 5–15 ms。</li>
-      <li>模板匹配：O(H·W·h·w)，32×32 模板在 QVGA 上就是 7.8×10<sup>7</sup> 次操作，M7 上要 500 ms 以上——<b>必须先用轮廓/颜色把候选区缩到几个 ROI 再匹配</b>，否则一定超时。</li>
+      <li>模板匹配：O(H·W·h·w)，32×32 模板在 QVGA 上就是 7.8×10<sup>7</sup> 次操作，M7 上要 500 ms 以上，<b>必须先用轮廓/颜色把候选区缩到几个 ROI 再匹配</b>，否则一定超时。</li>
       <li>两两特征匹配（拼图的边配对）：O(N<sup>2</sup>) 对；N=9 时只有 36 对，随便算；N=100 时 4950 对，就要加哈希或先按边长分桶剪枝。</li>
       <li>FFT（GCC-PHAT）：O(M·log M)。M=2048 点、4 通道、每帧 6 对互相关，在 Cortex-M4F DSP 指令下约 5–15 ms，支持 30–60 Hz 更新率绰绰有余。</li>
     </ul>
-    <p>闭环控制类题目还要看<b>端到端延迟</b>而不只是帧率：视觉链路的延迟 = 曝光时间 + 传感器读出 + 传输 + 处理 + 通信，典型 30–60 ms，最差能到 100 ms。这个延迟直接限制控制带宽——经验规则是<b>闭环带宽不超过 1/(5–10 倍延迟)</b>，50 ms 延迟对应控制带宽只有 2–4 Hz，追快速运动目标必须靠预测（常速/常加速卡尔曼外推一个延迟周期）而不是提高增益，否则一定振荡。</p>
+    <p>闭环控制类题目还要看<b>端到端延迟</b>而不只是帧率：视觉链路的延迟 = 曝光时间 + 传感器读出 + 传输 + 处理 + 通信，典型 30–60 ms，最差能到 100 ms。这个延迟直接限制控制带宽，经验规则是<b>闭环带宽不超过 1/(5–10 倍延迟)</b>，50 ms 延迟对应控制带宽只有 2–4 Hz，追快速运动目标必须靠预测（常速/常加速卡尔曼外推一个延迟周期）而不是提高增益，否则一定振荡。</p>
     <p>实测手段要简单粗暴：在每个环节前后翻转一个 GPIO，示波器直接量宽度，比在代码里打印时间戳准且不干扰。OpenMV 里用 <code>pyb.millis()</code> 打点，把每段耗时通过 UART 吐出来做成表。</p>
 
     <div class="k-callout k-exam">
@@ -662,7 +662,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是只测平均耗时不测<b>最坏耗时</b>，某些帧因为噪声导致轮廓数暴增，处理时间从 30 ms 跳到 300 ms，控制回路瞬间失稳——必须限制单帧处理的候选目标数上限，超了就丢弃本帧。二是把耗时的图像处理放在定时器中断里，阻塞其他任务；应放主循环，中断只做数据搬运。三是用 <code>printf</code> 调试没关，串口阻塞几十毫秒。四是忽略机械臂的加减速时间，按最大速度算行程，实测慢一倍。五是没有留失败重试的时间余量——拼图抓空一次要能重来，预算里必须给 15%–20% 的裕度。六是把"帧率 30 fps"当成"延迟 33 ms"，实际流水线深度导致延迟可能是 3 帧即 100 ms。</p>
+      <p>一是只测平均耗时不测<b>最坏耗时</b>，某些帧因为噪声导致轮廓数暴增，处理时间从 30 ms 跳到 300 ms，控制回路瞬间失稳，必须限制单帧处理的候选目标数上限，超了就丢弃本帧。二是把耗时的图像处理放在定时器中断里，阻塞其他任务；应放主循环，中断只做数据搬运。三是用 <code>printf</code> 调试没关，串口阻塞几十毫秒。四是忽略机械臂的加减速时间，按最大速度算行程，实测慢一倍。五是没有留失败重试的时间余量，拼图抓空一次要能重来，预算里必须给 15%–20% 的裕度。六是把"帧率 30 fps"当成"延迟 33 ms"，实际流水线深度导致延迟可能是 3 帧即 100 ms。</p>
     </div>
   </div>
 </article>
@@ -674,7 +674,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   </div>
   <div class="k-tags"><span class="tag">GDOP</span><span class="tag">迟滞带</span><span class="tag">误差累积</span><span class="tag">闭环校正</span><span class="tag">测评复现</span></div>
   <div class="k-b">
-    <p><b class="lead">同一套方案，室内中心测得很准、一到边界就超标，几乎是定位题的通病，根源是几何精度衰减因子（GDOP）。</b>位置误差不等于测距误差，而是被几何放大：</p>
+    <p><b class="lead">同一套方案，室内中心测得很准、一到边界就超标，几乎是定位题的通病，根源是几何精度衰减因子（GDOP）。</b>测距误差乘上 GDOP 才是位置误差：</p>
     <div class="k-formula">
       <div class="f katexed"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">pos</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathrm">GDOP</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0359em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">range</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span><span class="ft">　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.3em;vertical-align:-0.1944em;"></span><span class="mpunct">,</span></span></span></span><span class="ft">　</span><span class="katex"><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathrm">GDOP</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.24em;vertical-align:-0.2963em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9437em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathrm">trace</span></span><span class="mopen">[(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0813em;">H</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7673em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span></span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.0813em;">H</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mclose">]</span></span></span><span style="top:-2.9037em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.28em" viewBox="0 0 400000 1296" preserveAspectRatio="xMinYMin slice"><path d="M263,681c0.7,0,18,39.7,52,119
 c34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120
@@ -689,7 +689,7 @@ c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z
 M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span></span></span></span></span></span></span></span></span></div>
       <div class="fn">H 为各基站到目标的单位方向向量构成的几何矩阵；场地中心 GDOP 通常 1–2，靠近基站连线延长区或外侧可达 5–10</div>
     </div>
-    <p>10 cm 的测距误差在中心给出 10–20 cm 定位误差，在边角就变成 50 cm–1 m。对策不是"提高测距精度"，而是<b>改布局</b>：基站要包住整个测试区（目标始终在基站构成的凸包内），四角布点优于一字排开；实在包不住就在边界侧增加冗余基站。方案评审时应该画一张全场 GDOP 热力图，把红色区域和题目要求的测试点位对照，提前发现问题。</p>
+    <p>10 cm 的测距误差在中心给出 10–20 cm 定位误差，在边角就变成 50 cm–1 m。对策是<b>改布局</b>：基站要包住整个测试区（目标始终在基站构成的凸包内），四角布点优于一字排开；实在包不住就在边界侧增加冗余基站。方案评审时应该画一张全场 GDOP 热力图，把红色区域和题目要求的测试点位对照，提前发现问题。</p>
     <p><b>分区判定的边界抖动</b>是另一类失分：目标停在分区线附近时，测量噪声让判决结果在两个分区之间来回跳。标准解法是<b>迟滞（施密特）+ 驻留时间</b>：</p>
     <ul class="k-list">
       <li>迟滞带：进入 A 区的门限设为 <code>d &lt; d<sub>0</sub> − Δ</code>，退出设为 <code>d &gt; d<sub>0</sub> + Δ</code>，Δ 取单次测量标准差的 2–3 倍（若 σ=5 cm 则 Δ 取 10–15 cm）。</li>
@@ -698,18 +698,18 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
     </ul>
     <p><b>误差累积</b>是机械类题的隐形杀手。拼图/搬运任务里每一片的定位误差如果<b>相对于上一片</b>测量，误差会随片数线性甚至随机游走式累积：n 片后偏差约 <code>σ·√n</code>（独立误差）或 <code>n·δ</code>（存在系统偏差时）。单片 2 mm 的系统偏差，第 9 片就是 18 mm，远超"顶点距离 ≤2 cm"这类指标。两条对策：</p>
     <ul class="k-list">
-      <li><b>绝对基准</b>——所有片的目标位姿都相对于固定的世界坐标系（贴在台面上的基准标志或 AprilTag）计算，而不是相对于已放好的邻片。这是最重要的一条设计原则。</li>
-      <li><b>闭环校正</b>——每放置若干片后重新拍照，测量实际位置与目标位置的偏差，把这个偏差反馈修正后续放置；相当于把开环变闭环，能把累积项压回单次误差量级。</li>
+      <li><b>绝对基准</b>：所有片的目标位姿一律相对于固定的世界坐标系（贴在台面上的基准标志或 AprilTag）计算，不能相对已放好的邻片推算。这是最重要的一条设计原则。</li>
+      <li><b>闭环校正</b>：每放置若干片后重新拍照，测量实际位置与目标位置的偏差，把这个偏差反馈修正后续放置；相当于把开环变闭环，能把累积项压回单次误差量级。</li>
     </ul>
-    <p>最后是<b>测评复现性</b>：作品在自己桌上跑十次全对，评委面前跑三次错两次，通常来自——摄像头支架被搬动、电池电压下降导致舵机力矩不足、场地背景颜色不同、赛场灯光不同、开机初始化时目标已经在场内导致背景建模把它学进去。对策是做一个<b>可现场执行的开机自检与快速重标流程</b>（30 秒内完成：拍基准标志→重算像素到世界的变换→测一次已知距离验证零点→显示重投影残差），并把关键中间量显示在屏幕上，出问题能当场定位是哪一环。</p>
+    <p>最后是<b>测评复现性</b>：作品在自己桌上跑十次全对，评委面前跑三次错两次，原因通常是这几件事：摄像头支架被搬动、电池电压下降导致舵机力矩不足、场地背景颜色不同、赛场灯光不同、开机初始化时目标已经在场内导致背景建模把它学进去。对策是做一个<b>可现场执行的开机自检与快速重标流程</b>（30 秒内完成：拍基准标志→重算像素到世界的变换→测一次已知距离验证零点→显示重投影残差），并把关键中间量显示在屏幕上，出问题能当场定位是哪一环。</p>
 
     <div class="k-callout k-exam">
       <b>电赛怎么考</b>
-      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」把这三类失分点全考了：分区判定误差 ≤0.2 m 比径向 0.3 m 更严，考的正是边界迟滞与滤波；测试点若布在基站围成区域之外，GDOP 放大会让本来合格的测距变成不合格的定位。2026 年赛区赛 E 题「拼图装置」明确给出顶点距离 ≤2 cm 的精度指标与 2 分钟限时，误差累积是最典型的翻车方式——必须用台面固定基准而非邻片相对定位。2016 年赛区赛 B 题「物品分拣搬送装置」与 2024 年赛区赛 E 题「三子棋游戏装置」同样受累积偏差影响。2022 年 10 月赛区赛 D 题「盲盒识别装置」和 2020 年赛区赛 F 题「简易无接触温度测量与身份识别装置」的识别率在赛场光照下掉分，是"实验室能跑、现场跑不了"的经典案例。</p>
+      <p>2026 年赛区赛 C 题「基于无线通信的数字钥匙实验系统」把这三类失分点全考了：分区判定误差 ≤0.2 m 比径向 0.3 m 更严，考的正是边界迟滞与滤波；测试点若布在基站围成区域之外，GDOP 放大会让本来合格的测距变成不合格的定位。2026 年赛区赛 E 题「拼图装置」明确给出顶点距离 ≤2 cm 的精度指标与 2 分钟限时，误差累积是最典型的翻车方式，必须用台面固定基准而非邻片相对定位。2016 年赛区赛 B 题「物品分拣搬送装置」与 2024 年赛区赛 E 题「三子棋游戏装置」同样受累积偏差影响。2022 年 10 月赛区赛 D 题「盲盒识别装置」和 2020 年赛区赛 F 题「简易无接触温度测量与身份识别装置」的识别率在赛场光照下掉分，是"实验室能跑、现场跑不了"的经典案例。</p>
     </div>
     <div class="k-callout k-trap">
       <b>常见坑</b>
-      <p>一是只在场地中心和几个"好点位"测试，从不测边角和基站连线的延长线区域——测试点必须按题目给的网格全覆盖，并单独记录最差点。二是迟滞带 Δ 拍脑袋取值，正确做法是先静止采 200 次测量算出 σ，再取 Δ=2σ–3σ。三是滤波窗口开太长（如 20 点均值），静态精度好看但动态跟踪严重滞后，测评走动时全错。四是拼图/搬运用"贴着上一片放"的策略，看似合理实则累积误差。五是没有开机自检流程，现场出问题只能瞎调。六是电池供电的装置在长时间测试后电压下降，舵机/电机行程变化导致定位偏移，测评前务必换满电电池并测一次。七是把标定参数和阈值散落在代码各处，现场改一个参数要翻五个文件。</p>
+      <p>一是只在场地中心和几个"好点位"测试，从不测边角和基站连线的延长线区域，测试点必须按题目给的网格全覆盖，并单独记录最差点。二是迟滞带 Δ 拍脑袋取值，正确做法是先静止采 200 次测量算出 σ，再取 Δ=2σ–3σ。三是滤波窗口开太长（如 20 点均值），静态精度好看但动态跟踪严重滞后，测评走动时全错。四是拼图/搬运用"贴着上一片放"的策略，看似合理实则累积误差。五是没有开机自检流程，现场出问题只能瞎调。六是电池供电的装置在长时间测试后电压下降，舵机/电机行程变化导致定位偏移，测评前务必换满电电池并测一次。七是把标定参数和阈值散落在代码各处，现场改一个参数要翻五个文件。</p>
     </div>
   </div>
 </article>
@@ -718,7 +718,7 @@ M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   <section class="sec">
     <div class="sec-h"><h2>参考设计方案</h2>
     <p>按题型给出可直接落地的技术路线，含拓扑与算法选型。</p></div>
-    <ul class="plan"><li><b>无线数字钥匙（2026 C）</b>：0.3m 径向 + 10° 方位角，两个指标指向不同技术——距离用 UWB TWR（双向测距，天然抗多径且不需时钟同步）；方位角用 UWB PDoA 或多天线 AoA 阵列。低成本替代是 BLE 5.1 AoA 方案。分区判定（开锁 / 迎宾 / 感应）加迟滞带避免边界抖动。</li><li><b>超声信标定位（2025 J）</b>：信标发超声 + 同步用的射频触发；定位端多麦克风阵列做 TDoA，用 GCC-PHAT 求时延，再最小二乘解位置。声速必须按现场温度修正，否则 3m 处误差可达数厘米。</li><li><b>声传播定位（2023 F）</b>：同上思路，注意混响环境下取首径而非最强径。</li><li><b>单目视觉测量（2025 C）</b>：标定内参 → 已知目标物在同一平面 → 用单应矩阵或"已知靶面尺寸反推距离"；1–2m 距离下的边长测量精度主要受标定质量与角点提取精度限制。</li><li><b>拼图 / 分拣 / 棋类（2026 E、2024 E、2022 D、2016 B）</b>：流程统一为 —— 图像分割取碎片轮廓 → 多边形近似取顶点 → 边长与角度特征匹配（花纹题再叠加纹理匹配）→ 求解拼接位姿 → 手眼变换到机械臂坐标 → 吸附搬运。铁质碎片用电磁吸盘最省事。</li><li><b>非接触交互（2025 I、2018 D）</b>：漫反射光电开关阵列做手势时序识别 + 超声测距做距离档位，本质是状态机 + 阈值判决，不需要机器学习。</li></ul>
+    <ul class="plan"><li><b>无线数字钥匙（2026 C）</b>：0.3m 径向 + 10° 方位角，两个指标指向不同技术：距离用 UWB TWR（双向测距，天然抗多径且不需时钟同步）；方位角用 UWB PDoA 或多天线 AoA 阵列。低成本替代是 BLE 5.1 AoA 方案。分区判定（开锁 / 迎宾 / 感应）加迟滞带避免边界抖动。</li><li><b>超声信标定位（2025 J）</b>：信标发超声 + 同步用的射频触发；定位端多麦克风阵列做 TDoA，用 GCC-PHAT 求时延，再最小二乘解位置。声速必须按现场温度修正，否则 3m 处误差可达数厘米。</li><li><b>声传播定位（2023 F）</b>：同上思路，注意混响环境下取首径而非最强径。</li><li><b>单目视觉测量（2025 C）</b>：标定内参 → 已知目标物在同一平面 → 用单应矩阵或"已知靶面尺寸反推距离"；1–2m 距离下的边长测量精度主要受标定质量与角点提取精度限制。</li><li><b>拼图 / 分拣 / 棋类（2026 E、2024 E、2022 D、2016 B）</b>：流程统一为：图像分割取碎片轮廓 → 多边形近似取顶点 → 边长与角度特征匹配（花纹题再叠加纹理匹配）→ 求解拼接位姿 → 手眼变换到机械臂坐标 → 吸附搬运。铁质碎片用电磁吸盘最省事。</li><li><b>非接触交互（2025 I、2018 D）</b>：漫反射光电开关阵列做手势时序识别 + 超声测距做距离档位，本质是状态机 + 阈值判决，不需要机器学习。</li></ul>
   </section>
 
   <section class="sec">
